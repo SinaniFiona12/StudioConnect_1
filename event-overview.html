@@ -5,31 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AED Studios - Events</title>
 
-    <style>
-      :root {
-        --bg-color: #282626;
-        --text-color: #fdfdfd;
-        --accent-color: #fe0d00;
-        --card-bg: #333131;
-        --font-main: "Rubik", sans-serif;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: var(--font-main);
-        padding-bottom: 120px;
-      }
-    </style>
+    <link rel="stylesheet" href="/style.css" />
   </head>
 
   <body>
+    <header class="main-header">
+      <div class="logo-area">
+        <div class="logo-placeholder">
+          <img src="./images/Logo.svg" alt="logo" />
+        </div>
+
+        <div class="logo-text">
+          <strong>AED STUDIOS</strong>
+          <span>Creative Network</span>
+        </div>
+      </div>
+
+      <div class="language-toggles">
+        <button class="lang-btn" id="btn-nl">NL</button>
+
+        <button class="lang-btn active" id="btn-en">EN</button>
+
+        <button class="lang-btn" id="btn-fr">FR</button>
+      </div>
+    </header>
     <script>
       const access = sessionStorage.getItem("eventAccess");
 
