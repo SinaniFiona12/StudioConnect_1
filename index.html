@@ -133,7 +133,7 @@ const heroSlides = [
 
     {
         tag: "Comming soon",
-        title: "Next to normaal",
+        title: "Next to normal",
         subtitle: "Rockmusical",
         channel: "Kadee producties",
         image: "./images/Nexttonormal.svg"
@@ -156,7 +156,7 @@ const newsItems = [
     {
         active: true,
         icon: "./images/Bliksem.svg",
-        date: "2 dagen geleden",
+        daysAgo: 2,
         title: "Nieuwe studio geopend",
         text:
         "Studio 16 is nu beschikbaar voor bookings met state-of-the-art 4K camera equipment."
@@ -165,7 +165,7 @@ const newsItems = [
     {
         active: false,
         icon: "./images/Speakerbig.svg",
-        date: "5 dagen geleden",
+        daysAgo: 5,
         title: "Upgrades netwerk",
         text:
         "Snellere verbindingen tussen alle studio's dankzij nieuwe infrastructuur."
@@ -174,7 +174,7 @@ const newsItems = [
     {
         active: false,
         icon: "./images/Calenderbig.svg",
-        date: "1 week geleden",
+        daysAgo: 7,
         title: "AED Theater coming soon",
         text:
         "Binnenkort kan je naar de nieuwste theater shows komen kijken in ons splinternieuwe AED Theater."
@@ -273,6 +273,39 @@ const newsScroll =
         "newsScroll"
     );
 
+function getTimeAgo(days){
+
+    if(days === 0){
+
+        return "Vandaag";
+
+    }
+
+    if(days === 1){
+
+        return "1 dag geleden";
+
+    }
+
+    if(days < 7){
+
+        return `${days} dagen geleden`;
+
+    }
+
+    const weeks =
+        Math.floor(days / 7);
+
+    if(weeks === 1){
+
+        return "1 week geleden";
+
+    }
+
+    return `${weeks} weken geleden`;
+
+}
+
 newsItems.forEach(news => {
 
     newsScroll.innerHTML += `
@@ -288,7 +321,7 @@ newsItems.forEach(news => {
                 </div>
 
                 <span>
-                    ${news.date}
+                    ${getTimeAgo(news.daysAgo)}
                 </span>
 
             </div>
