@@ -418,6 +418,23 @@ cards.forEach(card => {
 
     }
 
+    continueBtn.addEventListener(
+        "click",
+        () => {
+
+            if(!selectedDate) return;
+
+            localStorage.setItem(
+                "selectedEventDate",
+                selectedDate
+            );
+
+            window.location.href =
+                "Eventregistration.html";
+
+        }
+    );
+
     document
         .getElementById("btn-nl")
         .addEventListener(
