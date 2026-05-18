@@ -5,8 +5,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width,
-        initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0"
     >
 
     <title>
@@ -15,10 +14,10 @@
 
     <style>
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
     </style>
@@ -35,7 +34,7 @@
 
             <img
                 src="./images/Logo.svg"
-                alt="logo"
+                alt="AED Studios logo"
             >
 
         </div>
@@ -59,6 +58,7 @@
         <button
             class="lang-btn"
             id="btn-nl"
+            type="button"
         >
             NL
         </button>
@@ -66,6 +66,7 @@
         <button
             class="lang-btn active"
             id="btn-en"
+            type="button"
         >
             EN
         </button>
@@ -73,6 +74,7 @@
         <button
             class="lang-btn"
             id="btn-fr"
+            type="button"
         >
             FR
         </button>
@@ -94,9 +96,7 @@
                 ←
             </span>
 
-            <span
-                data-translate="goBack"
-            ></span>
+            <span data-translate="goBack"></span>
 
         </a>
 
@@ -104,13 +104,9 @@
 
     <section class="title-section">
 
-        <h1
-            data-translate="chooseDate"
-        ></h1>
+        <h1 data-translate="chooseDate"></h1>
 
-        <p
-            data-translate="chooseSubtitle"
-        ></p>
+        <p data-translate="chooseSubtitle"></p>
 
     </section>
 
@@ -121,11 +117,12 @@
 
     <section class="bottom-button">
 
-        <button id="continueBtn">
+        <button
+            id="continueBtn"
+            type="button"
+        >
 
-            <span
-                data-translate="continueBtn"
-            ></span>
+            <span data-translate="continueBtn"></span>
 
             <span>
                 →
@@ -153,7 +150,10 @@
                 "Select the event that works best for you",
 
             continueBtn:
-                "CONTINUE TO REGISTRATION"
+                "CONTINUE TO REGISTRATION",
+
+            spotsAvailable:
+                "spots available"
 
         },
 
@@ -169,7 +169,10 @@
                 "Selecteer het event dat het beste bij je past",
 
             continueBtn:
-                "GA VERDER NAAR REGISTRATIE"
+                "GA VERDER NAAR REGISTRATIE",
+
+            spotsAvailable:
+                "plaatsen beschikbaar"
 
         },
 
@@ -185,13 +188,208 @@
                 "Sélectionnez l'événement qui vous convient le mieux",
 
             continueBtn:
-                "CONTINUER VERS L'INSCRIPTION"
+                "CONTINUER VERS L'INSCRIPTION",
+
+            spotsAvailable:
+                "places disponibles"
 
         }
 
     };
 
-    function setLanguage(language){
+    const eventDates = [
+
+        {
+            id: 1,
+            date: "June 15, 2026",
+            time: "18:00 - 22:00",
+            location: "Studio 1",
+            maxSpots: 60,
+            registrations: 0
+        },
+
+        {
+            id: 2,
+            date: "September 22, 2026",
+            time: "18:00 - 22:00",
+            location: "Studio 1",
+            maxSpots: 60,
+            registrations: 0
+        },
+
+        {
+            id: 3,
+            date: "December 20, 2026",
+            time: "18:00 - 22:00",
+            location: "Studio 1",
+            maxSpots: 60,
+            registrations: 0
+        },
+
+        {
+            id: 4,
+            date: "March 19, 2027",
+            time: "18:00 - 22:00",
+            location: "Studio 1",
+            maxSpots: 60,
+            registrations: 0
+        }
+
+    ];
+
+    const datesList =
+        document.getElementById(
+            "datesList"
+        );
+
+    function buildCards(language) {
+
+        datesList.innerHTML = "";
+
+        eventDates.forEach(event => {
+
+            const availableSpots =
+                event.maxSpots -
+                event.registrations;
+
+            const progress =
+                (event.registrations /
+                event.maxSpots) * 100;
+
+            datesList.innerHTML += `
+
+                <div
+                    class="date-card
+                    ${
+                        selectedDate ==
+                        event.id
+                        ? "active"
+                        : ""
+                    }"
+                    data-id="${event.id}"
+                >
+
+                    <div class="date-row">
+
+                        <div class="date-icon">
+                            <img
+                                src="./images/EventRed.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div class="date-title">
+                            ${event.date}
+                        </div>
+
+                    </div>
+
+                    <div class="date-row">
+
+                        <div class="date-icon">
+                            <img
+                                src="./images/ClockRed.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div class="date-info">
+                            ${event.time}
+                        </div>
+
+                    </div>
+
+                    <div class="date-row">
+
+                        <div class="date-icon">
+                            <img
+                                src="./images/LocationRed.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div class="date-info">
+                            ${event.location}
+                        </div>
+
+                    </div>
+
+                    <div class="spots">
+
+                        <img
+                            src="./images/PeopleRed.svg"
+                            alt=""
+                        >
+
+                        <span>
+                            ${availableSpots}
+                            ${translations[language].spotsAvailable}
+                        </span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width: ${progress}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+        const cards =
+        document.querySelectorAll(
+            ".date-card"
+        );
+
+cards.forEach(card => {
+
+    card.addEventListener(
+        "click",
+        () => {
+
+            cards.forEach(c =>
+                c.classList.remove(
+                    "active"
+                )
+            );
+
+            card.classList.add(
+                "active"
+            );
+
+            selectedDate =
+                card.dataset.id;
+
+            continueBtn.classList.add(
+                "active"
+            );
+
+            localStorage.setItem(
+                "selectedEventDate",
+                selectedDate
+            );
+
+        }
+    );
+
+});
+
+    }
+
+    let selectedDate = null;
+
+    const continueBtn =
+        document.getElementById(
+            "continueBtn"
+        );
+
+    function setLanguage(language) {
 
         localStorage.setItem(
             "language",
@@ -199,84 +397,112 @@
         );
 
         document
-        .querySelectorAll(".lang-btn")
-        .forEach(btn => {
+            .querySelectorAll(".lang-btn")
+            .forEach(btn => {
 
-            btn.classList.remove(
+                btn.classList.remove(
+                    "active"
+                );
+
+            });
+
+        document
+            .getElementById(
+                `btn-${language}`
+            )
+            .classList.add(
                 "active"
             );
 
-        });
-
         document
-        .getElementById(
-            `btn-${language}`
-        )
-        .classList.add(
-            "active"
-        );
+            .querySelectorAll(
+                "[data-translate]"
+            )
+            .forEach(element => {
 
-        document
-        .querySelectorAll(
-            "[data-translate]"
-        )
-        .forEach(element => {
+                const key =
+                    element.dataset.translate;
 
-            const key =
-                element.dataset.translate;
+                element.textContent =
+                    translations[language][key];
 
-            element.textContent =
-                translations[
-                    language
-                ][key];
+            });
 
-        });
+        buildCards(language);
 
     }
 
-    document
-    .getElementById("btn-nl")
-    .addEventListener(
+    continueBtn.addEventListener(
         "click",
         () => {
 
-            setLanguage("nl");
+            if(!selectedDate) return;
+
+            localStorage.setItem(
+                "selectedEventDate",
+                selectedDate
+            );
+
+            window.location.href =
+                "Eventregistration.html";
 
         }
     );
 
     document
-    .getElementById("btn-en")
-    .addEventListener(
-        "click",
-        () => {
+        .getElementById("btn-nl")
+        .addEventListener(
+            "click",
+            () => {
 
-            setLanguage("en");
+                setLanguage("nl");
 
-        }
-    );
+            }
+        );
 
     document
-    .getElementById("btn-fr")
-    .addEventListener(
-        "click",
-        () => {
+        .getElementById("btn-en")
+        .addEventListener(
+            "click",
+            () => {
 
-            setLanguage("fr");
+                setLanguage("en");
 
-        }
-    );
+            }
+        );
+
+    document
+        .getElementById("btn-fr")
+        .addEventListener(
+            "click",
+            () => {
+
+                setLanguage("fr");
+
+            }
+        );
 
     const savedLanguage =
-
         localStorage.getItem(
             "language"
-        )
+        ) || "en";
 
-        || "en";
+        selectedDate =
+            localStorage.getItem(
+                "selectedEventDate"
+            );
+
+        if(selectedDate){
+
+            continueBtn.classList.add(
+                "active"
+            );
+
+        }
 
     setLanguage(savedLanguage);
 
 </script>
+
 </body>
 </html>
