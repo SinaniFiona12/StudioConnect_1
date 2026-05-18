@@ -13,119 +13,6 @@
 
         
 
-        main{
-            padding:20px;
-        }
-
-        .section-title{
-            font-size:24px;
-            margin-bottom:20px;
-            font-weight:700;
-        }
-
-        .production-list{
-            display:flex;
-            flex-direction:column;
-            gap:18px;
-            margin-bottom:40px;
-        }
-
-        .production-card{
-            background:var(--card-bg);
-            border-radius:22px;
-            padding:16px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            box-shadow:0 10px 25px rgba(0,0,0,0.25);
-        }
-
-        .production-left{
-            display:flex;
-            gap:14px;
-            flex:1;
-        }
-
-        .play-btn{
-            width:52px;
-            height:52px;
-            border-radius:14px;
-            background:#522725;
-            border:1px solid #841F1A;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-shrink:0;
-        }
-
-        .play-icon{
-            width:0;
-            height:0;
-            border-top:10px solid transparent;
-            border-bottom:10px solid transparent;
-            border-left:15px solid var(--accent-color);
-            margin-left:4px;
-        }
-
-        .production-info h3{
-            font-size:18px;
-            margin-bottom:8px;
-        }
-
-        .production-info p{
-            color:#9d9d9d;
-            margin-bottom:4px;
-            font-size:14px;
-        }
-
-        .time{
-            margin-top:10px;
-            color:#7f7f7f;
-            font-size:14px;
-        }
-
-        .production-image{
-            width:110px;
-            height:110px;
-            border-radius:18px;
-            object-fit:cover;
-            margin-left:15px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.25);
-        }
-
-        .company-grid{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:16px;
-        }
-
-        .company-card{
-            background:var(--card-bg);
-            border-radius:22px;
-            padding:24px 16px;
-            text-align:center;
-            box-shadow:0 10px 25px rgba(0,0,0,0.25);
-        }
-
-        .company-logo{
-            width:70px;
-            height:70px;
-            border-radius:18px;
-            object-fit:cover;
-            margin-bottom:18px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.25);
-        }
-
-        .company-card h3{
-            margin-bottom:8px;
-            font-size:20px;
-        }
-
-        .company-card p{
-            color:#8b8b8b;
-            font-size:14px;
-        }
-
         
 
     </style>
@@ -167,32 +54,43 @@
     </div>
 
 </header>
+<!-- HERO -->
 
-<main>
+<section class="hero-section">
 
-    <section>
+    <div class="hero-slider" id="heroSlider"></div>
 
-        <h2
-            class="section-title"
-            data-translate="activeProductions"
-        ></h2>
+    <div class="hero-dots" id="heroDots"></div>
 
-        <div class="production-list" id="production-list"></div>
+</section>
 
-    </section>
+<!-- NEWS -->
 
-    <section>
+<section class="news-section">
 
-        <h2
-            class="section-title"
-            data-translate="companiesOnSite"
-        ></h2>
+    <div class="section-title">
 
-        <div class="company-grid" id="company-grid"></div>
+        <img src="./images/newsred.svg">
 
-    </section>
+        <h2>Actualiteit</h2>
 
-</main>
+    </div>
+
+    <div class="news-scroll" id="newsScroll"></div>
+
+</section>
+
+<!-- PRODUCTIONS -->
+
+<section class="productions-section">
+
+    <h2 class="productions-title">
+        Actieve Producties
+    </h2>
+
+    <div class="production-list" id="productionList"></div>
+
+</section>
 
 <nav class="bottom-nav">
 
@@ -239,303 +137,273 @@
 </nav>
 
 <script>
+/* HERO DATABASE */
 
-    const translations = {
+const heroSlides = [
 
-        en: {
+    {
+        tag: "Recent opgenomen",
+        title: "De Container Cup",
+        subtitle: "Seizoen 4 • 2024",
+        channel: "VTM",
+        image: "./images/containercup.png"
+    },
 
-            activeProductions:
-                "Active Productions",
+    {
+        tag: "Live productie",
+        title: "The Voice",
+        subtitle: "Seizoen 3 • 2024",
+        channel: "VTM",
+        image: "./images/thevoicehero.png"
+    },
 
-            companiesOnSite:
-                "Companies On Site",
-
-            navHome:
-                "Home",
-
-            navMap:
-                "Map",
-
-            navStudios:
-                "Studios",
-
-            navEvent:
-                "Event"
-
-        },
-
-        nl: {
-
-            activeProductions:
-                "Actieve Producties",
-
-            companiesOnSite:
-                "Bedrijven Op Locatie",
-
-            navHome:
-                "Home",
-
-            navMap:
-                "Kaart",
-
-            navStudios:
-                "Studio's",
-
-            navEvent:
-                "Event"
-
-        },
-
-        fr: {
-
-            activeProductions:
-                "Productions Actives",
-
-            companiesOnSite:
-                "Entreprises Sur Site",
-
-            navHome:
-                "Accueil",
-
-            navMap:
-                "Carte",
-
-            navStudios:
-                "Studios",
-
-            navEvent:
-                "Événement"
-
-        }
-
-    };
-
-    function setLanguage(language){
-
-        localStorage.setItem(
-            "language",
-            language
-        );
-
-        document
-        .querySelectorAll(".lang-btn")
-        .forEach(btn => {
-
-            btn.classList.remove("active");
-
-        });
-
-        document
-        .getElementById(`btn-${language}`)
-        .classList.add("active");
-
-        document
-        .querySelectorAll("[data-translate]")
-        .forEach(element => {
-
-            const key =
-                element.dataset.translate;
-
-            element.textContent =
-                translations[language][key];
-
-        });
-
+    {
+        tag: "Nieuwe productie",
+        title: "Quiz With Balls",
+        subtitle: "Studio 5 • 2024",
+        channel: "Play4",
+        image: "./images/quizhero.png"
     }
 
-    document
-    .getElementById("btn-nl")
-    .addEventListener("click", () => {
+];
 
-        setLanguage("nl");
+/* NEWS DATABASE */
 
-    });
+const newsItems = [
 
-    document
-    .getElementById("btn-en")
-    .addEventListener("click", () => {
+    {
+        active: true,
+        icon: "./images/flash.svg",
+        date: "2 dagen geleden",
+        title: "Nieuwe studio geopend",
+        text:
+        "Studio 16 is nu beschikbaar voor bookings met state-of-the-art 4K camera equipment."
+    },
 
-        setLanguage("en");
+    {
+        active: false,
+        icon: "./images/newsred.svg",
+        date: "5 dagen geleden",
+        title: "Upgrades netwerk",
+        text:
+        "Snellere verbindingen tussen alle studio's dankzij nieuwe infrastructuur."
+    },
 
-    });
+    {
+        active: false,
+        icon: "./images/camera.svg",
+        date: "1 week geleden",
+        title: "Nieuwe camera gear",
+        text:
+        "Nieuwe RED cinema camera's toegevoegd aan de equipment pool."
+    }
 
-    document
-    .getElementById("btn-fr")
-    .addEventListener("click", () => {
+];
 
-        setLanguage("fr");
+/* PRODUCTIONS DATABASE */
 
-    });
+const productions = [
 
-    const savedLanguage =
+    {
+        image: "./images/familie.png",
+        title: "Familie",
+        studio: "Studio 1",
+        time: "08:00 - 18:00"
+    },
 
-        localStorage.getItem("language")
+    {
+        image: "./images/voice.png",
+        title: "The Voice",
+        studio: "Studio 3",
+        time: "10:00 - 22:00"
+    },
 
-        || "en";
+    {
+        image: "./images/quiz.png",
+        title: "Quiz with Balls",
+        studio: "Studio 5",
+        time: "14:00 - 20:00"
+    }
 
-    setLanguage(savedLanguage);
+];
 
-    const productions = [
+/* HERO GENERATION */
 
-        {
-            title: "Famille",
-            studio: "Studio 1",
-            company: "Banijay",
-            time: "08:00 - 18:00",
-            image: "./images/Familie.svg"
-        },
+const heroSlider =
+    document.getElementById(
+        "heroSlider"
+    );
 
-        {
-            title: "The Voice",
-            studio: "Studio 3",
-            company: "Talpa Network",
-            time: "10:00 - 22:00",
-            image: "./images/Voice.svg"
-        },
+const heroDots =
+    document.getElementById(
+        "heroDots"
+    );
 
-        {
-            title: "Quiz with Balls",
-            studio: "Studio 5",
-            company: "Endemol Shine",
-            time: "14:00 - 20:00",
-            image: "./images/quiz.svg"
-        }
+heroSlides.forEach((slide, index) => {
 
-    ];
+    heroSlider.innerHTML += `
 
-    const companies = [
+        <div class="hero-slide ${index === 0 ? "active" : ""}">
 
-        {
-            title: "De mensen",
-            studio: "Studio 5, Studio 7",
-            image: "./images/De mensen.svg"
-        },
+            <img 
+                src="${slide.image}"
+                class="hero-image"
+            >
 
-        {
-            title: "Banijay",
-            studio: "Studio 1 & 2",
-            image: "./images/Banijay.svg"
-        },
+            <div class="hero-overlay"></div>
 
-        {
-            title: "VRT",
-            studio: "Studio 4",
-            image: "./images/Vrt.svg"
-        },
+            <div class="hero-content">
 
-        {
-            title: "Talpa Network",
-            studio: "Studio 3",
-            image: "./images/Talpe network.svg"
-        }
-
-    ];
-
-    const productionList =
-        document.getElementById(
-            'production-list'
-        );
-
-    productions.forEach(item => {
-
-        productionList.innerHTML += `
-
-            <div class="production-card">
-
-                <div class="production-left">
-
-                    <div class="play-btn">
-
-                        <div class="play-icon"></div>
-
-                    </div>
-
-                    <div class="production-info">
-
-                        <h3>${item.title}</h3>
-
-                        <p>${item.studio}</p>
-
-                        <p>${item.company}</p>
-
-                        <div class="time">
-                            ${item.time}
-                        </div>
-
-                    </div>
-
+                <div class="hero-tag">
+                    ${slide.tag}
                 </div>
 
-                <img
-                    class="production-image"
-                    src="${item.image}"
-                >
+                <h1>
+                    ${slide.title}
+                </h1>
+
+                <p>
+                    ${slide.subtitle}
+                </p>
+
+                <span>
+                    ${slide.channel}
+                </span>
 
             </div>
 
-        `;
+        </div>
 
-    });
+    `;
 
-    const companyGrid =
-        document.getElementById(
-            'company-grid'
-        );
+    heroDots.innerHTML += `
 
-    companies.forEach(item => {
+        <div class="hero-dot ${index === 0 ? "active" : ""}"></div>
 
-        companyGrid.innerHTML += `
+    `;
 
-            <div class="company-card">
+});
 
-                <img
-                    class="company-logo"
-                    src="${item.image}"
-                >
+/* NEWS GENERATION */
+
+const newsScroll =
+    document.getElementById(
+        "newsScroll"
+    );
+
+newsItems.forEach(news => {
+
+    newsScroll.innerHTML += `
+
+        <div class="news-card ${news.active ? "active-news" : ""}">
+
+            <div class="news-top">
+
+                <div class="news-icon">
+
+                    <img src="${news.icon}">
+
+                </div>
+
+                <span>
+                    ${news.date}
+                </span>
+
+            </div>
+
+            <h3>
+                ${news.title}
+            </h3>
+
+            <p>
+                ${news.text}
+            </p>
+
+        </div>
+
+    `;
+
+});
+
+/* PRODUCTIONS GENERATION */
+
+const productionList =
+    document.getElementById(
+        "productionList"
+    );
+
+productions.forEach(item => {
+
+    productionList.innerHTML += `
+
+        <div class="production-card">
+
+            <img 
+                src="${item.image}"
+                class="production-thumb"
+            >
+
+            <div class="production-info">
 
                 <h3>${item.title}</h3>
 
                 <p>${item.studio}</p>
 
+                <span>
+                    ⏱ ${item.time}
+                </span>
+
             </div>
 
-        `;
+        </div>
 
-    });
+    `;
 
-    const eventNavBtn =
-        document.getElementById(
-            "eventNavBtn"
-        );
+});
 
-    eventNavBtn.addEventListener(
-        "click",
-        (e) => {
+/* HERO CAROUSEL */
 
-            e.preventDefault();
-
-            const access =
-                sessionStorage.getItem(
-                    "eventAccess"
-                );
-
-            if(access === "granted"){
-
-                window.location.href =
-                    "event-overview.html";
-
-            }
-
-            else{
-
-                window.location.href =
-                    "EventCode.html";
-
-            }
-
-        }
+const slides =
+    document.querySelectorAll(
+        ".hero-slide"
     );
 
+const dots =
+    document.querySelectorAll(
+        ".hero-dot"
+    );
+
+let currentSlide = 0;
+
+function showSlide(index){
+
+    slides.forEach(slide =>
+        slide.classList.remove("active")
+    );
+
+    dots.forEach(dot =>
+        dot.classList.remove("active")
+    );
+
+    slides[index].classList.add("active");
+
+    dots[index].classList.add("active");
+
+}
+
+setInterval(() => {
+
+    currentSlide++;
+
+    if(currentSlide >= slides.length){
+
+        currentSlide = 0;
+
+    }
+
+    showSlide(currentSlide);
+
+}, 4000);
 </script>
 
 </body>
