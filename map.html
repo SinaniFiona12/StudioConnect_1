@@ -288,6 +288,52 @@
             background:var(--accent-color);
             border:none;
         }
+        .map-legend{
+            position:absolute;
+            bottom:120px;
+            left:20px;
+            background-color:#4a1a1a;
+            border-radius:15px;
+            padding:15px;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            z-index:50;
+            box-shadow:0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .legend-item{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:13px;
+            color:#ddd;
+        }
+
+        .dot-white{
+            width:10px;
+            height:10px;
+            background-color:white;
+            border-radius:50%;
+            margin-left:5px;
+            margin-right:5px;
+        }
+
+        .icon-red{
+            width:20px;
+            height:20px;
+            background-color:var(--accent-color);
+            border-radius:50%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .icon-red img{
+            width:10px;
+            height:10px;
+            filter:brightness(0) invert(1);
+        }
     </style>
 </head>
 
@@ -338,6 +384,19 @@
                 <span>Discover this studio</span>
                 <img src="images/Icon (3).svg" alt="Arrow Right">
             </a>
+        </div>
+        <div class="map-legend">
+            <div class="legend-item">
+                <div class="dot-white"></div>
+                <span>Your location</span>
+            </div>
+        
+            <div class="legend-item">
+                <div class="icon-red">
+                    <img src="images/Icon (4).svg" alt="Location">
+                </div>
+                <span>Studio locations (5)</span>
+            </div>
         </div>
 
     </div>
