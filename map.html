@@ -428,10 +428,18 @@
             <span>Studios</span>
         </a>
 
-        <a href="#" class="nav-item">
+        <a
+            href="#"
+            id="eventNavBtn"
+            class="nav-item"
+        >
             <div class="nav-icon">
-                <img src="./images/EventIcontrans.svg" alt="Event">
+                <img
+                    src="./images/EventIcontrans.svg"
+                    alt="Event"
+                >
             </div>
+        
             <span>Event</span>
         </a>
     </nav>
@@ -556,6 +564,39 @@
 
             updateTransform();
         });
+
+        const eventNavBtn =
+            document.getElementById(
+                "eventNavBtn"
+            );
+
+        eventNavBtn.addEventListener(
+            "click",
+            (e) => {
+
+                e.preventDefault();
+
+                const access =
+                    sessionStorage.getItem(
+                        "eventAccess"
+                    );
+
+                if(access === "granted"){
+
+                    window.location.href =
+                        "event-overview.html";
+
+                }
+
+                else{
+
+                    window.location.href =
+                        "EventCode.html";
+
+                }
+
+            }
+        );
 
         updateTransform();
     </script>
