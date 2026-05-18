@@ -14,7 +14,7 @@
     <header class="main-header">
 
     <div class="logo-area">
-        <div class="logo-placeholder"><img src="" alt="logo"></div>
+        <div class="logo-placeholder"><img src="./images/Logo.svg" alt="logo"></div>
 
             <div class="logo-text">
                 <strong>AED STUDIOS</strong>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="search-container">
-        <img src="" alt="Search" class="search-icon">
+        <img src="images/Icon (1).svg" alt="Search" class="search-icon">
         <input type="text" class="search-input" placeholder="Search studios...">
     </div>
 
@@ -77,5 +77,127 @@
     </a>
 </nav>
 
+<script>
+
+const eventNavBtn =
+        document.getElementById("eventNavBtn");
+
+    eventNavBtn.addEventListener("click", (e) => {
+
+        e.preventDefault();
+
+        const access =
+            sessionStorage.getItem("eventAccess");
+
+        /* USER HAS ACCESS */
+
+        if(access === "granted"){
+
+            window.location.href =
+                "event-overview.html";
+
+        }
+
+        
+
+        else{
+
+            window.location.href =
+                "EventCode.html";
+
+        }
+
+    });
+
+    
+
+    const studiosDatabase = [
+
+        { id: "orangerie", name: "The orangerie", type: "Backstage" },
+        { id: "studio1", name: "Studio 1", type: "Occupied by Banijay" },
+        { id: "studio2", name: "Studio 2", type: "Occupied by Banijay" },
+        { id: "studio3", name: "Studio 3", type: "Black box" },
+        { id: "studio4", name: "Studio 4", type: "Black box" },
+        { id: "studio5", name: "Studio 5", type: "Black box" },
+        { id: "studio6", name: "Studio 6", type: "Restaurant" },
+        { id: "studio7", name: "Studio 7", type: "Black box" },
+        { id: "studio8", name: "Studio 8", type: "Auditorium" },
+        { id: "studio9", name: "Studio 9", type: "Black box" },
+        { id: "studio10A", name: "Studio 10A", type: "Black box" },
+        { id: "studio10B", name: "Studio 10B", type: "Black box" },
+        { id: "studio11", name: "Studio 11", type: "Black box" },
+        { id: "studio12", name: "Studio 12", type: "Water tank" },
+        { id: "studio14", name: "Studio 14", type: "Black box" },
+        { id: "studio15", name: "Studio 15", type: "Occupied by Banijay" },
+        { id: "studio16", name: "Studio 16", type: "Event hall" },
+        { id: "cinema", name: "AED Cinema", type: "Cinema" }
+
+    ];
+
+    
+
+    function renderStudiosList(studiosData){
+
+        const container =
+            document.getElementById(
+                'studios-container'
+            );
+
+        container.innerHTML = '';
+
+        studiosData.forEach(studio => {
+
+            const cardElement =
+                document.createElement('a');
+
+            cardElement.href =
+                "information.html";
+
+            cardElement.className =
+                'studio-card';
+
+            cardElement.innerHTML = `
+
+                <div class="studio-icon-box">
+
+                    <img 
+                        src="images/Icon (2).svg"
+                        alt="Building Icon"
+                    >
+
+                </div>
+
+                <div class="studio-info">
+
+                    <div class="studio-name">
+                        ${studio.name}
+                    </div>
+
+                    <div class="studio-type">
+                        ${studio.type}
+                    </div>
+
+                </div>
+
+                <img 
+                    src="images/Container (4).svg"
+                    alt="Arrow Right"
+                    class="arrow-right"
+                >
+
+            `;
+
+            container.appendChild(cardElement);
+
+        });
+
+    }
+
+    
+
+    renderStudiosList(studiosDatabase);
+
+
+</script>
 </body>
 </html>
