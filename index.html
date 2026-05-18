@@ -64,7 +64,7 @@
 
     <div class="section-title">
 
-        <img src="./images/newsred.svg">
+        <img src="./images/speakersmall.svg">
 
         <h2>Actualiteit</h2>
 
@@ -109,7 +109,7 @@
         <span>Studio's</span>
     </a>
 
-   <a href="#" id="eventNavBtn" class="nav-item">
+   <a href="eventCode.html" id="eventNavBtn" class="nav-item">
         <div class="nav-icon">
             <img src="./images/EventIcontrans.svg" alt="Event">
         </div>
@@ -125,26 +125,26 @@ const heroSlides = [
 
     {
         tag: "Recent opgenomen",
-        title: "De Container Cup",
-        subtitle: "Seizoen 4 • 2024",
-        channel: "VTM",
-        image: "./images/containercup.png"
+        title: "Knokke Off",
+        subtitle: "Seizoen 3 • 2026",
+        channel: "VRT",
+        image: "./images/image 37.svg"
     },
 
     {
-        tag: "Live productie",
-        title: "The Voice",
-        subtitle: "Seizoen 3 • 2024",
-        channel: "VTM",
-        image: "./images/thevoicehero.png"
+        tag: "Comming soon",
+        title: "Next to normal",
+        subtitle: "Rockmusical",
+        channel: "Kadee producties",
+        image: "./images/Nexttonormal.svg"
     },
 
     {
-        tag: "Nieuwe productie",
-        title: "Quiz With Balls",
+        tag: "Recent opgenomen",
+        title: "Undercover",
         subtitle: "Studio 5 • 2024",
-        channel: "Play4",
-        image: "./images/quizhero.png"
+        channel: "Streamz",
+        image: "./images/undercover.svg"
     }
 
 ];
@@ -155,8 +155,8 @@ const newsItems = [
 
     {
         active: true,
-        icon: "./images/flash.svg",
-        date: "2 dagen geleden",
+        icon: "./images/Bliksem.svg",
+        daysAgo: 2,
         title: "Nieuwe studio geopend",
         text:
         "Studio 16 is nu beschikbaar voor bookings met state-of-the-art 4K camera equipment."
@@ -164,8 +164,8 @@ const newsItems = [
 
     {
         active: false,
-        icon: "./images/newsred.svg",
-        date: "5 dagen geleden",
+        icon: "./images/Speakerbig.svg",
+        daysAgo: 5,
         title: "Upgrades netwerk",
         text:
         "Snellere verbindingen tussen alle studio's dankzij nieuwe infrastructuur."
@@ -173,11 +173,11 @@ const newsItems = [
 
     {
         active: false,
-        icon: "./images/camera.svg",
-        date: "1 week geleden",
-        title: "Nieuwe camera gear",
+        icon: "./images/Calenderbig.svg",
+        daysAgo: 7,
+        title: "AED Theater coming soon",
         text:
-        "Nieuwe RED cinema camera's toegevoegd aan de equipment pool."
+        "Binnenkort kan je naar de nieuwste theater shows komen kijken in ons splinternieuwe AED Theater."
     }
 
 ];
@@ -187,21 +187,21 @@ const newsItems = [
 const productions = [
 
     {
-        image: "./images/familie.png",
+        image: "./images/FamilieSmall.svg",
         title: "Familie",
         studio: "Studio 1",
         time: "08:00 - 18:00"
     },
 
     {
-        image: "./images/voice.png",
+        image: "./images/VoiceSmall.svg",
         title: "The Voice",
         studio: "Studio 3",
         time: "10:00 - 22:00"
     },
 
     {
-        image: "./images/quiz.png",
+        image: "./images/quizSmall.svg",
         title: "Quiz with Balls",
         studio: "Studio 5",
         time: "14:00 - 20:00"
@@ -234,7 +234,7 @@ heroSlides.forEach((slide, index) => {
 
             <div class="hero-overlay"></div>
 
-            <div class="hero-content">
+            <div class="carousel-content">
 
                 <div class="hero-tag">
                     ${slide.tag}
@@ -273,6 +273,39 @@ const newsScroll =
         "newsScroll"
     );
 
+function getTimeAgo(days){
+
+    if(days === 0){
+
+        return "Vandaag";
+
+    }
+
+    if(days === 1){
+
+        return "1 dag geleden";
+
+    }
+
+    if(days < 7){
+
+        return `${days} dagen geleden`;
+
+    }
+
+    const weeks =
+        Math.floor(days / 7);
+
+    if(weeks === 1){
+
+        return "1 week geleden";
+
+    }
+
+    return `${weeks} weken geleden`;
+
+}
+
 newsItems.forEach(news => {
 
     newsScroll.innerHTML += `
@@ -288,7 +321,7 @@ newsItems.forEach(news => {
                 </div>
 
                 <span>
-                    ${news.date}
+                    ${getTimeAgo(news.daysAgo)}
                 </span>
 
             </div>
