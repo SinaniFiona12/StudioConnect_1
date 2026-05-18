@@ -1,0 +1,129 @@
+ 
+  /*main css*/
+ :root {
+            --bg-color: #282626;
+            --text-color: #FDFDFD;
+            --accent-color: #FE0D00;
+            --card-bg: #333131;
+            --font-main: 'Rubik', sans-serif;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            padding-bottom:120px;
+        }
+
+
+
+           /*navigatie*/
+        .main-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px;
+            border-bottom:1px solid #fe0d005a;
+        }
+
+        .logo-area{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .logo-placeholder{
+            width:60px;
+            height:45px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .logo-text{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .logo-text strong{
+            font-size:16px;
+        }
+
+        .logo-text span{
+            color:#888;
+            font-size:12px;
+        }
+
+        .language-toggles{
+            display:flex;
+            gap:8px;
+        }
+
+        .lang-btn{
+            background:#444;
+            color:white;
+            border:none;
+            padding:8px 14px;
+            border-radius:8px;
+            font-family:var(--font-main);
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .lang-btn.active{
+            background:var(--accent-color);
+        }
+
+       /*navigatie*/
+
+      .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+
+    background:#2f2d2d;
+
+    padding:18px 10px;
+
+    display:flex;
+    justify-content:space-around;
+
+    border-top:1px solid #4a4a4a;
+}
+
+        .nav-item{
+            text-decoration:none;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            color:#8e8e8e;
+            font-size:13px;
+        }
+
+        .nav-icon{
+            width:56px;
+            height:56px;
+            border-radius:18px;
+            background:#3a3939;
+            border:1px solid #5c5c5c;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .nav-item.active .nav-icon{
+            background:var(--accent-color);
+            border:none;
+        
+        }
+
+
+      /*index*/
