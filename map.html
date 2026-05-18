@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AED Studios - Map</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            --bg-color: #282626;
+            --text-color: #FDFDFD;
+            --accent-color: #FE0D00;
+            --card-bg: #333131;
+            --font-main: 'Rubik', sans-serif;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background-color:var(--bg-color);
+            color:var(--text-color);
+            font-family:var(--font-main);
+            overflow:hidden;
+            height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .main-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px;
+            border-bottom:1px solid #fe0d005a;
+        }
+
+        .logo-area{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .logo-placeholder{
+            width:60px;
+            height:45px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .logo-text{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .logo-text strong{
+            font-size:16px;
+        }
+
+        .logo-text span{
+            color:#888;
+            font-size:12px;
+        }
+
+        .language-toggles{
+            display:flex;
+            gap:8px;
+        }
+
+        .lang-btn{
+            background:#444;
+            color:white;
+            border:none;
+            padding:8px 14px;
+            border-radius:8px;
+            font-family:var(--font-main);
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .lang-btn.active{
+            background:var(--accent-color);
+        }
+
+        .map-container{
+            position:relative;
+            flex-grow:1;
+            width:100%;
+            overflow:hidden;
+            background-color:#1a1919;
+        }
+
+        .map-layer{
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:2000px;
+            height:2000px;
+            transform:translate(-50%, -50%);
+            background-image:radial-gradient(
+                circle at center,
+                #282626 2px,
+                transparent 2px
+            );
+            background-size:40px 40px;
+        }
+
+        .map-pin{
+            position:absolute;
+            background-color:var(--accent-color);
+            color:white;
+            width:80px;
+            height:80px;
+            border-radius:24px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:20px;
+            font-weight:bold;
+            box-shadow:0 4px 10px rgba(0,0,0,0.5);
+            cursor:pointer;
+            transition:transform 0.2s;
+        }
+
+        .map-pin:hover{
+            transform:scale(1.1);
+        }
+
+        .map-pin img{
+            width:44px;
+            height:44px;
+            object-fit:contain;
+        }
+
+        #pin-orangerie{
+            top:40%;
+            left:45%;
+        }
+
+        #pin-2{
+            top:55%;
+            left:60%;
+        }
+
+        #pin-12{
+            top:65%;
+            left:40%;
+        }
+
+        .overlay-popup{
+            position:absolute;
+            top:150%;
+            left:50%;
+            transform:translate(-50%, -50%);
+            width:90%;
+            max-width:400px;
+            background-color:var(--card-bg);
+            border-radius:20px;
+            overflow:hidden;
+            box-shadow:0 15px 40px rgba(0,0,0,0.8);
+            transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index:60;
+            opacity:0;
+            pointer-events:none;
+        }
+
+        .overlay-popup.active{
+            top:45%;
+            opacity:1;
+            pointer-events:auto;
+        }
+
+        .overlay-image-area{
+            position:relative;
+            height:160px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .overlay-image-area::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background-image:url('images/image 2 (1).svg');
+            background-size:cover;
+            background-position:center;
+            opacity:0.6;
+        }
+
+        .overlay-image-area::after{
+            content:'';
+            position:absolute;
+            inset:0;
+            background-color:rgba(60, 10, 10, 0.5);
+        }
+
+        .overlay-badge{
+            position:relative;
+            z-index:2;
+            background-color:var(--accent-color);
+            width:70px;
+            height:70px;
+            border-radius:16px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-bottom:15px;
+        }
+
+        .overlay-badge img{
+            width:36px;
+            height:36px;
+        }
+
+        .overlay-title{
+            position:relative;
+            z-index:2;
+            font-size:20px;
+            font-weight:700;
+        }
+
+        .overlay-action{
+            display:flex;
+            align-items:center;
+            padding:20px;
+            color:var(--text-color);
+            text-decoration:none;
+            font-size:15px;
+        }
+
+        .overlay-action span{
+            flex-grow:1;
+        }
+
+        .overlay-action img{
+            width:18px;
+        }
+
+        .bottom-nav{
+            position:fixed;
+            bottom:0;
+            left:0;
+            right:0;
+            background:#2f2d2d;
+            padding:18px 10px;
+            display:flex;
+            justify-content:space-around;
+            border-top:1px solid #4a4a4a;
+        }
+
+        .nav-item{
+            text-decoration:none;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            color:#8e8e8e;
+            font-size:13px;
+        }
+
+        .nav-icon{
+            width:56px;
+            height:56px;
+            border-radius:18px;
+            background:#3a3939;
+            border:1px solid #5c5c5c;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .nav-item.active .nav-icon{
+            background:var(--accent-color);
+            border:none;
+        }
+        .map-legend{
+            position:absolute;
+            bottom:120px;
+            left:20px;
+            background-color:#4a1a1a;
+            border-radius:15px;
+            padding:15px;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            z-index:50;
+            box-shadow:0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .legend-item{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:13px;
+            color:#ddd;
+        }
+
+        .dot-white{
+            width:10px;
+            height:10px;
+            background-color:white;
+            border-radius:50%;
+            margin-left:5px;
+            margin-right:5px;
+        }
+
+        .icon-red{
+            width:20px;
+            height:20px;
+            background-color:var(--accent-color);
+            border-radius:50%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .icon-red img{
+            width:10px;
+            height:10px;
+            filter:brightness(0) invert(1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-area">
+            <div class="logo-placeholder">
+                <img src="./images/Logo.svg" alt="logo">
+            </div>
+
+            <div class="logo-text">
+                <strong>AED STUDIOS</strong>
+                <span>Creative Network</span>
+            </div>
+        </div>
+
+        <div class="language-toggles">
+            <button class="lang-btn">NL</button>
+            <button class="lang-btn active">EN</button>
+            <button class="lang-btn">FR</button>
+        </div>
+    </header>
+
+    <div class="map-container" id="map-container">
+
+        <div class="map-layer" id="map-layer">
+            <div class="map-pin" id="pin-orangerie">
+                <img src="images/Container (3).svg" alt="Orangerie">
+            </div>
+
+            <div class="map-pin" id="pin-2">2</div>
+            <div class="map-pin" id="pin-12">12</div>
+        </div>
+
+        <div class="overlay-popup" id="overlay-popup">
+            <div class="overlay-image-area">
+                <div class="overlay-badge">
+                    <img src="images/Container (3).svg" alt="Icon">
+                </div>
+
+                <div class="overlay-title">
+                    The Orangerie
+                </div>
+            </div>
+
+            <a href="information.html" class="overlay-action">
+                <span>Discover this studio</span>
+                <img src="images/Icon (3).svg" alt="Arrow Right">
+            </a>
+        </div>
+        <div class="map-legend">
+            <div class="legend-item">
+                <div class="dot-white"></div>
+                <span>Your location</span>
+            </div>
+        
+            <div class="legend-item">
+                <div class="icon-red">
+                    <img src="images/Icon (4).svg" alt="Location">
+                </div>
+                <span>Studio locations (5)</span>
+            </div>
+        </div>
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">
+                <img src="./images/HomeIcon.svg" alt="Home">
+            </div>
+            <span>Home</span>
+        </a>
+
+        <a href="map.html" class="nav-item active">
+            <div class="nav-icon">
+                <img src="./images/MapIcon.svg" alt="Map">
+            </div>
+            <span>Map</span>
+        </a>
+
+        <a href="overview.html" class="nav-item">
+            <div class="nav-icon">
+                <img src="./images/StudioIcontrans.svg" alt="Studios">
+            </div>
+            <span>Studios</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <div class="nav-icon">
+                <img src="./images/EventIcontrans.svg" alt="Event">
+            </div>
+            <span>Event</span>
+        </a>
+    </nav>
+
+    <script>
+        const pinOrangerie =
+            document.getElementById('pin-orangerie');
+
+        const overlayPopup =
+            document.getElementById('overlay-popup');
+
+        const mapContainer =
+            document.getElementById('map-container');
+
+        pinOrangerie.addEventListener('click', (e) => {
+            e.stopPropagation();
+            overlayPopup.classList.add('active');
+        });
+
+        mapContainer.addEventListener('click', () => {
+            overlayPopup.classList.remove('active');
+        });
+
+        overlayPopup.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    </script>
+
+</body>
+</html>
