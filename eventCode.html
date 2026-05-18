@@ -59,6 +59,15 @@
         flex-direction: column;
       }
 
+      .logo-text strong {
+        font-size: 16px;
+      }
+
+      .logo-text span {
+        color: #888;
+        font-size: 12px;
+      }
+
       .language-toggles {
         display: flex;
         gap: 8px;
@@ -77,6 +86,146 @@
 
       .lang-btn.active {
         background: var(--accent-color);
+      }
+
+      .access-page {
+        padding: 50px 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .access-icon {
+        width: 82px;
+        height: 82px;
+        border-radius: 24px;
+        background: var(--accent-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+
+      .access-icon img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .access-page h1 {
+        font-size: 24px;
+        margin-bottom: 16px;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #a0a0a0;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 280px;
+        margin-bottom: 28px;
+      }
+
+      .error-box {
+        width: 100%;
+        border: 2px solid var(--accent-color);
+        border-radius: 18px;
+        padding: 18px;
+        color: #b8afaf;
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .error-box.show {
+        display: block;
+      }
+
+      #accessCode {
+        width: 100%;
+        height: 64px;
+        background: #343232;
+        border: 2px solid #4a4747;
+        border-radius: 18px;
+        outline: none;
+        padding: 0 22px;
+        color: white;
+        font-size: 18px;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+        font-family: var(--font-main);
+      }
+
+      #accessCode::placeholder {
+        color: #8a8686;
+        letter-spacing: 3px;
+      }
+
+      #submitBtn {
+        width: 100%;
+        height: 64px;
+        border: none;
+        border-radius: 18px;
+        background: #4a4747;
+        color: #7e7a7a;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: var(--font-main);
+      }
+
+      #submitBtn.active {
+        background: var(--accent-color);
+        color: white;
+      }
+
+      #submitBtn.error {
+        background: var(--accent-color);
+        color: white;
+      }
+
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #2f2d2d;
+        padding: 18px 10px;
+        display: flex;
+        justify-content: space-around;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        border-top: 1px solid #4a4a4a;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #8e8e8e;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .nav-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        background: #3a3939;
+        border: 1px solid #5c5c5c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+      }
+
+      .nav-item.active .nav-icon {
+        background: var(--accent-color);
+        color: white;
+        border: none;
       }
     </style>
   </head>
@@ -102,5 +251,200 @@
         <button class="lang-btn" id="btn-fr">FR</button>
       </div>
     </header>
+
+    <main class="access-page">
+      <div class="access-icon">
+        <img src="./images/Lock.svg" alt="Lock" />
+      </div>
+
+      <h1 data-translate="accessTitle"></h1>
+
+      <p class="subtitle" data-translate="accessSubtitle"></p>
+
+      <div class="error-box" id="errorBox" data-translate="errorMessage"></div>
+
+      <input type="text" id="accessCode" data-placeholder="accessPlaceholder" />
+
+      <button id="submitBtn" data-translate="submitBtn"></button>
+    </main>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <div class="nav-icon">
+          <img src="./images/HomeIcon.svg" alt="Home" />
+        </div>
+
+        <span data-translate="navHome"></span>
+      </a>
+
+      <a href="map.html" class="nav-item">
+        <div class="nav-icon">
+          <img src="./images/MapIcontrans.svg" alt="Map" />
+        </div>
+
+        <span data-translate="navMap"></span>
+      </a>
+
+      <a href="overview.html" class="nav-item">
+        <div class="nav-icon">
+          <img src="./images/StudioIcontrans.svg" alt="Studio's" />
+        </div>
+
+        <span data-translate="navStudios"></span>
+      </a>
+
+      <a href="EventCode.html" class="nav-item active">
+        <div class="nav-icon">
+          <img src="./images/EventIconfull.svg" alt="Event" />
+        </div>
+
+        <span data-translate="navEvent"></span>
+      </a>
+    </nav>
+
+    <script>
+      const translations = {
+        en: {
+          accessTitle: "Access Code",
+
+          accessSubtitle: "Enter your unique company code to view events",
+
+          accessPlaceholder: "ENTER CODE",
+
+          submitBtn: "SUBMIT",
+
+          errorMessage:
+            "An invite code is required to proceed. If you haven't received one, this page may not be relevant to you.",
+
+          navHome: "Home",
+
+          navMap: "Map",
+
+          navStudios: "Studios",
+
+          navEvent: "Event",
+        },
+
+        nl: {
+          accessTitle: "Toegangscode",
+
+          accessSubtitle:
+            "Voer je unieke bedrijfscode in om evenementen te bekijken",
+
+          accessPlaceholder: "VOER CODE IN",
+
+          submitBtn: "VERZENDEN",
+
+          errorMessage:
+            "Een uitnodigingscode is vereist om verder te gaan. Als je er geen hebt ontvangen, is deze pagina mogelijk niet relevant voor jou.",
+
+          navHome: "Home",
+
+          navMap: "Kaart",
+
+          navStudios: "Studio's",
+
+          navEvent: "Event",
+        },
+
+        fr: {
+          accessTitle: "Code d'accès",
+
+          accessSubtitle:
+            "Entrez votre code d'entreprise unique pour voir les événements",
+
+          accessPlaceholder: "ENTREZ LE CODE",
+
+          submitBtn: "ENVOYER",
+
+          errorMessage:
+            "Un code d'invitation est requis pour continuer. Si vous n'en avez pas reçu, cette page peut ne pas vous concerner.",
+
+          navHome: "Accueil",
+
+          navMap: "Carte",
+
+          navStudios: "Studios",
+
+          navEvent: "Événement",
+        },
+      };
+
+      function setLanguage(language) {
+        localStorage.setItem("language", language);
+
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        document.getElementById(`btn-${language}`).classList.add("active");
+
+        document.querySelectorAll("[data-translate]").forEach((element) => {
+          const key = element.dataset.translate;
+
+          element.textContent = translations[language][key];
+        });
+
+        document.querySelectorAll("[data-placeholder]").forEach((element) => {
+          const key = element.dataset.placeholder;
+
+          element.placeholder = translations[language][key];
+        });
+      }
+
+      document.getElementById("btn-nl").addEventListener("click", () => {
+        setLanguage("nl");
+      });
+
+      document.getElementById("btn-en").addEventListener("click", () => {
+        setLanguage("en");
+      });
+
+      document.getElementById("btn-fr").addEventListener("click", () => {
+        setLanguage("fr");
+      });
+
+      const savedLanguage = localStorage.getItem("language") || "en";
+
+      setLanguage(savedLanguage);
+
+      const input = document.getElementById("accessCode");
+
+      const button = document.getElementById("submitBtn");
+
+      const errorBox = document.getElementById("errorBox");
+
+      const validCode = "Studio123";
+
+      input.addEventListener("input", () => {
+        if (input.value.trim() !== "") {
+          button.classList.add("active");
+        } else {
+          button.classList.remove("active");
+        }
+      });
+
+      button.addEventListener("click", () => {
+        const enteredCode = input.value.trim();
+
+        errorBox.classList.remove("show");
+
+        button.classList.remove("error");
+
+        button.textContent = translations[savedLanguage].submitBtn;
+
+        if (enteredCode === validCode) {
+          sessionStorage.setItem("eventAccess", "granted");
+
+          window.location.href = "event-overview.html";
+        } else {
+          errorBox.classList.add("show");
+
+          button.classList.add("error");
+
+          button.textContent = "PLEASE TRY AGAIN";
+        }
+      });
+    </script>
   </body>
 </html>
