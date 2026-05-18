@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AED Studios - Home</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --bg-color: #282626;
+            --text-color: #FDFDFD;
+            --accent-color: #FE0D00;
+            --card-bg: #333131;
+            --font-main: 'Rubik', sans-serif;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            padding-bottom:120px;
+        }
+
+        /* HEADER */
+
+        .main-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px;
+            border-bottom:1px solid #fe0d005a;
+        }
+
+        .logo-area{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .logo-placeholder{
+            
+            color:white;
+            width:60px;
+            height:45px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-weight:bold;
+            font-size:24px;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+        }
+
+        .logo-text{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .logo-text strong{
+            font-size:16px;
+        }
+
+        .logo-text span{
+            color:#888;
+            font-size:12px;
+        }
+
+        .language-toggles{
+            display:flex;
+            gap:8px;
+        }
+
+        .lang-btn{
+            background:#444;
+            color:white;
+            border:none;
+            padding:8px 14px;
+            border-radius:8px;
+            font-family:var(--font-main);
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .lang-btn.active{
+            background:var(--accent-color);
+        }
+
+        /* MAIN CONTENT */
+
+        main{
+            padding:20px;
+        }
+
+        .section-title{
+            font-size:24px;
+            margin-bottom:20px;
+            font-weight:700;
+        }
+
+        /* PRODUCTIE CARDS */
+
+        .production-list{
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+            margin-bottom:40px;
+        }
+
+        .production-card{
+            background:var(--card-bg);
+            border-radius:22px;
+            padding:16px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .production-left{
+            display:flex;
+            gap:14px;
+            flex:1;
+        }
+
+        .play-btn{
+            width:52px;
+            height:52px;
+            border-radius:14px;
+            background:#522725;
+            border:1px solid #841F1A;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-shrink:0;
+        }
+
+        .play-icon{
+            width:0;
+            height:0;
+            border-top:10px solid transparent;
+            border-bottom:10px solid transparent;
+            border-left:15px solid var(--accent-color);
+            margin-left:4px;
+        }
+
+        .production-info h3{
+            font-size:18px;
+            margin-bottom:8px;
+        }
+
+        .production-info p{
+            color:#9d9d9d;
+            margin-bottom:4px;
+            font-size:14px;
+        }
+
+        .time{
+            margin-top:10px;
+            color:#7f7f7f;
+            font-size:14px;
+        }
+
+        .production-image{
+            width:110px;
+            height:110px;
+            border-radius:18px;
+            object-fit:cover;
+            margin-left:15px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        /* BEDRIJVEN */
+
+        .company-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px;
+        }
+
+        .company-card{
+            background:var(--card-bg);
+            border-radius:22px;
+            padding:24px 16px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .company-logo{
+            width:70px;
+            height:70px;
+            border-radius:18px;
+            object-fit:cover;
+            margin-bottom:18px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .company-card h3{
+            margin-bottom:8px;
+            font-size:20px;
+        }
+
+        .company-card p{
+            color:#8b8b8b;
+            font-size:14px;
+        }
+
+        /* BOTTOM NAV */
+
+        .bottom-nav{
+            position:fixed;
+            bottom:0px;
+            left:0px;
+            right:0px;
+            background:#2f2d2d;
+            padding:18px 10px;
+            display:flex;
+            justify-content:space-around;
+            box-shadow:0 15px 35px rgba(0,0,0,0.4);
+            border-top:1px solid #4a4a4a;
+        }
+
+      .nav-item{
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    color:#8e8e8e;
+    font-size:13px;
+    cursor:pointer;
+}
+
+        .nav-icon{
+            width:56px;
+            height:56px;
+            border-radius:18px;
+            background:#3a3939;
+            border:1px solid #5c5c5c;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:22px;
+        }
+
+      
+
+        .nav-item.active .nav-icon{
+            background:var(--accent-color);
+            color:white;
+            border:none;
+            
+        }
+
+    </style>
+   
+</head>
+<body>
+
+<header class="main-header">
+
+    <div class="logo-area">
+
+        <div class="logo-placeholder">
+            <img src="./images/Logo.svg" alt="logo">
+        </div>
+
+        <div class="logo-text">
+
+            <strong>AED STUDIOS</strong>
+
+            <span>Creative Network</span>
+
+        </div>
+
+    </div>
+
+    <div class="language-toggles">
+
+        <button class="lang-btn" id="btn-nl">
+            NL
+        </button>
+
+        <button class="lang-btn active" id="btn-en">
+            EN
+        </button>
+
+        <button class="lang-btn" id="btn-fr">
+            FR
+        </button>
+
+    </div>
+
+</header>
+
+<main>
+
+    <section>
+
+        <h2
+            class="section-title"
+            data-translate="activeProductions"
+        ></h2>
+
+        <div class="production-list" id="production-list"></div>
+
+    </section>
+
+    <section>
+
+        <h2
+            class="section-title"
+            data-translate="companiesOnSite"
+        ></h2>
+
+        <div class="company-grid" id="company-grid"></div>
+
+    </section>
+
+</main>
+
+<nav class="bottom-nav">
+
+    <a href="index.html" class="nav-item active">
+
+        <div class="nav-icon">
+            <img src="./images/HomeIconfull.svg">
+        </div>
+
+        <span data-translate="navHome"></span>
+
+    </a>
+
+    <a href="map.html" class="nav-item">
+
+        <div class="nav-icon">
+            <img src="./images/MapIcontrans.svg">
+        </div>
+
+        <span data-translate="navMap"></span>
+
+    </a>
+
+    <a href="overview.html" class="nav-item">
+
+        <div class="nav-icon">
+            <img src="./images/StudioIcontrans.svg">
+        </div>
+
+        <span data-translate="navStudios"></span>
+
+    </a>
+
+    <a href="#" id="eventNavBtn" class="nav-item">
+
+        <div class="nav-icon">
+            <img src="./images/EventIcontrans.svg">
+        </div>
+
+        <span data-translate="navEvent"></span>
+
+    </a>
+
+</nav>
+</body>
