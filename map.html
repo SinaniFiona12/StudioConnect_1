@@ -165,6 +165,32 @@
             left:40%;
         }
 
+        /* pijltjes */
+
+        .side-arrow-btn{
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            background:transparent;
+            border:none;
+            cursor:pointer;
+            z-index:55;
+            padding:10px;
+        }
+
+        .side-arrow-btn img{
+            width:24px;
+            height:auto;
+        }
+
+        #arrow-left{
+            left:15px;
+        }
+
+        #arrow-right{
+            right:15px;
+        }
+
         .overlay-popup{
             position:absolute;
             top:150%;
@@ -373,7 +399,25 @@
             <div class="map-pin" id="pin-2">2</div>
             <div class="map-pin" id="pin-12">12</div>
         </div>
+        <button
+            class="side-arrow-btn"
+            id="arrow-left"
+        >
+            <img
+                src="images/Polygon 2.svg"
+                alt="Left"
+            >
+        </button>
 
+        <button
+            class="side-arrow-btn"
+            id="arrow-right"
+        >
+            <img
+                src="images/Polygon 1.svg"
+                alt="Right"
+            >
+        </button>
         <div class="overlay-popup" id="overlay-popup">
             <div class="overlay-image-area">
                 <div class="overlay-badge">
@@ -597,6 +641,39 @@
 
             }
         );
+
+        const arrowLeft =
+        document.getElementById(
+            "arrow-left"
+        );
+
+    const arrowRight =
+        document.getElementById(
+            "arrow-right"
+        );
+
+    arrowLeft.addEventListener(
+        "click",
+        () => {
+
+            translateX += 200;
+
+            updateTransform();
+
+        }
+    );
+
+    arrowRight.addEventListener(
+        "click",
+        () => {
+
+            translateX -= 200;
+
+            updateTransform();
+
+        }
+    );
+
 
         updateTransform();
     </script>
