@@ -369,4 +369,148 @@
     </a>
 
 </nav>
+
+<script>
+
+       
+
+        const productions = [
+
+            {
+                title: "Famille",
+                studio: "Studio 1",
+                company: "Banijay",
+                time: "08:00 - 18:00",
+                image: "./images/Familie (1).png"
+            },
+
+            {
+                title: "The Voice",
+                studio: "Studio 3",
+                company: "Talpa Network",
+                time: "10:00 - 22:00",
+                image: "./images/Voice (1).png"
+            },
+
+            {
+                title: "Quiz with Balls",
+                studio: "Studio 5",
+                company: "Endemol Shine",
+                time: "14:00 - 20:00",
+                image: "./images/quiz (1).png"
+            }
+
+        ];
+
+        const companies = [
+
+            {
+                title: "De mensen",
+                studio: "Studio 5, Studio 7",
+                image: "./images/De mensen (1).png"
+            },
+
+            {
+                title: "Banijay",
+                studio: "Studio 1 & 2",
+                image: "./images/Banijay (1).png"
+            },
+            
+            {
+                title: "VRT",
+                studio: "Studio 4",
+                image: "./images/Vrt (1).png"
+            },
+            
+            {
+                title: "Talpa Network",
+                studio: "Studio 3",
+                image: "./images/Talpe network (1).png"
+            }
+
+        ];
+
+        
+
+        const productionList = document.getElementById('production-list');
+
+        productions.forEach(item => {
+
+            productionList.innerHTML += `
+
+                <div class="production-card">
+
+                    <div class="production-left">
+
+                        <div class="play-btn">
+                            <div class="play-icon"></div>
+                        </div>
+
+                        <div class="production-info">
+                            <h3>${item.title}</h3>
+                            <p>${item.studio}</p>
+                            <p>${item.company}</p>
+                            <div class="time">${item.time}</div>
+                        </div>
+
+                    </div>
+
+                    <img class="production-image" src="${item.image}" alt="${item.title}">
+
+                </div>
+
+            `;
+        });
+
+       
+
+        const companyGrid = document.getElementById('company-grid');
+
+        companies.forEach(item => {
+
+            companyGrid.innerHTML += `
+
+                <div class="company-card">
+
+                    <img class="company-logo" src="${item.image}" alt="${item.title}">
+
+                    <h3>${item.title}</h3>
+
+                    <p>${item.studio}</p>
+
+                </div>
+
+            `;
+        });
+
+        
+
+
+    const eventNavBtn = document.getElementById("eventNavBtn");
+
+    eventNavBtn.addEventListener("click", (e) => {
+
+        e.preventDefault();
+
+        const access = sessionStorage.getItem("eventAccess");
+
+        /* AL INGELOGD */
+
+        if(access === "granted"){
+
+            window.location.href = "event-overview.html";
+
+        }
+
+        
+
+        else{
+
+            window.location.href = "EventCode.html";
+
+        }
+
+    });
+
+</script>
 </body>
