@@ -167,7 +167,7 @@
     );
 }
 
-.hero-content{
+.carousel-content{
     position:absolute;
     left:24px;
     bottom:30px;
@@ -263,7 +263,7 @@
 }
 
 .news-card{
-    min-width:290px;
+    max-width:300px;
 
     background:#333131;
 
