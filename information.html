@@ -98,5 +98,55 @@
     </nav>
 
 </main>
+
+
+<script>
+    // 1. Mock Database
+    const databaseData = {
+        title: "The Orangerie",
+        description: "The Orangerie is a unique 850 m² transparent event space, surrounded by nature and greenery. Flooded with natural light by day and transformed into an atmospheric venue by night, it offers a stylish setting enhanced with elegant chandeliers, subtle sound and lighting.",
+        email: "Sales@aedstudios.com",
+        // Hero image
+        heroImage: "images/image 2 (1).svg", 
+        galleryImages: [
+            "images/orangeriefeest.svg",
+            "images/orangeriemensen.svg",
+            "images/orangerieglazen.svg",
+            "images/orangerieplaats.svg"
+        ]
+    };
+
+    // 2. Functie om de HTML te vullen met de data
+    function buildPage(data) {
+        // Tekst invullen
+        document.getElementById('page-title').textContent = data.title;
+        document.getElementById('studio-title').textContent = data.title;
+        document.getElementById('studio-description').textContent = data.description;
+        
+        // Email invullen
+        const emailLink = document.getElementById('studio-email');
+        emailLink.textContent = data.email;
+        emailLink.href = "mailto:" + data.email;
+
+        // Hero image invullen
+        document.getElementById('hero-image').src = data.heroImage;
+
+        // Gallery opbouwen
+        const galleryContainer = document.getElementById('gallery-container');
+        galleryContainer.innerHTML = ''; 
+
+        data.galleryImages.forEach(imageUrl => {
+            const imgElement = document.createElement('img');
+            imgElement.src = imageUrl;
+            imgElement.alt = "Gallery Afbeelding";
+            galleryContainer.appendChild(imgElement);
+        });
+    }
+
+    // 3. Bouw de pagina op
+    buildPage(databaseData);
+</script>
+
+
 </body>
 </html>
