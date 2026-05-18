@@ -101,20 +101,25 @@
             width:100%;
             overflow:hidden;
             background-color:#1a1919;
+            cursor:grab;
+        }
+
+        .map-container:active{
+            cursor:grabbing;
         }
 
         .map-layer{
             position:absolute;
-            top:50%;
-            left:50%;
             width:2000px;
             height:2000px;
-            transform:translate(-50%, -50%);
-            background-image:radial-gradient(
-                circle at center,
-                #282626 2px,
-                transparent 2px
-            );
+
+            background-image:
+                radial-gradient(
+                    circle at center,
+                    #282626 2px,
+                    transparent 2px
+                );
+
             background-size:40px 40px;
         }
 
@@ -453,6 +458,106 @@
         overlayPopup.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+
+        const mapLayer =
+            document.getElementById('map-layer');
+
+        let scale = 1;
+        let isDragging = false;
+        let startX;
+        let startY;
+        let translateX = -1000;
+        let translateY = -1000;
+
+        function updateTransform(){
+            mapLayer.style.transform =
+                `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+
+        mapContainer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+
+            startX =
+                e.clientX - translateX;
+
+            startY =
+                e.clientY - translateY;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if(!isDragging) return;
+
+            e.preventDefault();
+
+            translateX =
+                e.clientX - startX;
+
+            translateY =
+                e.clientY - startY;
+
+            updateTransform();
+        });
+
+        mapContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+
+            const zoomAmount = 0.1;
+
+            if(e.deltaY < 0){
+                scale += zoomAmount;
+            } else {
+                scale -= zoomAmount;
+            }
+
+            scale =
+                Math.min(
+                    Math.max(0.4, scale),
+                    3
+                );
+
+            updateTransform();
+        });
+
+        mapContainer.addEventListener('touchstart', (e) => {
+            if(e.touches.length === 1){
+                isDragging = true;
+
+                startX =
+                    e.touches[0].clientX -
+                    translateX;
+
+                startY =
+                    e.touches[0].clientY -
+                    translateY;
+            }
+        });
+
+        window.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if(
+                !isDragging ||
+                e.touches.length !== 1
+            ) return;
+
+            translateX =
+                e.touches[0].clientX -
+                startX;
+
+            translateY =
+                e.touches[0].clientY -
+                startY;
+
+            updateTransform();
+        });
+
+        updateTransform();
     </script>
 
 </body>
