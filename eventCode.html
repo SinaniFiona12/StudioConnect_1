@@ -78,6 +78,58 @@
       .lang-btn.active {
         background: var(--accent-color);
       }
+
+      .access-page {
+        padding: 50px 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .access-icon {
+        width: 82px;
+        height: 82px;
+        border-radius: 24px;
+        background: var(--accent-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+
+      .access-page h1 {
+        font-size: 24px;
+        margin-bottom: 16px;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #a0a0a0;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 280px;
+        margin-bottom: 28px;
+      }
+
+      #errorBox {
+        width: 100%;
+      }
+
+      #accessCode {
+        width: 100%;
+        height: 64px;
+        background: #343232;
+        border: 2px solid #4a4747;
+        border-radius: 18px;
+      }
+
+      #submitBtn {
+        width: 100%;
+        height: 64px;
+        border: none;
+        border-radius: 18px;
+      }
     </style>
   </head>
   <body>
@@ -102,5 +154,21 @@
         <button class="lang-btn" id="btn-fr">FR</button>
       </div>
     </header>
+
+    <main class="access-page">
+      <div class="access-icon">
+        <img src="./images/Lock.svg" alt="Lock" />
+      </div>
+
+      <h1 data-translate="accessTitle"></h1>
+
+      <p class="subtitle" data-translate="accessSubtitle"></p>
+
+      <div class="error-box" id="errorBox" data-translate="errorMessage"></div>
+
+      <input type="text" id="accessCode" data-placeholder="accessPlaceholder" />
+
+      <button id="submitBtn" data-translate="submitBtn"></button>
+    </main>
   </body>
 </html>
