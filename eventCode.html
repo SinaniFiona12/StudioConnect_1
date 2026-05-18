@@ -112,8 +112,16 @@
         margin-bottom: 28px;
       }
 
-      #errorBox {
+      .error-box {
         width: 100%;
+        border: 2px solid var(--accent-color);
+        border-radius: 18px;
+        padding: 18px;
+        color: #b8afaf;
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        display: none;
       }
 
       #accessCode {
@@ -122,6 +130,13 @@
         background: #343232;
         border: 2px solid #4a4747;
         border-radius: 18px;
+        outline: none;
+        padding: 0 22px;
+        color: white;
+        font-size: 18px;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+        font-family: var(--font-main);
       }
 
       #submitBtn {
@@ -129,6 +144,55 @@
         height: 64px;
         border: none;
         border-radius: 18px;
+        background: #4a4747;
+        color: #7e7a7a;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: var(--font-main);
+      }
+
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #2f2d2d;
+        padding: 18px 10px;
+        display: flex;
+        justify-content: space-around;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        border-top: 1px solid #4a4a4a;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #8e8e8e;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .nav-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        background: #3a3939;
+        border: 1px solid #5c5c5c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+      }
+
+      .nav-item.active .nav-icon {
+        background: var(--accent-color);
+        color: white;
+        border: none;
       }
     </style>
   </head>
@@ -170,5 +234,39 @@
 
       <button id="submitBtn" data-translate="submitBtn"></button>
     </main>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <div class="nav-icon">
+          <img src="./images/HomeIcon.svg" alt="Home" />
+        </div>
+
+        <span data-translate="navHome"></span>
+      </a>
+
+      <a href="map.html" class="nav-item">
+        <div class="nav-icon">
+          <img src="./images/MapIcontrans.svg" alt="Map" />
+        </div>
+
+        <span data-translate="navMap"></span>
+      </a>
+
+      <a href="overview.html" class="nav-item">
+        <div class="nav-icon">
+          <img src="./images/StudioIcontrans.svg" alt="Studio's" />
+        </div>
+
+        <span data-translate="navStudios"></span>
+      </a>
+
+      <a href="EventCode.html" class="nav-item active">
+        <div class="nav-icon">
+          <img src="./images/EventIconfull.svg" alt="Event" />
+        </div>
+
+        <span data-translate="navEvent"></span>
+      </a>
+    </nav>
   </body>
 </html>
