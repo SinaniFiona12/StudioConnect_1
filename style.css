@@ -464,9 +464,131 @@
 
       #submitBtn.error {
         background: var(--accent-color);
-        color: white;
-
-
-
-        
+        color: white;  
       }
+
+    /* ========================================= */
+/* OVERVIEW PAGINA                           */
+/* ========================================= */
+
+/* Pagina Content Wrapper */
+.page-content {
+    padding: 25px 20px;
+}
+
+/* Titel Sectie */
+.page-title-area {
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* Zoekbalk */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.search-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    opacity: 0.6;
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Lijst met Studios */
+.studios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Individueel Studio Kaartje */
+.studio-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none; 
+    color: inherit;
+}
+
+.studio-card:active {
+    background-color: #444;
+}
+
+/* Het blokje met het rode icoon erin */
+.studio-icon-box {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(254, 13, 0, 0.05); 
+    border: 1px solid rgba(254, 13, 0, 0.2); 
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.studio-icon-box img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+/* Tekst in het kaartje */
+.studio-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.studio-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.studio-type {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Rode pijltje naar rechts */
+.arrow-right {
+    width: 32px; 
+    height: auto;
+    margin-left: 15px;
+    opacity: 1; 
+}
