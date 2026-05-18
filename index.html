@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -30,8 +30,6 @@
             padding-bottom:120px;
         }
 
-        /* HEADER */
-
         .main-header{
             display:flex;
             justify-content:space-between;
@@ -47,16 +45,11 @@
         }
 
         .logo-placeholder{
-            
-            color:white;
             width:60px;
             height:45px;
             display:flex;
             justify-content:center;
             align-items:center;
-            font-weight:bold;
-            font-size:24px;
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
         }
 
         .logo-text{
@@ -93,8 +86,6 @@
             background:var(--accent-color);
         }
 
-        /* MAIN CONTENT */
-
         main{
             padding:20px;
         }
@@ -104,8 +95,6 @@
             margin-bottom:20px;
             font-weight:700;
         }
-
-        /* PRODUCTIE CARDS */
 
         .production-list{
             display:flex;
@@ -177,8 +166,6 @@
             box-shadow:0 10px 25px rgba(0,0,0,0.25);
         }
 
-        /* BEDRIJVEN */
-
         .company-grid{
             display:grid;
             grid-template-columns:1fr 1fr;
@@ -212,31 +199,27 @@
             font-size:14px;
         }
 
-        /* BOTTOM NAV */
-
         .bottom-nav{
             position:fixed;
-            bottom:0px;
-            left:0px;
-            right:0px;
+            bottom:0;
+            left:0;
+            right:0;
             background:#2f2d2d;
             padding:18px 10px;
             display:flex;
             justify-content:space-around;
-            box-shadow:0 15px 35px rgba(0,0,0,0.4);
             border-top:1px solid #4a4a4a;
         }
 
-      .nav-item{
-    text-decoration:none;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:8px;
-    color:#8e8e8e;
-    font-size:13px;
-    cursor:pointer;
-}
+        .nav-item{
+            text-decoration:none;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            color:#8e8e8e;
+            font-size:13px;
+        }
 
         .nav-icon{
             width:56px;
@@ -247,20 +230,14 @@
             display:flex;
             justify-content:center;
             align-items:center;
-            font-size:22px;
         }
-
-      
 
         .nav-item.active .nav-icon{
             background:var(--accent-color);
-            color:white;
             border:none;
-            
         }
 
     </style>
-   
 </head>
 <body>
 
@@ -369,4 +346,306 @@
     </a>
 
 </nav>
+
+<script>
+
+    const translations = {
+
+        en: {
+
+            activeProductions:
+                "Active Productions",
+
+            companiesOnSite:
+                "Companies On Site",
+
+            navHome:
+                "Home",
+
+            navMap:
+                "Map",
+
+            navStudios:
+                "Studios",
+
+            navEvent:
+                "Event"
+
+        },
+
+        nl: {
+
+            activeProductions:
+                "Actieve Producties",
+
+            companiesOnSite:
+                "Bedrijven Op Locatie",
+
+            navHome:
+                "Home",
+
+            navMap:
+                "Kaart",
+
+            navStudios:
+                "Studio's",
+
+            navEvent:
+                "Event"
+
+        },
+
+        fr: {
+
+            activeProductions:
+                "Productions Actives",
+
+            companiesOnSite:
+                "Entreprises Sur Site",
+
+            navHome:
+                "Accueil",
+
+            navMap:
+                "Carte",
+
+            navStudios:
+                "Studios",
+
+            navEvent:
+                "Événement"
+
+        }
+
+    };
+
+    function setLanguage(language){
+
+        localStorage.setItem(
+            "language",
+            language
+        );
+
+        document
+        .querySelectorAll(".lang-btn")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+        document
+        .getElementById(`btn-${language}`)
+        .classList.add("active");
+
+        document
+        .querySelectorAll("[data-translate]")
+        .forEach(element => {
+
+            const key =
+                element.dataset.translate;
+
+            element.textContent =
+                translations[language][key];
+
+        });
+
+    }
+
+    document
+    .getElementById("btn-nl")
+    .addEventListener("click", () => {
+
+        setLanguage("nl");
+
+    });
+
+    document
+    .getElementById("btn-en")
+    .addEventListener("click", () => {
+
+        setLanguage("en");
+
+    });
+
+    document
+    .getElementById("btn-fr")
+    .addEventListener("click", () => {
+
+        setLanguage("fr");
+
+    });
+
+    const savedLanguage =
+
+        localStorage.getItem("language")
+
+        || "en";
+
+    setLanguage(savedLanguage);
+
+    const productions = [
+
+        {
+            title: "Famille",
+            studio: "Studio 1",
+            company: "Banijay",
+            time: "08:00 - 18:00",
+            image: "./images/Familie.svg"
+        },
+
+        {
+            title: "The Voice",
+            studio: "Studio 3",
+            company: "Talpa Network",
+            time: "10:00 - 22:00",
+            image: "./images/Voice.svg"
+        },
+
+        {
+            title: "Quiz with Balls",
+            studio: "Studio 5",
+            company: "Endemol Shine",
+            time: "14:00 - 20:00",
+            image: "./images/quiz.svg"
+        }
+
+    ];
+
+    const companies = [
+
+        {
+            title: "De mensen",
+            studio: "Studio 5, Studio 7",
+            image: "./images/De mensen.svg"
+        },
+
+        {
+            title: "Banijay",
+            studio: "Studio 1 & 2",
+            image: "./images/Banijay.svg"
+        },
+
+        {
+            title: "VRT",
+            studio: "Studio 4",
+            image: "./images/Vrt.svg"
+        },
+
+        {
+            title: "Talpa Network",
+            studio: "Studio 3",
+            image: "./images/Talpe network.svg"
+        }
+
+    ];
+
+    const productionList =
+        document.getElementById(
+            'production-list'
+        );
+
+    productions.forEach(item => {
+
+        productionList.innerHTML += `
+
+            <div class="production-card">
+
+                <div class="production-left">
+
+                    <div class="play-btn">
+
+                        <div class="play-icon"></div>
+
+                    </div>
+
+                    <div class="production-info">
+
+                        <h3>${item.title}</h3>
+
+                        <p>${item.studio}</p>
+
+                        <p>${item.company}</p>
+
+                        <div class="time">
+                            ${item.time}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <img
+                    class="production-image"
+                    src="${item.image}"
+                >
+
+            </div>
+
+        `;
+
+    });
+
+    const companyGrid =
+        document.getElementById(
+            'company-grid'
+        );
+
+    companies.forEach(item => {
+
+        companyGrid.innerHTML += `
+
+            <div class="company-card">
+
+                <img
+                    class="company-logo"
+                    src="${item.image}"
+                >
+
+                <h3>${item.title}</h3>
+
+                <p>${item.studio}</p>
+
+            </div>
+
+        `;
+
+    });
+
+    const eventNavBtn =
+        document.getElementById(
+            "eventNavBtn"
+        );
+
+    eventNavBtn.addEventListener(
+        "click",
+        (e) => {
+
+            e.preventDefault();
+
+            const access =
+                sessionStorage.getItem(
+                    "eventAccess"
+                );
+
+            if(access === "granted"){
+
+                window.location.href =
+                    "event-overview.html";
+
+            }
+
+            else{
+
+                window.location.href =
+                    "EventCode.html";
+
+            }
+
+        }
+    );
+
+</script>
+
 </body>
+</html>
