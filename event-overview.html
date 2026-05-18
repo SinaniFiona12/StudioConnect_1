@@ -124,6 +124,129 @@
       if (access !== "granted") {
         window.location.href = "EventCode.html";
       }
+
+      const translations = {
+        en: {
+          heroTitle: "2026 Networking Events",
+
+          heroSubtitle: "Connect with creatives across all AED Studios",
+
+          infoText:
+            "Every quarter we're hosting an exclusive networking event bringing together professionals from all studios. A unique opportunity to make new connections, share knowledge, and collaborate on future projects.",
+
+          expectTitle: "What to Expect",
+
+          expect1:
+            "Networking opportunities with producers, developers, designers and more",
+
+          expect2:
+            "Knowledge sharing about new technologies and creative processes",
+
+          expect3: "Opportunities for future collaboration and projects",
+
+          buttonText: "VIEW AVAILABLE DATES",
+
+          navHome: "Home",
+
+          navMap: "Map",
+
+          navStudios: "Studios",
+
+          navEvent: "Event",
+        },
+
+        nl: {
+          heroTitle: "2026 Networking Events",
+
+          heroSubtitle:
+            "Connecteer met creatives verspreid over alle AED Studios",
+
+          infoText:
+            "Elk kwartaal organiseren we een exclusief networking event dat professionals uit alle studio’s samenbrengt. Een unieke kans om nieuwe connecties te maken, kennis te delen en samen te werken aan toekomstige projecten.",
+
+          expectTitle: "Wat Kan Je Verwachten",
+
+          expect1:
+            "Netwerkmogelijkheden met producers, developers, designers en meer",
+
+          expect2:
+            "Kennisdeling over nieuwe technologieën en creatieve processen",
+
+          expect3: "Kansen voor toekomstige samenwerkingen en projecten",
+
+          buttonText: "BEKIJK BESCHIKBARE DATA",
+
+          navHome: "Home",
+
+          navMap: "Kaart",
+
+          navStudios: "Studio's",
+
+          navEvent: "Event",
+        },
+
+        fr: {
+          heroTitle: "Événements Networking 2026",
+
+          heroSubtitle:
+            "Connectez-vous avec les créatifs de tous les AED Studios",
+
+          infoText:
+            "Chaque trimestre, nous organisons un événement de networking exclusif réunissant des professionnels de tous les studios. Une opportunité unique de créer de nouvelles connexions, partager des connaissances et collaborer sur de futurs projets.",
+
+          expectTitle: "À Quoi S'attendre",
+
+          expect1:
+            "Opportunités de networking avec des producteurs, développeurs, designers et plus encore",
+
+          expect2:
+            "Partage de connaissances sur les nouvelles technologies et les processus créatifs",
+
+          expect3: "Opportunités de collaborations et projets futurs",
+
+          buttonText: "VOIR LES DATES DISPONIBLES",
+
+          navHome: "Accueil",
+
+          navMap: "Carte",
+
+          navStudios: "Studios",
+
+          navEvent: "Événement",
+        },
+      };
+
+      function setLanguage(language) {
+        localStorage.setItem("language", language);
+
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        document.getElementById(`btn-${language}`).classList.add("active");
+
+        document.querySelectorAll("[data-translate]").forEach((element) => {
+          const key = element.dataset.translate;
+
+          element.textContent = translations[language][key];
+        });
+      }
+
+      document.getElementById("btn-nl").addEventListener("click", () => {
+        setLanguage("nl");
+      });
+
+      document.getElementById("btn-en").addEventListener("click", () => {
+        setLanguage("en");
+      });
+
+      document.getElementById("btn-fr").addEventListener("click", () => {
+        setLanguage("fr");
+      });
+
+      const savedLanguage = localStorage.getItem("language") || "en";
+
+      setLanguage(savedLanguage);
     </script>
   </body>
 </html>
