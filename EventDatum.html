@@ -370,11 +370,6 @@ cards.forEach(card => {
                 "active"
             );
 
-            localStorage.setItem(
-                "selectedEventDate",
-                selectedDate
-            );
-
         }
     );
 
@@ -389,65 +384,79 @@ cards.forEach(card => {
             "continueBtn"
         );
 
-    function setLanguage(language) {
+        function setLanguage(language) {
 
-        localStorage.setItem(
-            "language",
-            language
-        );
+            localStorage.setItem(
+                "language",
+                language
+            );
 
-        document
-            .querySelectorAll(".lang-btn")
-            .forEach(btn => {
+            document
+                .querySelectorAll(".lang-btn")
+                .forEach(btn => {
 
-                btn.classList.remove(
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                });
+
+            document
+                .getElementById(
+                    `btn-${language}`
+                )
+                .classList.add(
                     "active"
                 );
 
-            });
+            document
+                .querySelectorAll(
+                    "[data-translate]"
+                )
+                .forEach(element => {
 
-        document
-            .getElementById(
-                `btn-${language}`
-            )
-            .classList.add(
-                "active"
+                    const key =
+                        element.dataset.translate;
+
+                    element.textContent =
+                        translations[language][key];
+
+                });
+
+            buildCards(language);
+
+            }
+
+            continueBtn.addEventListener(
+                "click",
+                () => {
+
+                    if(!selectedDate) return;
+
+                    const selectedEvent =
+                        eventDates.find(
+                            event =>
+                                event.id ==
+                                selectedDate
+                        );
+
+                    localStorage.setItem(
+                        "selectedEventDate",
+                        selectedDate
+                    );
+
+                    localStorage.setItem(
+                        "selectedEvent",
+                        JSON.stringify(
+                            selectedEvent
+                        )
+                    );
+
+                    window.location.href =
+                        "Eventregistration.html";
+
+                }
             );
-
-        document
-            .querySelectorAll(
-                "[data-translate]"
-            )
-            .forEach(element => {
-
-                const key =
-                    element.dataset.translate;
-
-                element.textContent =
-                    translations[language][key];
-
-            });
-
-        buildCards(language);
-
-    }
-
-    continueBtn.addEventListener(
-        "click",
-        () => {
-
-            if(!selectedDate) return;
-
-            localStorage.setItem(
-                "selectedEventDate",
-                selectedDate
-            );
-
-            window.location.href =
-                "Eventregistration.html";
-
-        }
-    );
 
     document
         .getElementById("btn-nl")
