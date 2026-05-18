@@ -210,6 +210,7 @@ const productions = [
 ];
 
 /* HERO GENERATION */
+/* HERO GENERATION */
 
 const heroSlider =
     document.getElementById(
@@ -221,11 +222,24 @@ const heroDots =
         "heroDots"
     );
 
+/* TRACK AANMAKEN */
+
+const heroTrack =
+    document.createElement("div");
+
+heroTrack.classList.add(
+    "hero-track"
+);
+
+heroSlider.appendChild(heroTrack);
+
+/* SLIDES GENEREREN */
+
 heroSlides.forEach((slide, index) => {
 
-    heroSlider.innerHTML += `
+    heroTrack.innerHTML += `
 
-        <div class="hero-slide ${index === 0 ? "active" : ""}">
+        <div class="hero-slide">
 
             <img 
                 src="${slide.image}"
@@ -344,10 +358,11 @@ productions.forEach(item => {
 });
 
 /* HERO CAROUSEL */
+/* HERO CAROUSEL */
 
-const slides =
-    document.querySelectorAll(
-        ".hero-slide"
+const track =
+    document.querySelector(
+        ".hero-track"
     );
 
 const dots =
@@ -357,35 +372,91 @@ const dots =
 
 let currentSlide = 0;
 
-function showSlide(index){
+function updateCarousel(){
 
-    slides.forEach(slide =>
-        slide.classList.remove("active")
-    );
+    track.style.transform =
+        `translateX(-${currentSlide * 100}%)`;
 
     dots.forEach(dot =>
         dot.classList.remove("active")
     );
 
-    slides[index].classList.add("active");
-
-    dots[index].classList.add("active");
+    dots[currentSlide].classList.add(
+        "active"
+    );
 
 }
+
+/* AUTO SLIDE */
 
 setInterval(() => {
 
     currentSlide++;
 
-    if(currentSlide >= slides.length){
+    if(currentSlide >= heroSlides.length){
 
         currentSlide = 0;
 
     }
 
-    showSlide(currentSlide);
+    updateCarousel();
 
 }, 4000);
+
+/* SWIPE SUPPORT */
+
+let startX = 0;
+
+track.addEventListener(
+    "touchstart",
+    e => {
+
+        startX =
+            e.touches[0].clientX;
+
+    }
+);
+
+track.addEventListener(
+    "touchend",
+    e => {
+
+        const endX =
+            e.changedTouches[0].clientX;
+
+        const diff =
+            startX - endX;
+
+        if(diff > 50){
+
+            currentSlide++;
+
+            if(currentSlide >= heroSlides.length){
+
+                currentSlide = 0;
+
+            }
+
+        }
+
+        else if(diff < -50){
+
+            currentSlide--;
+
+            if(currentSlide < 0){
+
+                currentSlide =
+                    heroSlides.length - 1;
+
+            }
+
+        }
+
+        updateCarousel();
+
+    }
+);
+
 </script>
 
 </body>
