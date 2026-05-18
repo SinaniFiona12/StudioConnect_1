@@ -258,7 +258,16 @@
 
             datesList.innerHTML += `
 
-                <div class="date-card" data-id="${event.id}">
+                <div
+                    class="date-card
+                    ${
+                        selectedDate ==
+                        event.id
+                        ? "active"
+                        : ""
+                    }"
+                    data-id="${event.id}"
+                >
 
                     <div class="date-row">
 
@@ -359,6 +368,11 @@ cards.forEach(card => {
 
             continueBtn.classList.add(
                 "active"
+            );
+
+            localStorage.setItem(
+                "selectedEventDate",
+                selectedDate
             );
 
         }
@@ -472,6 +486,19 @@ cards.forEach(card => {
         localStorage.getItem(
             "language"
         ) || "en";
+
+        selectedDate =
+            localStorage.getItem(
+                "selectedEventDate"
+            );
+
+        if(selectedDate){
+
+            continueBtn.classList.add(
+                "active"
+            );
+
+        }
 
     setLanguage(savedLanguage);
 
