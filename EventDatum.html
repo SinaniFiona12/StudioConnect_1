@@ -137,5 +137,146 @@
 
 </main>
 
+<script>
+
+    const translations = {
+
+        en: {
+
+            goBack:
+                "Go back",
+
+            chooseDate:
+                "Choose a Date",
+
+            chooseSubtitle:
+                "Select the event that works best for you",
+
+            continueBtn:
+                "CONTINUE TO REGISTRATION"
+
+        },
+
+        nl: {
+
+            goBack:
+                "Ga terug",
+
+            chooseDate:
+                "Kies een Datum",
+
+            chooseSubtitle:
+                "Selecteer het event dat het beste bij je past",
+
+            continueBtn:
+                "GA VERDER NAAR REGISTRATIE"
+
+        },
+
+        fr: {
+
+            goBack:
+                "Retour",
+
+            chooseDate:
+                "Choisissez une Date",
+
+            chooseSubtitle:
+                "Sélectionnez l'événement qui vous convient le mieux",
+
+            continueBtn:
+                "CONTINUER VERS L'INSCRIPTION"
+
+        }
+
+    };
+
+    function setLanguage(language){
+
+        localStorage.setItem(
+            "language",
+            language
+        );
+
+        document
+        .querySelectorAll(".lang-btn")
+        .forEach(btn => {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+        document
+        .getElementById(
+            `btn-${language}`
+        )
+        .classList.add(
+            "active"
+        );
+
+        document
+        .querySelectorAll(
+            "[data-translate]"
+        )
+        .forEach(element => {
+
+            const key =
+                element.dataset.translate;
+
+            element.textContent =
+                translations[
+                    language
+                ][key];
+
+        });
+
+    }
+
+    document
+    .getElementById("btn-nl")
+    .addEventListener(
+        "click",
+        () => {
+
+            setLanguage("nl");
+
+        }
+    );
+
+    document
+    .getElementById("btn-en")
+    .addEventListener(
+        "click",
+        () => {
+
+            setLanguage("en");
+
+        }
+    );
+
+    document
+    .getElementById("btn-fr")
+    .addEventListener(
+        "click",
+        () => {
+
+            setLanguage("fr");
+
+        }
+    );
+
+    const savedLanguage =
+
+        localStorage.getItem(
+            "language"
+        )
+
+        || "en";
+
+    setLanguage(savedLanguage);
+
+</script>
 </body>
 </html>
