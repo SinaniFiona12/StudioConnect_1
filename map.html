@@ -6,96 +6,10 @@
     <title>AED Studios - Map</title>
  
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
 
     <style>
-        :root {
-            --bg-color: #282626;
-            --text-color: #FDFDFD;
-            --accent-color: #FE0D00;
-            --card-bg: #333131;
-            --font-main: 'Rubik', sans-serif;
-            --text-muted: #888888;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            overflow: hidden; 
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* HEADER */
-
-        .main-header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px;
-            border-bottom:1px solid #fe0d005a;
-        }
-
-        .logo-area{
-            display:flex;
-            align-items:center;
-            gap:12px;
-        }
-
-        .logo-placeholder{
-            
-            color:white;
-            width:60px;
-            height:45px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-weight:bold;
-            font-size:24px;
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-        }
-
-        .logo-text{
-            display:flex;
-            flex-direction:column;
-        }
-
-        .logo-text strong{
-            font-size:16px;
-        }
-
-        .logo-text span{
-            color:#888;
-            font-size:12px;
-        }
-
-        .language-toggles{
-            display:flex;
-            gap:8px;
-        }
-
-        .lang-btn{
-            background:#444;
-            color:white;
-            border:none;
-            padding:8px 14px;
-            border-radius:8px;
-            font-family:var(--font-main);
-            font-weight:bold;
-            cursor:pointer;
-        }
-
-        .lang-btn.active{
-            background:var(--accent-color);
-        }
-
         /* MAP AREA */
         .map-container {
             position: relative;

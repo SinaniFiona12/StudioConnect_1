@@ -19,8 +19,11 @@
             color: var(--text-color);
             font-family: var(--font-main);
             padding-bottom:120px;
+            overflow: hidden; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
 
 
            /*navigatie*/
