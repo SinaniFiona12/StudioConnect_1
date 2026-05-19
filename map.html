@@ -54,20 +54,46 @@
         /* PINS OP DE MAP */
         .map-pin {
             position: absolute;
+
+            width: 52px;
+            height: 52px;
+
             background-color: var(--accent-color);
-            color: white;
-            width: 60px; 
-            height: 60px; 
-            border-radius: 15px; 
+
+            border-radius: 50% 50% 50% 0;
+
+            transform: rotate(-45deg);
+
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
-            font-weight: bold;
+
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+
             cursor: pointer;
+
             transition: transform 0.2s;
         }
+
+        /* inhoud terug recht zetten */
+        .map-pin img,
+        .map-pin {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .map-pin img,
+        .map-pin span {
+            transform: rotate(45deg);
+        }
+
+        .map-pin img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
 
         .map-pin:hover {
             transform: scale(1.1);
@@ -80,7 +106,7 @@
         }
 
         /* Pin Posities */
-        #pin-orangerie { top: 40%; left: 45%; }
+        #pin-orangerie { top: 21%; left: 7%; }
         #pin-2 { top: 55%; left: 60%; }
         #pin-12 { top: 65%; left: 40%; }
 
@@ -312,8 +338,38 @@
         }
 
         #pin-studio-1 {
-            top: 40%;
-            left: 31%;
+            top: 46%;
+            left: 17%;
+        }
+
+        #pin-studio-2 {
+            top: 52%;
+            left: 17%;
+        }
+
+        #pin-studio-3 {
+            top: 46%;
+            left: 5%;
+        }
+
+        #pin-studio-4 {
+            top: 53%;
+            left: 4%;
+        }
+
+        #pin-studio-5 {
+            top: 53%;
+            left: 8%;
+        }
+
+        #pin-studio-6 {
+            top: 31%;
+            left: 9%;
+        }
+
+        #pin-studio-7 {
+            top: 32%;
+            left: 43%;
         }
     </style>
 
@@ -349,15 +405,38 @@
         </div>
     
         <div class="map-pin" id="pin-studio-1">
-            1
+            <span>1</span>
         </div>
+        
     
-        <div class="map-pin" id="pin-2">
-            2
+        <div class="map-pin" id="pin-studio-2">
+            <span>2</span>
         </div>
+
+        <div class="map-pin" id="pin-studio-3">
+            <span>3</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-4">
+            <span>4</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-5">
+            <span>5</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-6">
+            <span>6</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-7">
+            <span>7</span>
+        </div>
+
+        
     
         <div class="map-pin" id="pin-12">
-            12
+            <span>12</span>
         </div>
     
     </div>
@@ -500,17 +579,24 @@
     eventNavBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const access = sessionStorage.getItem("eventAccess");
+        const access = localStorage.getItem("eventAccess");
 
         if(access === "granted"){
             window.location.href = "event-overview.html";
         } else {
-            window.location.href = "EventCode.html";
+            window.location.href = "eventCode.html";
         }
     });
 
     const pinOrangerie = document.getElementById("pin-orangerie");
     const pinStudio1 = document.getElementById("pin-studio-1");
+    const pinStudio2 = document.getElementById("pin-studio-2");
+    const pinStudio3 = document.getElementById("pin-studio-3");
+    const pinStudio4 = document.getElementById("pin-studio-4");
+    const pinStudio5 = document.getElementById("pin-studio-5");
+    const pinStudio6 = document.getElementById("pin-studio-6");
+    const pinStudio7 = document.getElementById("pin-studio-7");
+
 
     const overlayPopup = document.getElementById("overlay-popup");
     const overlayTitle = document.getElementById("overlay-title");
@@ -521,13 +607,31 @@
             ".overlay-image-area"
         );
 
-    const locationImages = {
-        orangerie:
-            "images/image 2 (1).svg",
+        const locationImages = {
+            orangerie:
+                "images/image 2 (1).svg",
 
-        studio1:
-            "images/studio1.png"
-    };
+            studio1:
+                "images/studio1.png",
+
+            studio2:
+                "images/studio2.png",
+
+            studio3:
+                "images/studio3.png",
+
+            studio4:
+                "images/studio4.png",
+                            
+            studio5:
+                "images/studio5.png",
+
+            studio6:
+                "images/studio6.png",
+
+            studio7:
+                "images/studio7.png",
+        };
 
     const mapContainer = document.getElementById("map-container");
 
@@ -566,19 +670,103 @@
         }
     );
 
-    pinStudio1.addEventListener(
-        "click",
-        (e) => {
+pinStudio1.addEventListener(
+    "click",
+    (e) => {
 
-            e.stopPropagation();
+        e.stopPropagation();
 
-            openLocationPopup(
-                "Studio 1",
-                "information.html",
-                "studio1"
-            );
-        }
-    );
+        openLocationPopup(
+            "Studio 1",
+            "studio1.html",
+            "studio1"
+        );
+    }
+);
+
+pinStudio2.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 2",
+            "studio2.html",
+            "studio2"
+        );
+    }
+);
+
+pinStudio3.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 3",
+            "studio3.html",
+            "studio3"
+        );
+    }
+);
+
+pinStudio4.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 4",
+            "studio4.html",
+            "studio4"
+        );
+    }
+);
+
+pinStudio5.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 5",
+            "studio5.html",
+            "studio5"
+        );
+    }
+);
+
+pinStudio6.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 6",
+            "studio6.html",
+            "studio6"
+        );
+    }
+);
+
+pinStudio7.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 7",
+            "studio7.html",
+            "studio7"
+        );
+    }
+);
 
     mapContainer.addEventListener("click", () => {
         overlayPopup.classList.remove("active");
