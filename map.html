@@ -1156,6 +1156,28 @@ pinCinema.addEventListener(
         updateTransform();
     }
 }, { passive: false });
+
+const arrowLeft =
+    document.getElementById("arrow-left");
+
+const arrowRight =
+    document.getElementById("arrow-right");
+
+arrowLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    translateX += 250;
+
+    updateTransform();
+});
+
+arrowRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    translateX -= 250;
+
+    updateTransform();
+});
     
 
     updateTransform();
