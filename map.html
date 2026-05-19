@@ -55,8 +55,8 @@
         .map-pin {
             position: absolute;
 
-            width: 52px;
-            height: 52px;
+            width: 42px;
+            height: 42px;
 
             background-color: var(--accent-color);
 
@@ -94,10 +94,6 @@
             object-fit: contain;
         }
 
-
-        .map-pin:hover {
-            transform: scale(1.1);
-        }
 
         .map-pin img {
             width: 44px; 
@@ -371,6 +367,57 @@
             top: 32%;
             left: 43%;
         }
+
+        #pin-studio-8 {
+            top: 29%;
+            left: 30%;
+        }
+
+        #pin-studio-9 {
+            top: 32%;
+            left: 61%;
+        }
+        #pin-studio-10a {
+            top: 33%;
+            left: 30%;
+        }
+
+        #pin-studio-10b {
+            top: 34%;
+            left: 35%;
+        }
+
+        #pin-studio-11 {
+            top: 59%;
+            left: 7%;
+        }
+
+        #pin-studio-12 {
+            top: 57%;
+            left: 52%;
+        }
+
+        #pin-studio-14 {
+            top: 59%;
+            left: 21%;
+        }
+
+        #pin-studio-16 {
+            top: 45%;
+            left: 46%;
+        }
+
+        #pin-studio-cinema {
+            top: 25%;
+            left: 43%;
+        }
+
+        #cinema-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+
     </style>
 
 </head>
@@ -433,10 +480,40 @@
             <span>7</span>
         </div>
 
+        <div class="map-pin" id="pin-studio-8">
+            <span>8</span>
+        </div>
         
-    
-        <div class="map-pin" id="pin-12">
+        <div class="map-pin" id="pin-studio-9">
+            <span>9</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-10a">
+            <span>10a</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-10b">
+            <span>10b</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-11">
+            <span>11</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-12">
             <span>12</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-14">
+            <span>14</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-16">
+            <span>16</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-cinema">
+            <img id="cinema-icon" src="images/cinema_Icon.png" alt="Cinema">
         </div>
     
     </div>
@@ -596,6 +673,15 @@
     const pinStudio5 = document.getElementById("pin-studio-5");
     const pinStudio6 = document.getElementById("pin-studio-6");
     const pinStudio7 = document.getElementById("pin-studio-7");
+    const pinStudio8 = document.getElementById("pin-studio-8");
+    const pinStudio9 = document.getElementById("pin-studio-9");
+    const pinStudio10a = document.getElementById("pin-studio-10a");
+    const pinStudio10b = document.getElementById("pin-studio-10b");
+    const pinStudio11 = document.getElementById("pin-studio-11");
+    const pinStudio12 = document.getElementById("pin-studio-12");
+    const pinStudio14 = document.getElementById("pin-studio-14");
+    const pinStudio16 = document.getElementById("pin-studio-16");
+    const pinCinema = document.getElementById("pin-studio-cinema");
 
 
     const overlayPopup = document.getElementById("overlay-popup");
@@ -631,6 +717,33 @@
 
             studio7:
                 "images/studio7.png",
+
+            studio8:
+                "images/studio8.png",
+
+            studio9:
+                "images/studio9.png",
+
+            studio10a:
+                "images/studio10a.png",
+
+            studio10b:
+                "images/studio10b.png",
+
+            studio11:
+                "images/studio11.png",
+
+            studio12:
+                "images/studio12.png",
+
+            studio14:
+                "images/studio14.png",
+
+            studio16:
+                "images/studio16.png",
+                
+            cinema:
+                "images/cinema.png",
         };
 
     const mapContainer = document.getElementById("map-container");
@@ -767,6 +880,132 @@ pinStudio7.addEventListener(
         );
     }
 );
+
+pinStudio8.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 8",
+            "studio8.html",
+            "studio8"
+        );
+    }
+);
+
+pinStudio9.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 9",
+            "studio9.html",
+            "studio9"
+        );
+    }
+);
+
+pinStudio10a.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 10a",
+            "studio10a.html",
+            "studio10a"
+        );
+    }
+);
+
+pinStudio10b.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 10b",
+            "studio10b.html",
+            "studio10b"
+        );
+    }
+);
+
+pinStudio11.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 11",
+            "studio11.html",
+            "studio11"
+        );
+    }
+);
+
+pinStudio12.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 12",
+            "studio12.html",
+            "studio12"
+        );
+    }
+);
+
+pinStudio14.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 14",
+            "studio14.html",
+            "studio14"
+        );
+    }
+);
+
+pinStudio16.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 16",
+            "studio16.html",
+            "studio16"
+        );
+    }
+);
+
+pinCinema.addEventListener(
+        "click",
+        (e) => {
+
+            e.stopPropagation();
+
+            openLocationPopup(
+                "AED Cinema",
+                "cinema.html",
+                "cinema"
+            );
+        }
+    );
 
     mapContainer.addEventListener("click", () => {
         overlayPopup.classList.remove("active");
