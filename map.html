@@ -1101,7 +1101,7 @@ pinCinema.addEventListener(
             scale -= zoomAmount;
         }
 
-        scale = Math.min(Math.max(0.4, scale), 3);
+        scale = Math.min(Math.max(0.8, scale), 2.5);
 
         updateTransform();
     });
@@ -1156,6 +1156,28 @@ pinCinema.addEventListener(
         updateTransform();
     }
 }, { passive: false });
+
+const arrowLeft =
+    document.getElementById("arrow-left");
+
+const arrowRight =
+    document.getElementById("arrow-right");
+
+arrowLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    translateX += 250;
+
+    updateTransform();
+});
+
+arrowRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    translateX -= 250;
+
+    updateTransform();
+});
     
 
     updateTransform();
