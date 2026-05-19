@@ -80,7 +80,7 @@
         }
 
         /* Pin Posities */
-        #pin-orangerie { top: 40%; left: 45%; }
+        #pin-orangerie { top: 21%; left: 7%; }
         #pin-2 { top: 55%; left: 60%; }
         #pin-12 { top: 65%; left: 40%; }
 
@@ -566,19 +566,19 @@
         }
     );
 
-    pinStudio1.addEventListener(
-        "click",
-        (e) => {
+pinStudio1.addEventListener(
+    "click",
+    (e) => {
 
-            e.stopPropagation();
+        e.stopPropagation();
 
-            openLocationPopup(
-                "Studio 1",
-                "information.html",
-                "studio1"
-            );
-        }
-    );
+        openLocationPopup(
+            "Studio 1",
+            "studio1.html",
+            "studio1"
+        );
+    }
+);
 
     mapContainer.addEventListener("click", () => {
         overlayPopup.classList.remove("active");
