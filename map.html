@@ -588,7 +588,9 @@
     </a>
 </nav>
 
-<script>
+<script type="module">
+import { supabase } from "./src/supabase.js";
+
     const translations = {
         en: {
             yourLocation: "Your location",
@@ -697,58 +699,56 @@
             ".overlay-image-area"
         );
 
-        const locationImages = {
-            orangerie:
-                "images/image 2 (1).svg",
+        let locationImages = {
+    orangerie: "images/image 2 (1).svg",
 
-            studio1:
-                "images/studio1.png",
+    studio1: "images/studio1.png",
+    studio2: "images/studio2.png",
+    studio3: "images/studio3.png",
+    studio4: "images/studio4.png",
+    studio5: "images/studio5.png",
+    studio6: "images/studio6.png",
+    studio7: "images/studio7.png",
+    studio8: "images/studio8.png",
+    studio9: "images/studio9.png",
+    studio10a: "images/studio10a.png",
+    studio10b: "images/studio10b.png",
+    studio11: "images/studio11.png",
+    studio12: "images/studio12.png",
+    studio14: "images/studio14.png",
+    studio16: "images/studio16.png",
 
-            studio2:
-                "images/studio2.png",
+    cinema: "images/cinema.png",
+};
 
-            studio3:
-                "images/studio3.png",
+function makeImageKey(title) {
+    return title
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/-/g, "");
+}
 
-            studio4:
-                "images/studio4.png",
-                            
-            studio5:
-                "images/studio5.png",
+async function loadStudioImagesFromDatabase() {
+    const { data, error } = await supabase
+        .from("images")
+        .select("title, category, image_url")
+        .eq("category", "studio");
 
-            studio6:
-                "images/studio6.png",
+    if (error) {
+        console.error("Studio images ophalen mislukt:", error);
+        return;
+    }
 
-            studio7:
-                "images/studio7.png",
+    data.forEach((image) => {
+        const key = makeImageKey(image.title);
 
-            studio8:
-                "images/studio8.png",
+        locationImages[key] = image.image_url;
+    });
 
-            studio9:
-                "images/studio9.png",
+    console.log("Studio images geladen voor map:", locationImages);
+}
 
-            studio10a:
-                "images/studio10a.png",
-
-            studio10b:
-                "images/studio10b.png",
-
-            studio11:
-                "images/studio11.png",
-
-            studio12:
-                "images/studio12.png",
-
-            studio14:
-                "images/studio14.png",
-
-            studio16:
-                "images/studio16.png",
-                
-            cinema:
-                "images/cinema.png",
-        };
+await loadStudioImagesFromDatabase();
 
         const locationIcons = {
             orangerie: "images/Container (3).svg",
