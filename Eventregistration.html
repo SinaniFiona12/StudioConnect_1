@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventregistration</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+
+       
+
+    </style>
+
+</head>
+<body>
+    
+<header class="main-header">
+
+    <div class="logo-area">
+
+        <div class="logo-placeholder">
+            <img src="./images/Logo.svg" alt="logo">
+        </div>
+
+        <div class="logo-text">
+
+            <strong>AED STUDIOS</strong>
+
+            <span>Creative Network</span>
+
+        </div>
+
+    </div>
+
+    <div class="language-toggles">
+
+        <button class="lang-btn" id="btn-nl">
+            NL
+        </button>
+
+        <button class="lang-btn active" id="btn-en">
+            EN
+        </button>
+
+        <button class="lang-btn" id="btn-fr">
+            FR
+        </button>
+
+    </div>
+
+</header>
+
+<main class="registration-page">
+
+    <section class="top-section">
+
+        <a href="EventDatum.html" class="back-btn">
+
+            <div class="back-icon">←</div>
+
+            <span data-translate="goBack"></span>
+
+        </a>
+
+    </section>
+
+    <section class="title-section">
+
+        <h1 data-translate="registrationTitle"></h1>
+
+        <p data-translate="registrationSubtitle"></p>
+
+    </section>
+
+    <section class="form-section">
+
+        <div class="form-group">
+
+            <label>
+
+                <img src="./images/Personred.svg">
+
+                <span data-translate="yourName"></span>
+
+            </label>
+
+            <input 
+                type="text"
+                id="nameInput"
+                data-placeholder="yourNamePlaceholder"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                <img src="./images/Companiered.svg">
+
+                <span data-translate="workPlace"></span>
+
+            </label>
+
+            <input 
+                type="text"
+                id="companyInput"
+                data-placeholder="workPlacePlaceholder"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                <img src="./images/Companiered.svg">
+
+                <span data-translate="companyOnSite"></span>
+
+            </label>
+
+            <input 
+                type="text"
+                id="locationInput"
+                data-placeholder="companyOnSitePlaceholder"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                <img src="./images/PeopleRed.svg">
+
+                <span data-translate="meetPeople"></span>
+
+            </label>
+
+            <p
+                class="roles-subtitle"
+                data-translate="rolesSubtitle"
+            ></p>
+
+            <div class="roles-grid" id="rolesGrid"></div>
+
+        </div>
+
+    </section>
+
+    <section class="bottom-button">
+
+        <button
+            id="confirmBtn"
+            data-translate="confirmBtn"
+        ></button>
+
+    </section>
+
+</main>
+</body>
