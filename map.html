@@ -41,12 +41,14 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 2000px; 
-            height: 2000px;
+            width: 1200px;
+            height: 1200px;
             transform-origin: center;
-            transform: translate(-50%, -50%) scale(1); 
-            background-image: radial-gradient(circle at center, #282626 2px, transparent 2px);
-            background-size: 40px 40px; 
+
+            background-image: url("images/Map_AEDStudios.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
         }
 
         /* PINS OP DE MAP */
@@ -54,9 +56,9 @@
             position: absolute;
             background-color: var(--accent-color);
             color: white;
-            width: 80px; 
-            height: 80px; 
-            border-radius: 24px; 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 15px; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -191,8 +193,11 @@
         .overlay-image-area::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('images/image 2 (1).svg'); 
+            inset: 0;
+
+            background-image:
+                var(--popup-image);
+
             background-size: cover;
             background-position: center;
             opacity: 0.6;
@@ -291,6 +296,25 @@
             color: white;
             border: none;
         }
+        #pin-studio-1 {
+            top: 39%;
+            left: 31%;
+        }
+        .studio-location-pin {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+
+        .studio-location-pin img {
+            width: 22px;
+            height: 22px;
+        }
+
+        #pin-studio-1 {
+            top: 40%;
+            left: 31%;
+        }
     </style>
 
 </head>
@@ -319,12 +343,23 @@
 <div class="map-container" id="map-container">
 
     <div class="map-layer" id="map-layer">
+
         <div class="map-pin" id="pin-orangerie">
             <img src="images/Container (3).svg" alt="Orangerie">
         </div>
-
-        <div class="map-pin" id="pin-2">2</div>
-        <div class="map-pin" id="pin-12">12</div>
+    
+        <div class="map-pin" id="pin-studio-1">
+            1
+        </div>
+    
+        <div class="map-pin" id="pin-2">
+            2
+        </div>
+    
+        <div class="map-pin" id="pin-12">
+            12
+        </div>
+    
     </div>
 
     <button class="side-arrow-btn" id="arrow-left">
@@ -355,10 +390,12 @@
                 <img src="images/Container (3).svg" alt="Icon">
             </div>
 
-            <div class="overlay-title">The Orangerie</div>
+            <div class="overlay-title" id="overlay-title">
+                The Orangerie
+            </div>
         </div>
 
-        <a href="information.html" class="overlay-action">
+        <a href="information.html" class="overlay-action" id="overlay-link">
             <span data-translate="discoverStudio"></span>
             <img src="images/Icon (3).svg" alt="Arrow Right">
         </a>
@@ -473,13 +510,75 @@
     });
 
     const pinOrangerie = document.getElementById("pin-orangerie");
+    const pinStudio1 = document.getElementById("pin-studio-1");
+
     const overlayPopup = document.getElementById("overlay-popup");
+    const overlayTitle = document.getElementById("overlay-title");
+    const overlayLink = document.getElementById("overlay-link");
+
+    const overlayImageArea =
+        document.querySelector(
+            ".overlay-image-area"
+        );
+
+    const locationImages = {
+        orangerie:
+            "images/image 2 (1).svg",
+
+        studio1:
+            "images/studio1.png"
+    };
+
     const mapContainer = document.getElementById("map-container");
 
-    pinOrangerie.addEventListener("click", (e) => {
-        e.stopPropagation();
-        overlayPopup.classList.add("active");
-    });
+    function openLocationPopup(
+        title,
+        link,
+        imageKey
+    ){
+        overlayTitle.textContent =
+            title;
+
+        overlayLink.href =
+            link;
+
+        overlayImageArea.style.setProperty(
+            "--popup-image",
+            `url('${locationImages[imageKey]}')`
+        );
+
+        overlayPopup.classList.add(
+            "active"
+        );
+    }
+
+    pinOrangerie.addEventListener(
+        "click",
+        (e) => {
+
+            e.stopPropagation();
+
+            openLocationPopup(
+                "The Orangerie",
+                "information.html",
+                "orangerie"
+            );
+        }
+    );
+
+    pinStudio1.addEventListener(
+        "click",
+        (e) => {
+
+            e.stopPropagation();
+
+            openLocationPopup(
+                "Studio 1",
+                "information.html",
+                "studio1"
+            );
+        }
+    );
 
     mapContainer.addEventListener("click", () => {
         overlayPopup.classList.remove("active");
@@ -495,8 +594,8 @@
     let isDragging = false;
     let startX;
     let startY;
-    let translateX = -1000;
-    let translateY = -1000;
+    let translateX = -600;
+    let translateY = -600;
 
     function updateTransform(){
         mapLayer.style.transform =
@@ -560,6 +659,7 @@
 
         updateTransform();
     });
+    
 
     updateTransform();
 </script>
