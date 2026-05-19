@@ -33,7 +33,7 @@
 
 <main>
     <section class="hero">
-        <img id="hero-image" class="hero-bg" src="" alt="Hero Afbeelding">
+        <img id="hero-image" class="hero-bg" src="images/image 2 (1).svg" alt="Hero Afbeelding">
         <div class="hero-content">
             <div class="hero-icon"><img src="images/Container (3).svg" alt="Orangerie Icon"></div>
             <h1 id="studio-title">Loading...</h1>
@@ -48,20 +48,13 @@
     </section>
 
     <section class="info-section">
-        <h3 class="section-title" id="contact-title">CONTACT</h3>
-        <div class="card contact-card">
-            <div class="contact-icon"><img src="images/Icon.svg" alt="Email Icon"></div>
-            <div class="contact-info">
-                <span class="contact-label" id="contact-label">Email</span>
-                <a href="#" id="studio-email">Loading...</a>
+        <h3 class="section-title" id="gallery-title">GALLERY</h3>
+        <div class="gallery-grid" id="gallery-container">
             </div>
-            <div class="arrow-right"><img src="images/Vector.svg" alt="Arrow Right"></div>
-        </div>
     </section>
 
     <section class="info-section">
-        <h3 class="section-title" id="gallery-title">GALLERY</h3>
-        <div class="gallery-grid" id="gallery-container">
+        <div id="contacts-container">
             </div>
     </section>
 
@@ -97,16 +90,19 @@
 </main>
 
 <script>
-    // 1. Vaste Data (Verandert niet bij taalwissel)
+    // 1. Vaste Data (Nu met meerdere contacten zoals in je design)
     const databaseData = {
         title: "The Orangerie",
-        email: "Sales@aedstudios.com",
         heroImage: "images/image 2 (1).svg", 
         galleryImages: [
             "images/orangeriefeest.svg",
             "images/orangeriemensen.svg",
             "images/orangerieglazen.svg",
             "images/orangerieplaats.svg"
+        ],
+        // Nieuwe contactenlijst toegevoegd
+        contacts: [
+            { email: "Sales@aedstudios.com", label: "AED" },
         ]
     };
 
@@ -114,50 +110,41 @@
     const translations = {
         en: {
             aboutTitle: "ABOUT STUDIO",
-            contactTitle: "CONTACT",
             galleryTitle: "GALLERY",
             emailLabel: "Email",
+            contactBtnPrefix: "CONTACT",
             description: "The Orangerie is a unique 850 m² transparent event space, surrounded by nature and greenery. Flooded with natural light by day and transformed into an atmospheric venue by night, it offers a stylish setting enhanced with elegant chandeliers, subtle sound and lighting."
         },
         nl: {
             aboutTitle: "OVER DE STUDIO",
-            contactTitle: "CONTACT",
             galleryTitle: "GALERIJ",
             emailLabel: "E-mail",
+            contactBtnPrefix: "CONTACTEER",
             description: "De Orangerie is een unieke, transparante evenementenruimte van 850 m², omgeven door natuur en groen. Overdag overspoeld met natuurlijk licht en 's avonds omgetoverd tot een sfeervolle locatie, biedt het een stijlvolle setting verrijkt met elegante kroonluchters, subtiel geluid en verlichting."
         },
         fr: {
             aboutTitle: "À PROPOS DU STUDIO",
-            contactTitle: "CONTACT",
             galleryTitle: "GALERIE",
             emailLabel: "E-mail",
+            contactBtnPrefix: "CONTACTER",
             description: "L'Orangerie est un espace événementiel transparent unique de 850 m², entouré de nature et de verdure. Inondé de lumière naturelle le jour et transformé en un lieu d'ambiance la nuit, il offre un cadre élégant rehaussé de lustres élégants, d'un son et d'un éclairage subtils."
         }
     };
 
-    // Standaardtaal instellen
     let currentLanguage = 'en';
 
-    // 3. Functie om de HTML te vullen met de data op basis van de taal
+    // 3. Functie om de HTML te vullen
     function buildPage(lang) {
         const t = translations[lang];
 
-        // Vaste Tekst invullen (verandert niet)
+        // Titels & Beschrijving
         document.getElementById('page-title').textContent = databaseData.title;
         document.getElementById('studio-title').textContent = databaseData.title;
-        const emailLink = document.getElementById('studio-email');
-        emailLink.textContent = databaseData.email;
-        emailLink.href = "mailto:" + databaseData.email;
-        document.getElementById('hero-image').src = databaseData.heroImage;
-
-        // Vertaalde Tekst invullen
         document.getElementById('about-title').textContent = t.aboutTitle;
-        document.getElementById('contact-title').textContent = t.contactTitle;
         document.getElementById('gallery-title').textContent = t.galleryTitle;
-        document.getElementById('contact-label').textContent = t.emailLabel;
         document.getElementById('studio-description').textContent = t.description;
 
-        // Gallery opbouwen (we maken hem alleen leeg en vol als hij nog leeg is)
+        // Gallery opbouwen (slechts 1x inladen)
         const galleryContainer = document.getElementById('gallery-container');
         if (galleryContainer.children.length === 0) {
             databaseData.galleryImages.forEach(imageUrl => {
@@ -167,6 +154,32 @@
                 galleryContainer.appendChild(imgElement);
             });
         }
+
+        // Contact Kaarten opbouwen met de CTA buttons
+        const contactsContainer = document.getElementById('contacts-container');
+        contactsContainer.innerHTML = ''; // Maak eerst leeg bij taalwissel
+
+        databaseData.contacts.forEach(contact => {
+            const card = document.createElement('div');
+            card.className = 'contact-card';
+            
+            // De tekst op de knop wordt opgebouwd uit de vertaling + de label (bijv. "CONTACTEER" + " AED")
+            const btnText = `${t.contactBtnPrefix} ${contact.label}`;
+
+            card.innerHTML = `
+                <div class="contact-top">
+                    <div class="contact-icon"><img src="images/Icon.svg" alt="Email Icon"></div>
+                    <div class="contact-info">
+                        <span class="contact-label">${t.emailLabel}</span>
+                        <span class="studio-email-text">${contact.email}</span>
+                    </div>
+                </div>
+                <a href="mailto:${contact.email}" class="cta-button">
+                    ${btnText} <img src="images/Icon (3).svg" alt="Arrow">
+                </a>
+            `;
+            contactsContainer.appendChild(card);
+        });
     }
 
     // 4. Taal Knoppen Logica
@@ -174,14 +187,10 @@
 
     languageButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Verwijder active class (rode kleur) van alle knoppen
             languageButtons.forEach(button => button.classList.remove('active'));
-            
-            // Voeg active class toe aan de geklikte knop
             const clickedBtn = e.target;
             clickedBtn.classList.add('active');
 
-            // Update de taal en herlaad de pagina inhoud
             currentLanguage = clickedBtn.getAttribute('data-lang');
             buildPage(currentLanguage);
         });
@@ -190,7 +199,7 @@
     // 5. Initialiseer de pagina
     buildPage(currentLanguage);
 
-    // 6. Event Navigatie Logica (toegevoegd voor consistentie met de rest van je app)
+    // 6. Event Navigatie Logica
     const eventNavBtn = document.getElementById("eventNavBtn");
     if(eventNavBtn) {
         eventNavBtn.addEventListener("click", (e) => {
