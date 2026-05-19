@@ -543,7 +543,7 @@
     <div class="overlay-popup" id="overlay-popup">
         <div class="overlay-image-area">
             <div class="overlay-badge">
-                <img src="images/Container (3).svg" alt="Icon">
+                <img id="overlay-icon" src="" alt="Icon">
             </div>
 
             <div class="overlay-title" id="overlay-title">
@@ -688,6 +688,10 @@
     const overlayTitle = document.getElementById("overlay-title");
     const overlayLink = document.getElementById("overlay-link");
 
+    const overlayBadge = document.querySelector(".overlay-badge");
+
+    const overlayIcon = document.getElementById("overlay-icon");
+
     const overlayImageArea =
         document.querySelector(
             ".overlay-image-area"
@@ -746,6 +750,28 @@
                 "images/cinema.png",
         };
 
+        const locationIcons = {
+            orangerie: "images/Container (3).svg",
+
+            studio1: null,
+            studio2: null,
+            studio3: null,
+            studio4: null,
+            studio5: null,
+            studio6: null,
+            studio7: null,
+            studio8: null,
+            studio9: null,
+            studio10a: null,
+            studio10b: null,
+            studio11: null,
+            studio12: null,
+            studio14: null,
+            studio16: null,
+
+            cinema: "images/cinema_Icon.png"
+        };
+
     const mapContainer = document.getElementById("map-container");
 
     function openLocationPopup(
@@ -753,20 +779,31 @@
         link,
         imageKey
     ){
-        overlayTitle.textContent =
-            title;
-
-        overlayLink.href =
-            link;
+        overlayTitle.textContent = title;
+        overlayLink.href = link;
 
         overlayImageArea.style.setProperty(
             "--popup-image",
             `url('${locationImages[imageKey]}')`
         );
 
-        overlayPopup.classList.add(
-            "active"
-        );
+        const icon =
+            locationIcons[imageKey];
+
+        if(icon){
+            overlayBadge.innerHTML = `
+                <img src="${icon}" alt="Icon">
+            `;
+        } else {
+            const studioNumber =
+                title.replace("Studio ", "");
+
+            overlayBadge.innerHTML = `
+                <span>${studioNumber}</span>
+            `;
+        }
+
+        overlayPopup.classList.add("active");
     }
 
     pinOrangerie.addEventListener(
