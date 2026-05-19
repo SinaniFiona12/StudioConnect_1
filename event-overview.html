@@ -109,7 +109,7 @@
           <span data-translate="navStudios"></span>
         </a>
 
-        <a href="events.html" class="nav-item active">
+        <a href="event-overview.html" class="nav-item active">
           <div class="nav-icon">
             <img src="./images/EventIconfull.svg" alt="Event" />
           </div>
@@ -119,7 +119,7 @@
       </nav>
     </main>
     <script>
-      const access = sessionStorage.getItem("eventAccess");
+      const access = localStorage.getItem("eventAccess");
 
       if (access !== "granted") {
         window.location.href = "EventCode.html";
