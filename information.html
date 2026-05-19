@@ -142,7 +142,7 @@
         },
       };
 
-      let currentLanguage = "en";
+      let currentLanguage = localStorage.getItem("language") || "en";
 
       // 3. Functie om de HTML te vullen
       function buildPage(lang) {
@@ -172,27 +172,31 @@
         const contactsContainer = document.getElementById("contacts-container");
         contactsContainer.innerHTML = ""; // Maak eerst leeg bij taalwissel
 
-        databaseData.contacts.forEach((contact) => {
-          const card = document.createElement("div");
-          card.className = "contact-card";
+       // Zoek in information.html naar dit gedeelte en vervang het door:
+databaseData.contacts.forEach((contact) => {
+  const card = document.createElement("div");
+  // We voegen hier de klasse 'card' toe voor het kader
+  card.className = "card contact-section-card"; 
 
-          // De tekst op de knop wordt opgebouwd uit de vertaling + de label (bijv. "CONTACTEER" + " AED")
-          const btnText = `${t.contactBtnPrefix} ${contact.label}`;
+  const btnText = `${t.contactBtnPrefix} ${contact.label}`;
 
-          card.innerHTML = `
-                <div class="contact-top">
-                    <div class="contact-icon"><img src="images/Icon.svg" alt="Email Icon"></div>
-                    <div class="contact-info">
-                        <span class="contact-label">${t.emailLabel}</span>
-                        <span class="studio-email-text">${contact.email}</span>
-                    </div>
-                </div>
-                <a href="mailto:${contact.email}" class="cta-button">
-                    ${btnText} <img src="images/Icon (3).svg" alt="Arrow">
-                </a>
-            `;
-          contactsContainer.appendChild(card);
-        });
+// Pas dit gedeelte in je information.html aan
+card.innerHTML = `
+    <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
+            <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
+        </div>
+        <div class="contact-info">
+            <span class="contact-label" style="display: block; font-size: 12px; color: #888;">${t.emailLabel}</span>
+            <span class="studio-email-text" style="display: block; font-size: 16px; color: white;">${contact.email}</span>
+        </div>
+    </div>
+    <a href="mailto:${contact.email}" class="cta-button-new">
+        ${btnText} <img src="images/Icon (5).svg" alt="Arrow">
+    </a>
+`;
+  contactsContainer.appendChild(card);
+});
       }
 
       // 4. Taal Knoppen Logica
@@ -207,11 +211,16 @@
           clickedBtn.classList.add("active");
 
           currentLanguage = clickedBtn.getAttribute("data-lang");
+          localStorage.setItem("language", currentLanguage);
           buildPage(currentLanguage);
         });
       });
 
-      // 5. Initialiseer de pagina
+      // 5. Initialiseer de pagina in de opgeslagen taal
+      languageButtons.forEach((button) => button.classList.remove("active"));
+      document
+        .querySelector(`[data-lang="${currentLanguage}"]`)
+        ?.classList.add("active");
       buildPage(currentLanguage);
 
       // 6. Event Navigatie Logica
