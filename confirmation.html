@@ -1,36 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Confirmation</title>
 
-    <link rel="stylesheet" href="/style.css">
-</head>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
 
-<body>
-
-<main class="success-page">
-
-    <div class="success-card">
-
+  <body>
+    <main class="success-page">
+      <div class="success-card">
         <div class="success-icon">
-
-            <img
-                src="./images/register.svg"
-                alt="Success"
-            >
-
+          <img src="./images/register.svg" alt="Success" />
         </div>
 
         <h1 data-translate="successTitle"></h1>
 
         <p data-translate="successText"></p>
+      </div>
+    </main>
 
-    </div>
+    <script>
+      const translations = {
+        en: {
+          successTitle: "Successfully Registered!",
 
-</main>
+          successText: "You're registered for the event. See you there!",
+        },
 
+        nl: {
+          successTitle: "Succesvol Geregistreerd!",
 
-</body>
+          successText: "Je bent geregistreerd voor het event. Tot dan!",
+        },
+
+        fr: {
+          successTitle: "Inscription Réussie !",
+
+          successText: "Vous êtes inscrit à l'événement. À bientôt !",
+        },
+      };
+
+      function setLanguage(language) {
+        document.querySelectorAll("[data-translate]").forEach((element) => {
+          const key = element.dataset.translate;
+
+          element.textContent = translations[language][key];
+        });
+      }
+
+      const savedLanguage = localStorage.getItem("language") || "en";
+
+      setLanguage(savedLanguage);
+
+      localStorage.setItem("eventAccess", "granted");
+
+      setTimeout(() => {
+        window.location.href = "event-overview.html";
+      }, 5000);
+    </script>
+  </body>
 </html>
