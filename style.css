@@ -780,6 +780,46 @@
     border-radius: 15px; }
 
 
+/* Nieuwe container stijl voor het kader */
+.contact-section-card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+
+.cta-button-new {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 10px;               
+    width: fit-content;      
+    min-width: 160px;     
+    height: 48px;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;        
+    text-decoration: none;
+    border-radius: 24px;     /
+    padding: 0 20px;         
+    font-family: var(--font-main);
+    transition: 0.2s;
+}
+
+
+.cta-button-new img {
+    width: 18px;
+    height: 18px;
+}
+
+.cta-button-new:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+
 /* Event Overview */
 
 .event-page{
