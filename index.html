@@ -466,7 +466,7 @@
 
         startCarousel();
 
-        localStorage.setItem("selectedLanguage", lang);
+        localStorage.setItem("language", lang);
       }
 
       function startCarousel() {
@@ -511,7 +511,7 @@
         .getElementById("btn-fr")
         .addEventListener("click", () => renderPage("fr"));
 
-      const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+      const savedLanguage = localStorage.getItem("language") || "en";
 
       renderPage(savedLanguage);
 
