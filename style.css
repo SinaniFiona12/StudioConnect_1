@@ -594,15 +594,14 @@
 }
 
 
-/* ========================================= */
-/* INFORMATION PAGINA                        */
-/* ========================================= */
+/*  Information pagina */
 .sub-nav {
     display: flex;
     align-items: center;
     padding: 20px;
     gap: 15px;
 }
+
 .back-btn {
     background: transparent;
     border: none;
@@ -620,7 +619,7 @@
 
 .hero {
     position: relative;
-    margin:  20px 30px 20px;
+    margin: 0 20px 30px 20px;
     border-radius: 20px;
     overflow: hidden;
     height: 250px;
@@ -631,21 +630,28 @@
 .hero::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(254, 13, 0, 0.3);
     z-index: 1;
 }
 
 .hero img.hero-bg {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     z-index: 0;
 }
 
 .hero-content {
     position: absolute;
-    top: 50%; left: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     width: 100%;
@@ -678,6 +684,7 @@
     margin-bottom: 30px;
 }
 
+
 .info-section .section-title {
     color: var(--accent-color);
     font-size: 14px;
@@ -695,19 +702,11 @@
     color: #ccc;
 }
 
-.contact-card {
-    background-color: var(--card-bg);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column; 
-    gap: 15px;
-}
 
-.contact-top {
+.contact-card {
     display: flex;
     align-items: center;
+    padding: 15px 20px;
 }
 
 .contact-icon {
@@ -737,37 +736,14 @@
 .contact-label {
     font-size: 12px;
     color: #888;
-    margin-bottom: 3px;
 }
 
-.studio-email-text {
+#studio-email {
     color: var(--text-color);
-    font-weight: 700;
-    font-size: 15px;
-}
-
-.cta-button {
-    background-color: var(--accent-color);
-    color: white;
     text-decoration: none;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    transition: 0.2s;
+    font-weight: 500;
 }
 
-.cta-button:active { transform: scale(0.98); }
-
-.cta-button img {
-    width: 16px;
-    filter: brightness(0) invert(1);
-}
 
 .gallery-grid {
     display: grid;
@@ -779,8 +755,7 @@
     width: 100%;
     height: 150px;
     object-fit: cover;
-    border-radius: 15px;
-}
+    border-radius: 15px; }
 
 
 /* Event Overview */
@@ -1104,15 +1079,18 @@
     right:0;
     background:#2B2929;
     padding:26px 24px;
+    
     border-top:1px solid rgba(255,255,255,0.05);
 }
 
 #continueBtn{
     width:100%;
-    height:64px;
+    height:70px;
     border:none;
     border-radius:20px;
     background:#4A4747;
+    margin-top: 20px;
+    margin-bottom: 20px;
     color:#868181;
     font-size:18px;
     font-weight:700;
