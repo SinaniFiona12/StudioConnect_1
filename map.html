@@ -505,12 +505,12 @@
     eventNavBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const access = sessionStorage.getItem("eventAccess");
+        const access = localStorage.getItem("eventAccess");
 
         if(access === "granted"){
             window.location.href = "event-overview.html";
         } else {
-            window.location.href = "EventCode.html";
+            window.location.href = "eventCode.html";
         }
     });
 
