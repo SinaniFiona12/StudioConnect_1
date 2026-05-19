@@ -142,7 +142,7 @@
         },
       };
 
-      let currentLanguage = "en";
+      let currentLanguage = localStorage.getItem("language") || "en";
 
       // 3. Functie om de HTML te vullen
       function buildPage(lang) {
@@ -211,11 +211,16 @@ card.innerHTML = `
           clickedBtn.classList.add("active");
 
           currentLanguage = clickedBtn.getAttribute("data-lang");
+          localStorage.setItem("language", currentLanguage);
           buildPage(currentLanguage);
         });
       });
 
-      // 5. Initialiseer de pagina
+      // 5. Initialiseer de pagina in de opgeslagen taal
+      languageButtons.forEach((button) => button.classList.remove("active"));
+      document
+        .querySelector(`[data-lang="${currentLanguage}"]`)
+        ?.classList.add("active");
       buildPage(currentLanguage);
 
       // 6. Event Navigatie Logica

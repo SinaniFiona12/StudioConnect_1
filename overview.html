@@ -170,7 +170,7 @@
       };
 
       // Variabele om bij te houden welke taal momenteel actief is
-      let currentLanguage = "en";
+      let currentLanguage = localStorage.getItem("language") || "en";
 
       // --- 4. FUNCTIE OM PAGINA OP TE BOUWEN ---
       function renderPage(lang) {
@@ -225,6 +225,7 @@
 
           // Haal de gekozen taal op (nl, en, of fr)
           currentLanguage = clickedBtn.getAttribute("data-lang");
+          localStorage.setItem("language", currentLanguage);
 
           // Herlaad de pagina met de nieuwe taal
           renderPage(currentLanguage);
@@ -232,7 +233,11 @@
       });
 
       // --- 6. INITIËLE LADING ---
-      // Start de pagina direct in het Engels
+      // Start de pagina in de opgeslagen taal
+      languageButtons.forEach((button) => button.classList.remove("active"));
+      document
+        .querySelector(`[data-lang="${currentLanguage}"]`)
+        ?.classList.add("active");
       renderPage(currentLanguage);
     </script>
   </body>
