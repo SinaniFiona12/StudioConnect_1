@@ -366,6 +366,11 @@
             top: 31%;
             left: 9%;
         }
+
+        #pin-studio-7 {
+            top: 32%;
+            left: 43%;
+        }
     </style>
 
 </head>
@@ -422,6 +427,10 @@
 
         <div class="map-pin" id="pin-studio-6">
             <span>6</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-7">
+            <span>7</span>
         </div>
 
         
@@ -586,6 +595,7 @@
     const pinStudio4 = document.getElementById("pin-studio-4");
     const pinStudio5 = document.getElementById("pin-studio-5");
     const pinStudio6 = document.getElementById("pin-studio-6");
+    const pinStudio7 = document.getElementById("pin-studio-7");
 
 
     const overlayPopup = document.getElementById("overlay-popup");
@@ -618,6 +628,9 @@
 
             studio6:
                 "images/studio6.png",
+
+            studio7:
+                "images/studio7.png",
         };
 
     const mapContainer = document.getElementById("map-container");
@@ -737,6 +750,20 @@ pinStudio6.addEventListener(
             "Studio 6",
             "studio6.html",
             "studio6"
+        );
+    }
+);
+
+pinStudio7.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        openLocationPopup(
+            "Studio 7",
+            "studio7.html",
+            "studio7"
         );
     }
 );
