@@ -1,172 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AED Studios - The Orangerie</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="main-header">
-        <div class="logo-area">
-            <div class="logo-placeholder">
-                <img src="./images/Logo.svg" alt="logo">
-            </div>
-            <div class="logo-text">
-                <strong>AED STUDIOS</strong>
-                <span>Creative Network</span>
-            </div>
+      <div class="logo-area">
+        <div class="logo-placeholder">
+          <img src="./images/Logo.svg" alt="logo" />
         </div>
-    
-        <div class="language-toggles">
-            <button class="lang-btn" data-lang="nl">NL</button>
-            <button class="lang-btn active" data-lang="en">EN</button>
-            <button class="lang-btn" data-lang="fr">FR</button>
+        <div class="logo-text">
+          <strong>AED STUDIOS</strong>
+          <span>Creative Network</span>
         </div>
+      </div>
+
+      <div class="language-toggles">
+        <button class="lang-btn" data-lang="nl">NL</button>
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
     </header>
 
-<nav class="sub-nav">
-    <button class="back-btn" onclick="window.location.href='overview.html'"><img src="images/Button.svg" alt="Terug"></button>
-    <h2 id="page-title">Loading...</h2>
-</nav>
+    <nav class="sub-nav">
+      <button class="back-btn" onclick="window.location.href = 'overview.html'">
+        <img src="images/Button.svg" alt="Terug" />
+      </button>
+      <h2 id="page-title">Loading...</h2>
+    </nav>
 
-<main>
-    <section class="hero">
-        <img id="hero-image" class="hero-bg" src="images/image 2 (1).svg" alt="Hero Afbeelding">
+    <main>
+      <section class="hero">
+        <img
+          id="hero-image"
+          class="hero-bg"
+          src="images/image 2 (1).svg"
+          alt="Hero Afbeelding"
+        />
         <div class="hero-content">
-            <div class="hero-icon"><img src="images/Container (3).svg" alt="Orangerie Icon"></div>
-            <h1 id="studio-title">Loading...</h1>
+          <div class="hero-icon">
+            <img src="images/Container (3).svg" alt="Orangerie Icon" />
+          </div>
+          <h1 id="studio-title">Loading...</h1>
         </div>
-    </section>
+      </section>
 
-    <section class="info-section">
+      <section class="info-section">
         <h3 class="section-title" id="about-title">ABOUT STUDIO</h3>
         <div class="card">
-            <p id="studio-description">Informatie wordt geladen...</p>
+          <p id="studio-description">Informatie wordt geladen...</p>
         </div>
-    </section>
+      </section>
 
-    <section class="info-section">
+      <section class="info-section">
         <h3 class="section-title" id="gallery-title">GALLERY</h3>
-        <div class="gallery-grid" id="gallery-container">
-            </div>
-    </section>
+        <div class="gallery-grid" id="gallery-container"></div>
+      </section>
 
-    <section class="info-section">
-        <div id="contacts-container">
-            </div>
-    </section>
+      <section class="info-section">
+        <div id="contacts-container"></div>
+      </section>
 
-    <nav class="bottom-nav">
+      <nav class="bottom-nav">
         <a href="index.html" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/HomeIcon.svg" alt="Home">
-            </div>
-            <span>Home</span>
+          <div class="nav-icon">
+            <img src="./images/HomeIcon.svg" alt="Home" />
+          </div>
+          <span>Home</span>
         </a>
-    
-        <a href="map.html" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/MapIcontrans.svg" alt="Map">
-            </div>
-            <span>Map</span>
-        </a>
-    
-        <a href="overview.html" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/StudioIcontrans.svg" alt="Studio's">
-            </div>
-            <span>Studio's</span>
-        </a>
-    
-       <a href="#" id="eventNavBtn" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/EventIcontrans.svg" alt="Event">
-            </div>
-            <span>Event</span>
-        </a>
-    </nav>
-</main>
 
-<script>
-    // 1. Vaste Data (Nu met meerdere contacten zoals in je design)
-    const databaseData = {
+        <a href="map.html" class="nav-item">
+          <div class="nav-icon">
+            <img src="./images/MapIcontrans.svg" alt="Map" />
+          </div>
+          <span>Map</span>
+        </a>
+
+        <a href="overview.html" class="nav-item">
+          <div class="nav-icon">
+            <img src="./images/StudioIcontrans.svg" alt="Studio's" />
+          </div>
+          <span>Studio's</span>
+        </a>
+
+        <a href="#" id="eventNavBtn" class="nav-item">
+          <div class="nav-icon">
+            <img src="./images/EventIcontrans.svg" alt="Event" />
+          </div>
+          <span>Event</span>
+        </a>
+      </nav>
+    </main>
+
+    <script>
+      // 1. Vaste Data (Nu met meerdere contacten zoals in je design)
+      const databaseData = {
         title: "The Orangerie",
-        heroImage: "images/image 2 (1).svg", 
+        heroImage: "images/image 2 (1).svg",
         galleryImages: [
-            "images/orangeriefeest.svg",
-            "images/orangeriemensen.svg",
-            "images/orangerieglazen.svg",
-            "images/orangerieplaats.svg"
+          "images/orangeriefeest.svg",
+          "images/orangeriemensen.svg",
+          "images/orangerieglazen.svg",
+          "images/orangerieplaats.svg",
         ],
         // Nieuwe contactenlijst toegevoegd
-        contacts: [
-            { email: "Sales@aedstudios.com", label: "AED" },
-        ]
-    };
+        contacts: [{ email: "Sales@aedstudios.com", label: "AED" }],
+      };
 
-    // 2. Woordenboek voor Vertalingen
-    const translations = {
+      // 2. Woordenboek voor Vertalingen
+      const translations = {
         en: {
-            aboutTitle: "ABOUT STUDIO",
-            galleryTitle: "GALLERY",
-            emailLabel: "Email",
-            contactBtnPrefix: "CONTACT",
-            description: "The Orangerie is a unique 850 m² transparent event space, surrounded by nature and greenery. Flooded with natural light by day and transformed into an atmospheric venue by night, it offers a stylish setting enhanced with elegant chandeliers, subtle sound and lighting."
+          aboutTitle: "ABOUT STUDIO",
+          galleryTitle: "GALLERY",
+          emailLabel: "Email",
+          contactBtnPrefix: "CONTACT",
+          description:
+            "The Orangerie is a unique 850 m² transparent event space, surrounded by nature and greenery. Flooded with natural light by day and transformed into an atmospheric venue by night, it offers a stylish setting enhanced with elegant chandeliers, subtle sound and lighting.",
         },
         nl: {
-            aboutTitle: "OVER DE STUDIO",
-            galleryTitle: "GALERIJ",
-            emailLabel: "E-mail",
-            contactBtnPrefix: "CONTACTEER",
-            description: "De Orangerie is een unieke, transparante evenementenruimte van 850 m², omgeven door natuur en groen. Overdag overspoeld met natuurlijk licht en 's avonds omgetoverd tot een sfeervolle locatie, biedt het een stijlvolle setting verrijkt met elegante kroonluchters, subtiel geluid en verlichting."
+          aboutTitle: "OVER DE STUDIO",
+          galleryTitle: "GALERIJ",
+          emailLabel: "E-mail",
+          contactBtnPrefix: "CONTACTEER",
+          description:
+            "De Orangerie is een unieke, transparante evenementenruimte van 850 m², omgeven door natuur en groen. Overdag overspoeld met natuurlijk licht en 's avonds omgetoverd tot een sfeervolle locatie, biedt het een stijlvolle setting verrijkt met elegante kroonluchters, subtiel geluid en verlichting.",
         },
         fr: {
-            aboutTitle: "À PROPOS DU STUDIO",
-            galleryTitle: "GALERIE",
-            emailLabel: "E-mail",
-            contactBtnPrefix: "CONTACTER",
-            description: "L'Orangerie est un espace événementiel transparent unique de 850 m², entouré de nature et de verdure. Inondé de lumière naturelle le jour et transformé en un lieu d'ambiance la nuit, il offre un cadre élégant rehaussé de lustres élégants, d'un son et d'un éclairage subtils."
-        }
-    };
+          aboutTitle: "À PROPOS DU STUDIO",
+          galleryTitle: "GALERIE",
+          emailLabel: "E-mail",
+          contactBtnPrefix: "CONTACTER",
+          description:
+            "L'Orangerie est un espace événementiel transparent unique de 850 m², entouré de nature et de verdure. Inondé de lumière naturelle le jour et transformé en un lieu d'ambiance la nuit, il offre un cadre élégant rehaussé de lustres élégants, d'un son et d'un éclairage subtils.",
+        },
+      };
 
-    let currentLanguage = 'en';
+      let currentLanguage = "en";
 
-    // 3. Functie om de HTML te vullen
-    function buildPage(lang) {
+      // 3. Functie om de HTML te vullen
+      function buildPage(lang) {
         const t = translations[lang];
 
         // Titels & Beschrijving
-        document.getElementById('page-title').textContent = databaseData.title;
-        document.getElementById('studio-title').textContent = databaseData.title;
-        document.getElementById('about-title').textContent = t.aboutTitle;
-        document.getElementById('gallery-title').textContent = t.galleryTitle;
-        document.getElementById('studio-description').textContent = t.description;
+        document.getElementById("page-title").textContent = databaseData.title;
+        document.getElementById("studio-title").textContent =
+          databaseData.title;
+        document.getElementById("about-title").textContent = t.aboutTitle;
+        document.getElementById("gallery-title").textContent = t.galleryTitle;
+        document.getElementById("studio-description").textContent =
+          t.description;
 
         // Gallery opbouwen (slechts 1x inladen)
-        const galleryContainer = document.getElementById('gallery-container');
+        const galleryContainer = document.getElementById("gallery-container");
         if (galleryContainer.children.length === 0) {
-            databaseData.galleryImages.forEach(imageUrl => {
-                const imgElement = document.createElement('img');
-                imgElement.src = imageUrl;
-                imgElement.alt = "Gallery Afbeelding";
-                galleryContainer.appendChild(imgElement);
-            });
+          databaseData.galleryImages.forEach((imageUrl) => {
+            const imgElement = document.createElement("img");
+            imgElement.src = imageUrl;
+            imgElement.alt = "Gallery Afbeelding";
+            galleryContainer.appendChild(imgElement);
+          });
         }
 
         // Contact Kaarten opbouwen met de CTA buttons
-        const contactsContainer = document.getElementById('contacts-container');
-        contactsContainer.innerHTML = ''; // Maak eerst leeg bij taalwissel
+        const contactsContainer = document.getElementById("contacts-container");
+        contactsContainer.innerHTML = ""; // Maak eerst leeg bij taalwissel
 
-        databaseData.contacts.forEach(contact => {
-            const card = document.createElement('div');
-            card.className = 'contact-card';
-            
-            // De tekst op de knop wordt opgebouwd uit de vertaling + de label (bijv. "CONTACTEER" + " AED")
-            const btnText = `${t.contactBtnPrefix} ${contact.label}`;
+        databaseData.contacts.forEach((contact) => {
+          const card = document.createElement("div");
+          card.className = "contact-card";
 
-            card.innerHTML = `
+          // De tekst op de knop wordt opgebouwd uit de vertaling + de label (bijv. "CONTACTEER" + " AED")
+          const btnText = `${t.contactBtnPrefix} ${contact.label}`;
+
+          card.innerHTML = `
                 <div class="contact-top">
                     <div class="contact-icon"><img src="images/Icon.svg" alt="Email Icon"></div>
                     <div class="contact-info">
@@ -178,41 +191,42 @@
                     ${btnText} <img src="images/Icon (3).svg" alt="Arrow">
                 </a>
             `;
-            contactsContainer.appendChild(card);
+          contactsContainer.appendChild(card);
         });
-    }
+      }
 
-    // 4. Taal Knoppen Logica
-    const languageButtons = document.querySelectorAll('.lang-btn');
+      // 4. Taal Knoppen Logica
+      const languageButtons = document.querySelectorAll(".lang-btn");
 
-    languageButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            languageButtons.forEach(button => button.classList.remove('active'));
-            const clickedBtn = e.target;
-            clickedBtn.classList.add('active');
+      languageButtons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          languageButtons.forEach((button) =>
+            button.classList.remove("active"),
+          );
+          const clickedBtn = e.target;
+          clickedBtn.classList.add("active");
 
-            currentLanguage = clickedBtn.getAttribute('data-lang');
-            buildPage(currentLanguage);
+          currentLanguage = clickedBtn.getAttribute("data-lang");
+          buildPage(currentLanguage);
         });
-    });
+      });
 
-    // 5. Initialiseer de pagina
-    buildPage(currentLanguage);
+      // 5. Initialiseer de pagina
+      buildPage(currentLanguage);
 
-    // 6. Event Navigatie Logica
-    const eventNavBtn = document.getElementById("eventNavBtn");
-    if(eventNavBtn) {
+      // 6. Event Navigatie Logica
+      const eventNavBtn = document.getElementById("eventNavBtn");
+      if (eventNavBtn) {
         eventNavBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const access = sessionStorage.getItem("eventAccess");
-            if(access === "granted"){
-                window.location.href = "event-overview.html";
-            } else {
-                window.location.href = "EventCode.html";
-            }
+          e.preventDefault();
+          const access = localStorage.getItem("eventAccess");
+          if (access === "granted") {
+            window.location.href = "event-overview.html";
+          } else {
+            window.location.href = "eventCode.html";
+          }
         });
-    }
-</script>
-
-</body>
+      }
+    </script>
+  </body>
 </html>
