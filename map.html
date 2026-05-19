@@ -1061,6 +1061,9 @@ pinCinema.addEventListener(
     let translateX = -600;
     let translateY = -600;
 
+    let startDistance = 0;
+    let startScale = 1;
+
     function updateTransform(){
         mapLayer.style.transform =
             `translate(${translateX}px, ${translateY}px) scale(${scale})`;
@@ -1098,7 +1101,7 @@ pinCinema.addEventListener(
             scale -= zoomAmount;
         }
 
-        scale = Math.min(Math.max(0.4, scale), 3);
+        scale = Math.min(Math.max(0.8, scale), 2.5);
 
         updateTransform();
     });
@@ -1106,8 +1109,20 @@ pinCinema.addEventListener(
     mapContainer.addEventListener("touchstart", (e) => {
         if(e.touches.length === 1){
             isDragging = true;
+
             startX = e.touches[0].clientX - translateX;
             startY = e.touches[0].clientY - translateY;
+        }
+
+        if(e.touches.length === 2){
+            isDragging = false;
+
+            startDistance = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+
+            startScale = scale;
         }
     });
 
@@ -1116,13 +1131,53 @@ pinCinema.addEventListener(
     });
 
     window.addEventListener("touchmove", (e) => {
-        if(!isDragging || e.touches.length !== 1) return;
+    e.preventDefault();
 
+    if(e.touches.length === 1 && isDragging){
         translateX = e.touches[0].clientX - startX;
         translateY = e.touches[0].clientY - startY;
 
         updateTransform();
-    });
+    }
+
+    if(e.touches.length === 2){
+        const currentDistance = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+        );
+
+        scale = startScale * (currentDistance / startDistance);
+
+        scale = Math.min(
+            Math.max(0.4, scale),
+            3
+        );
+
+        updateTransform();
+    }
+}, { passive: false });
+
+const arrowLeft =
+    document.getElementById("arrow-left");
+
+const arrowRight =
+    document.getElementById("arrow-right");
+
+arrowLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    translateX += 250;
+
+    updateTransform();
+});
+
+arrowRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    translateX -= 250;
+
+    updateTransform();
+});
     
 
     updateTransform();
