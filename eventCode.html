@@ -76,7 +76,7 @@
         <span data-translate="navStudios"></span>
       </a>
 
-      <a href="EventCode.html" class="nav-item active">
+      <a href="eventCode.html" class="nav-item active">
         <div class="nav-icon">
           <img src="./images/EventIconfull.svg" alt="Event" />
         </div>
@@ -217,7 +217,7 @@
         button.textContent = translations[savedLanguage].submitBtn;
 
         if (enteredCode === validCode) {
-          sessionStorage.setItem("eventAccess", "granted");
+          localStorage.setItem("eventAccess", "granted");
 
           window.location.href = "event-overview.html";
         } else {
