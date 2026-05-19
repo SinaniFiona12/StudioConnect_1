@@ -1,92 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AED Studios - Overview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="main-header">
-        <div class="logo-area">
-            <div class="logo-placeholder"><img src="./images/Logo.svg" alt="logo"></div>
-            <div class="logo-text">
-                <strong>AED STUDIOS</strong>
-                <span>Creative Network</span>
-            </div>
+      <div class="logo-area">
+        <div class="logo-placeholder">
+          <img src="./images/Logo.svg" alt="logo" />
         </div>
+        <div class="logo-text">
+          <strong>AED STUDIOS</strong>
+          <span>Creative Network</span>
+        </div>
+      </div>
 
-        <div class="language-toggles">
-            <button class="lang-btn" data-lang="nl">NL</button>
-            <button class="lang-btn active" data-lang="en">EN</button>
-            <button class="lang-btn" data-lang="fr">FR</button>
-        </div>
+      <div class="language-toggles">
+        <button class="lang-btn" data-lang="nl">NL</button>
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
     </header>
 
-<main class="page-content">
-    <div class="page-title-area">
+    <main class="page-content">
+      <div class="page-title-area">
         <h1 class="page-title" id="page-title-text">Studios Network</h1>
-        <p class="page-subtitle" id="page-subtitle-text">Discover 18 creative studios</p>
-    </div>
+        <p class="page-subtitle" id="page-subtitle-text">
+          Discover 18 creative studios
+        </p>
+      </div>
 
-    <div class="search-container">
-        <img src="images/Icon (1).svg" alt="Search" class="search-icon">
-        <input type="text" class="search-input" id="search-input" placeholder="Search studios...">
-    </div>
+      <div class="search-container">
+        <img src="images/Icon (1).svg" alt="Search" class="search-icon" />
+        <input
+          type="text"
+          class="search-input"
+          id="search-input"
+          placeholder="Search studios..."
+        />
+      </div>
 
-    <div class="studios-list" id="studios-container">
+      <div class="studios-list" id="studios-container">
         <p>Loading studios...</p>
-    </div>
+      </div>
+    </main>
 
-</main>
-
-<nav class="bottom-nav">
-    <a href="index.html" class="nav-item ">
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
         <div class="nav-icon">
-            <img src="./images/HomeIcon.svg" alt="Home">
+          <img src="./images/HomeIcon.svg" alt="Home" />
         </div>
         <span>Home</span>
-    </a>
+      </a>
 
-    <a href="map.html" class="nav-item">
+      <a href="map.html" class="nav-item">
         <div class="nav-icon">
-            <img src="./images/MapIcontrans.svg" alt="Map">
+          <img src="./images/MapIcontrans.svg" alt="Map" />
         </div>
         <span>Map</span>
-    </a>
+      </a>
 
-    <a href="overview.html" class="nav-item active">
+      <a href="overview.html" class="nav-item active">
         <div class="nav-icon">
-            <img src="./images/Studiofull.svg" alt="Studio's">
+          <img src="./images/Studiofull.svg" alt="Studio's" />
         </div>
         <span>Studio's</span>
-    </a>
+      </a>
 
-   <a href="#" id="eventNavBtn" class="nav-item">
+      <a href="#" id="eventNavBtn" class="nav-item">
         <div class="nav-icon">
-            <img src="./images/EventIcontrans.svg" alt="Event">
+          <img src="./images/EventIcontrans.svg" alt="Event" />
         </div>
         <span>Event</span>
-    </a>
-</nav>
+      </a>
+    </nav>
 
-<script>
-    // --- 1. EVENT NAVIGATIE LOGICA ---
-    const eventNavBtn = document.getElementById("eventNavBtn");
-    eventNavBtn.addEventListener("click", (e) => {
+    <script>
+      // --- 1. EVENT NAVIGATIE LOGICA ---
+      const eventNavBtn = document.getElementById("eventNavBtn");
+
+      eventNavBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        const access = sessionStorage.getItem("eventAccess");
-        if(access === "granted"){
-            window.location.href = "event-overview.html";
-        } else {
-            window.location.href = "EventCode.html";
-        }
-    });
 
-    // --- 2. DATABASE ---
-    const studiosDatabase = [
+        const access = localStorage.getItem("eventAccess");
+
+        if (access === "granted") {
+          window.location.href = "event-overview.html";
+        } else {
+          window.location.href = "eventCode.html";
+        }
+      });
+
+      // --- 2. DATABASE ---
+      const studiosDatabase = [
         { id: "orangerie", name: "The orangerie", type: "Backstage" },
         { id: "studio1", name: "Studio 1", type: "Occupied by Banijay" },
         { id: "studio2", name: "Studio 2", type: "Occupied by Banijay" },
@@ -104,83 +117,84 @@
         { id: "studio14", name: "Studio 14", type: "Black box" },
         { id: "studio15", name: "Studio 15", type: "Occupied by Banijay" },
         { id: "studio16", name: "Studio 16", type: "Event hall" },
-        { id: "cinema", name: "AED Cinema", type: "Cinema" }
-    ];
+        { id: "cinema", name: "AED Cinema", type: "Cinema" },
+      ];
 
-    // --- 3. VERTALINGEN WOORDENBOEK ---
-    const translations = {
+      // --- 3. VERTALINGEN WOORDENBOEK ---
+      const translations = {
         en: {
-            title: "Studios Network",
-            subtitle: "Discover 18 creative studios",
-            searchPlaceholder: "Search studios...",
-            types: {
-                "Backstage": "Backstage",
-                "Occupied by Banijay": "Occupied by Banijay",
-                "Black box": "Black box",
-                "Restaurant": "Restaurant",
-                "Auditorium": "Auditorium",
-                "Water tank": "Water tank",
-                "Event hall": "Event hall",
-                "Cinema": "Cinema"
-            }
+          title: "Studios Network",
+          subtitle: "Discover 18 creative studios",
+          searchPlaceholder: "Search studios...",
+          types: {
+            Backstage: "Backstage",
+            "Occupied by Banijay": "Occupied by Banijay",
+            "Black box": "Black box",
+            Restaurant: "Restaurant",
+            Auditorium: "Auditorium",
+            "Water tank": "Water tank",
+            "Event hall": "Event hall",
+            Cinema: "Cinema",
+          },
         },
         nl: {
-            title: "Studio Netwerk",
-            subtitle: "Ontdek 18 creatieve studio's",
-            searchPlaceholder: "Zoek studio's...",
-            types: {
-                "Backstage": "Backstage",
-                "Occupied by Banijay": "Bezet door Banijay",
-                "Black box": "Zwarte doos",
-                "Restaurant": "Restaurant",
-                "Auditorium": "Auditorium",
-                "Water tank": "Watertank",
-                "Event hall": "Evenementenhal",
-                "Cinema": "Bioscoop"
-            }
+          title: "Studio Netwerk",
+          subtitle: "Ontdek 18 creatieve studio's",
+          searchPlaceholder: "Zoek studio's...",
+          types: {
+            Backstage: "Backstage",
+            "Occupied by Banijay": "Bezet door Banijay",
+            "Black box": "Zwarte doos",
+            Restaurant: "Restaurant",
+            Auditorium: "Auditorium",
+            "Water tank": "Watertank",
+            "Event hall": "Evenementenhal",
+            Cinema: "Bioscoop",
+          },
         },
         fr: {
-            title: "Réseau de Studios",
-            subtitle: "Découvrez 18 studios créatifs",
-            searchPlaceholder: "Rechercher des studios...",
-            types: {
-                "Backstage": "Coulisses",
-                "Occupied by Banijay": "Occupé par Banijay",
-                "Black box": "Boîte noire",
-                "Restaurant": "Restaurant",
-                "Auditorium": "Auditorium",
-                "Water tank": "Réservoir d'eau",
-                "Event hall": "Salle d'événement",
-                "Cinema": "Cinéma"
-            }
-        }
-    };
+          title: "Réseau de Studios",
+          subtitle: "Découvrez 18 studios créatifs",
+          searchPlaceholder: "Rechercher des studios...",
+          types: {
+            Backstage: "Coulisses",
+            "Occupied by Banijay": "Occupé par Banijay",
+            "Black box": "Boîte noire",
+            Restaurant: "Restaurant",
+            Auditorium: "Auditorium",
+            "Water tank": "Réservoir d'eau",
+            "Event hall": "Salle d'événement",
+            Cinema: "Cinéma",
+          },
+        },
+      };
 
-    // Variabele om bij te houden welke taal momenteel actief is
-    let currentLanguage = 'en';
+      // Variabele om bij te houden welke taal momenteel actief is
+      let currentLanguage = "en";
 
-    // --- 4. FUNCTIE OM PAGINA OP TE BOUWEN ---
-    function renderPage(lang) {
+      // --- 4. FUNCTIE OM PAGINA OP TE BOUWEN ---
+      function renderPage(lang) {
         const t = translations[lang];
 
         // Update de statische teksten
-        document.getElementById('page-title-text').textContent = t.title;
-        document.getElementById('page-subtitle-text').textContent = t.subtitle;
-        document.getElementById('search-input').placeholder = t.searchPlaceholder;
+        document.getElementById("page-title-text").textContent = t.title;
+        document.getElementById("page-subtitle-text").textContent = t.subtitle;
+        document.getElementById("search-input").placeholder =
+          t.searchPlaceholder;
 
         // Update de lijst met studios
-        const container = document.getElementById('studios-container');
-        container.innerHTML = '';
+        const container = document.getElementById("studios-container");
+        container.innerHTML = "";
 
-        studiosDatabase.forEach(studio => {
-            const cardElement = document.createElement('a');
-            cardElement.href = "information.html";
-            cardElement.className = 'studio-card';
+        studiosDatabase.forEach((studio) => {
+          const cardElement = document.createElement("a");
+          cardElement.href = "information.html";
+          cardElement.className = "studio-card";
 
-            // Haal de vertaalde studio type op uit het woordenboek
-            const translatedType = t.types[studio.type] || studio.type;
+          // Haal de vertaalde studio type op uit het woordenboek
+          const translatedType = t.types[studio.type] || studio.type;
 
-            cardElement.innerHTML = `
+          cardElement.innerHTML = `
                 <div class="studio-icon-box">
                     <img src="images/Icon (2).svg" alt="Building Icon">
                 </div>
@@ -191,34 +205,35 @@
                 <img src="images/Container (4).svg" alt="Arrow Right" class="arrow-right">
             `;
 
-            container.appendChild(cardElement);
+          container.appendChild(cardElement);
         });
-    }
+      }
 
-    // --- 5. TAAL KNOPPEN LOGICA ---
-    const languageButtons = document.querySelectorAll('.lang-btn');
+      // --- 5. TAAL KNOPPEN LOGICA ---
+      const languageButtons = document.querySelectorAll(".lang-btn");
 
-    languageButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            // Verwijder de .active class van alle knoppen
-            languageButtons.forEach(button => button.classList.remove('active'));
-            
-            // Voeg de .active class toe aan de geklikte knop (wordt rood)
-            const clickedBtn = e.target;
-            clickedBtn.classList.add('active');
+      languageButtons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          // Verwijder de .active class van alle knoppen
+          languageButtons.forEach((button) =>
+            button.classList.remove("active"),
+          );
 
-            // Haal de gekozen taal op (nl, en, of fr)
-            currentLanguage = clickedBtn.getAttribute('data-lang');
+          // Voeg de .active class toe aan de geklikte knop (wordt rood)
+          const clickedBtn = e.target;
+          clickedBtn.classList.add("active");
 
-            // Herlaad de pagina met de nieuwe taal
-            renderPage(currentLanguage);
+          // Haal de gekozen taal op (nl, en, of fr)
+          currentLanguage = clickedBtn.getAttribute("data-lang");
+
+          // Herlaad de pagina met de nieuwe taal
+          renderPage(currentLanguage);
         });
-    });
+      });
 
-    // --- 6. INITIËLE LADING ---
-    // Start de pagina direct in het Engels
-    renderPage(currentLanguage);
-
-</script>
-</body>
+      // --- 6. INITIËLE LADING ---
+      // Start de pagina direct in het Engels
+      renderPage(currentLanguage);
+    </script>
+  </body>
 </html>
