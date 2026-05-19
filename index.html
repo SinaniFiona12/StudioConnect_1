@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AED Studios - Home</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
 <header class="main-header">
@@ -22,11 +23,8 @@
         </div>
 
         <div class="logo-text">
-
             <strong>AED STUDIOS</strong>
-
             <span>Creative Network</span>
-
         </div>
 
     </div>
@@ -48,7 +46,6 @@
     </div>
 
 </header>
-<!-- HERO -->
 
 <section class="hero-section">
 
@@ -58,15 +55,13 @@
 
 </section>
 
-<!-- NEWS -->
-
 <section class="news-section">
 
     <div class="section-title">
 
         <img src="./images/speakersmall.svg">
 
-        <h2>Actualiteit</h2>
+        <h2 id="newsTitle"></h2>
 
     </div>
 
@@ -74,13 +69,9 @@
 
 </section>
 
-<!-- PRODUCTIONS -->
-
 <section class="productions-section">
 
-    <h2 class="productions-title">
-        Actieve Producties
-    </h2>
+    <h2 class="productions-title" id="productionsTitle"></h2>
 
     <div class="production-list" id="productionList"></div>
 
@@ -88,101 +79,266 @@
 
 <nav class="bottom-nav">
 
-    <a href="index.html" class="nav-item active ">
+    <a href="index.html" class="nav-item active">
+
         <div class="nav-icon">
             <img src="./images/HomeIconfull.svg" alt="Home">
         </div>
-        <span>Home</span>
+
+        <span id="navHome"></span>
+
     </a>
 
     <a href="map.html" class="nav-item">
+
         <div class="nav-icon">
             <img src="./images/MapIcontrans.svg" alt="Map">
         </div>
-        <span>Map</span>
+
+        <span id="navMap"></span>
+
     </a>
 
-    <a href="overview.html" class="nav-item ">
+    <a href="overview.html" class="nav-item">
+
         <div class="nav-icon">
             <img src="./images/StudioIcontrans.svg" alt="Studio's">
         </div>
-        <span>Studio's</span>
+
+        <span id="navStudios"></span>
+
     </a>
 
-   <a href="eventCode.html" id="eventNavBtn" class="nav-item">
+    <a href="eventCode.html" id="eventNavBtn" class="nav-item">
+
         <div class="nav-icon">
             <img src="./images/EventIcontrans.svg" alt="Event">
         </div>
-        <span>Event</span>
+
+        <span id="navEvent"></span>
+
     </a>
 
 </nav>
 
 <script>
-/* HERO DATABASE */
 
-const heroSlides = [
+const translations = {
 
-    {
-        tag: "Recent opgenomen",
-        title: "Knokke Off",
-        subtitle: "Seizoen 3 • 2026",
-        channel: "VRT",
-        image: "./images/image 37.svg"
+    nl: {
+
+        newsTitle: "Actualiteit",
+        productionsTitle: "Actieve Producties",
+
+        navHome: "Home",
+        navMap: "Kaart",
+        navStudios: "Studio's",
+        navEvent: "Event",
+
+        heroSlides: [
+
+            {
+                tag: "Recent opgenomen",
+                title: "Knokke Off",
+                subtitle: "Seizoen 3 • 2026",
+                channel: "VRT",
+                image: "./images/image 37.svg"
+            },
+
+            {
+                tag: "Binnenkort",
+                title: "Next to Normal",
+                subtitle: "Rockmusical",
+                channel: "Kadee Producties",
+                image: "./images/Nexttonormal.svg"
+            },
+
+            {
+                tag: "Recent opgenomen",
+                title: "Undercover",
+                subtitle: "Studio 5 • 2024",
+                channel: "Streamz",
+                image: "./images/undercover.svg"
+            }
+
+        ],
+
+        newsItems: [
+
+            {
+                active: true,
+                icon: "./images/Bliksem.svg",
+                daysAgo: 2,
+                title: "Nieuwe studio geopend",
+                text:
+                    "Studio 16 is nu beschikbaar voor bookings met state-of-the-art 4K camera equipment."
+            },
+
+            {
+                active: false,
+                icon: "./images/Speakerbig.svg",
+                daysAgo: 5,
+                title: "Upgrades netwerk",
+                text:
+                    "Snellere verbindingen tussen alle studio's dankzij nieuwe infrastructuur."
+            },
+
+            {
+                active: false,
+                icon: "./images/Calenderbig.svg",
+                daysAgo: 7,
+                title: "AED Theater coming soon",
+                text:
+                    "Binnenkort kan je naar de nieuwste theater shows komen kijken in ons splinternieuwe AED Theater."
+            }
+
+        ]
+
     },
 
-    {
-        tag: "Comming soon",
-        title: "Next to normal",
-        subtitle: "Rockmusical",
-        channel: "Kadee producties",
-        image: "./images/Nexttonormal.svg"
+    en: {
+
+        newsTitle: "News",
+        productionsTitle: "Active Productions",
+
+        navHome: "Home",
+        navMap: "Map",
+        navStudios: "Studios",
+        navEvent: "Event",
+
+        heroSlides: [
+
+            {
+                tag: "Recently recorded",
+                title: "Knokke Off",
+                subtitle: "Season 3 • 2026",
+                channel: "VRT",
+                image: "./images/image 37.svg"
+            },
+
+            {
+                tag: "Coming soon",
+                title: "Next to Normal",
+                subtitle: "Rock Musical",
+                channel: "Kadee Productions",
+                image: "./images/Nexttonormal.svg"
+            },
+
+            {
+                tag: "Recently recorded",
+                title: "Undercover",
+                subtitle: "Studio 5 • 2024",
+                channel: "Streamz",
+                image: "./images/undercover.svg"
+            }
+
+        ],
+
+        newsItems: [
+
+            {
+                active: true,
+                icon: "./images/Bliksem.svg",
+                daysAgo: 2,
+                title: "New studio opened",
+                text:
+                    "Studio 16 is now available for bookings with state-of-the-art 4K camera equipment."
+            },
+
+            {
+                active: false,
+                icon: "./images/Speakerbig.svg",
+                daysAgo: 5,
+                title: "Network upgrades",
+                text:
+                    "Faster connections between all studios thanks to new infrastructure."
+            },
+
+            {
+                active: false,
+                icon: "./images/Calenderbig.svg",
+                daysAgo: 7,
+                title: "AED Theater coming soon",
+                text:
+                    "Soon you'll be able to enjoy the latest theater shows in our brand new AED Theater."
+            }
+
+        ]
+
     },
 
-    {
-        tag: "Recent opgenomen",
-        title: "Undercover",
-        subtitle: "Studio 5 • 2024",
-        channel: "Streamz",
-        image: "./images/undercover.svg"
+    fr: {
+
+        newsTitle: "Actualités",
+        productionsTitle: "Productions Actives",
+
+        navHome: "Accueil",
+        navMap: "Carte",
+        navStudios: "Studios",
+        navEvent: "Événement",
+
+        heroSlides: [
+
+            {
+                tag: "Récemment enregistré",
+                title: "Knokke Off",
+                subtitle: "Saison 3 • 2026",
+                channel: "VRT",
+                image: "./images/image 37.svg"
+            },
+
+            {
+                tag: "Bientôt disponible",
+                title: "Next to Normal",
+                subtitle: "Comédie musicale rock",
+                channel: "Kadee Productions",
+                image: "./images/Nexttonormal.svg"
+            },
+
+            {
+                tag: "Récemment enregistré",
+                title: "Undercover",
+                subtitle: "Studio 5 • 2024",
+                channel: "Streamz",
+                image: "./images/undercover.svg"
+            }
+
+        ],
+
+        newsItems: [
+
+            {
+                active: true,
+                icon: "./images/Bliksem.svg",
+                daysAgo: 2,
+                title: "Nouveau studio ouvert",
+                text:
+                    "Le Studio 16 est maintenant disponible avec un équipement caméra 4K ultramoderne."
+            },
+
+            {
+                active: false,
+                icon: "./images/Speakerbig.svg",
+                daysAgo: 5,
+                title: "Mise à niveau du réseau",
+                text:
+                    "Connexions plus rapides entre tous les studios grâce à une nouvelle infrastructure."
+            },
+
+            {
+                active: false,
+                icon: "./images/Calenderbig.svg",
+                daysAgo: 7,
+                title: "AED Theater bientôt disponible",
+                text:
+                    "Bientôt, vous pourrez profiter des derniers spectacles dans notre tout nouveau AED Theater."
+            }
+
+        ]
+
     }
 
-];
-
-/* NEWS DATABASE */
-
-const newsItems = [
-
-    {
-        active: true,
-        icon: "./images/Bliksem.svg",
-        daysAgo: 2,
-        title: "Nieuwe studio geopend",
-        text:
-        "Studio 16 is nu beschikbaar voor bookings met state-of-the-art 4K camera equipment."
-    },
-
-    {
-        active: false,
-        icon: "./images/Speakerbig.svg",
-        daysAgo: 5,
-        title: "Upgrades netwerk",
-        text:
-        "Snellere verbindingen tussen alle studio's dankzij nieuwe infrastructuur."
-    },
-
-    {
-        active: false,
-        icon: "./images/Calenderbig.svg",
-        daysAgo: 7,
-        title: "AED Theater coming soon",
-        text:
-        "Binnenkort kan je naar de nieuwste theater shows komen kijken in ons splinternieuwe AED Theater."
-    }
-
-];
-
-/* PRODUCTIONS DATABASE */
+};
 
 const productions = [
 
@@ -209,216 +365,254 @@ const productions = [
 
 ];
 
-/* HERO GENERATION */
+function getTimeAgo(days, lang){
 
-const heroSlider =
-    document.getElementById(
-        "heroSlider"
-    );
+    if(lang === "fr"){
 
-const heroDots =
-    document.getElementById(
-        "heroDots"
-    );
+        if(days === 0) return "Aujourd'hui";
+        if(days === 1) return "Il y a 1 jour";
+        if(days < 7) return `Il y a ${days} jours`;
 
-heroSlides.forEach((slide, index) => {
+        const weeks = Math.floor(days / 7);
 
-    heroSlider.innerHTML += `
+        if(weeks === 1) return "Il y a 1 semaine";
 
-        <div class="hero-slide ${index === 0 ? "active" : ""}">
-
-            <img 
-                src="${slide.image}"
-                class="hero-image"
-            >
-
-            <div class="hero-overlay"></div>
-
-            <div class="carousel-content">
-
-                <div class="hero-tag">
-                    ${slide.tag}
-                </div>
-
-                <h1>
-                    ${slide.title}
-                </h1>
-
-                <p>
-                    ${slide.subtitle}
-                </p>
-
-                <span>
-                    ${slide.channel}
-                </span>
-
-            </div>
-
-        </div>
-
-    `;
-
-    heroDots.innerHTML += `
-
-        <div class="hero-dot ${index === 0 ? "active" : ""}"></div>
-
-    `;
-
-});
-
-/* NEWS GENERATION */
-
-const newsScroll =
-    document.getElementById(
-        "newsScroll"
-    );
-
-function getTimeAgo(days){
-
-    if(days === 0){
-
-        return "Vandaag";
-
+        return `Il y a ${weeks} semaines`;
     }
 
-    if(days === 1){
+    if(lang === "en"){
 
-        return "1 dag geleden";
+        if(days === 0) return "Today";
+        if(days === 1) return "1 day ago";
+        if(days < 7) return `${days} days ago`;
 
+        const weeks = Math.floor(days / 7);
+
+        if(weeks === 1) return "1 week ago";
+
+        return `${weeks} weeks ago`;
     }
 
-    if(days < 7){
+    if(days === 0) return "Vandaag";
+    if(days === 1) return "1 dag geleden";
+    if(days < 7) return `${days} dagen geleden`;
 
-        return `${days} dagen geleden`;
+    const weeks = Math.floor(days / 7);
 
-    }
-
-    const weeks =
-        Math.floor(days / 7);
-
-    if(weeks === 1){
-
-        return "1 week geleden";
-
-    }
+    if(weeks === 1) return "1 week geleden";
 
     return `${weeks} weken geleden`;
 
 }
 
-newsItems.forEach(news => {
+function renderPage(lang){
 
-    newsScroll.innerHTML += `
+    const data = translations[lang];
 
-        <div class="news-card ${news.active ? "active-news" : ""}">
+    document.getElementById("newsTitle").textContent =
+        data.newsTitle;
 
-            <div class="news-top">
+    document.getElementById("productionsTitle").textContent =
+        data.productionsTitle;
 
-                <div class="news-icon">
+    document.getElementById("navHome").textContent =
+        data.navHome;
 
-                    <img src="${news.icon}">
+    document.getElementById("navMap").textContent =
+        data.navMap;
+
+    document.getElementById("navStudios").textContent =
+        data.navStudios;
+
+    document.getElementById("navEvent").textContent =
+        data.navEvent;
+
+    document
+        .querySelectorAll(".lang-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+    document
+        .getElementById(`btn-${lang}`)
+        .classList.add("active");
+
+    const heroSlider =
+        document.getElementById("heroSlider");
+
+    const heroDots =
+        document.getElementById("heroDots");
+
+    heroSlider.innerHTML = "";
+    heroDots.innerHTML = "";
+
+    data.heroSlides.forEach((slide, index) => {
+
+        heroSlider.innerHTML += `
+
+            <div class="hero-slide ${index === 0 ? "active" : ""}">
+
+                <img 
+                    src="${slide.image}"
+                    class="hero-image"
+                >
+
+                <div class="hero-overlay"></div>
+
+                <div class="carousel-content">
+
+                    <div class="hero-tag">
+                        ${slide.tag}
+                    </div>
+
+                    <h1>${slide.title}</h1>
+
+                    <p>${slide.subtitle}</p>
+
+                    <span>${slide.channel}</span>
 
                 </div>
 
-                <span>
-                    ${getTimeAgo(news.daysAgo)}
-                </span>
+            </div>
+
+        `;
+
+        heroDots.innerHTML += `
+            <div class="hero-dot ${index === 0 ? "active" : ""}"></div>
+        `;
+    });
+
+    const newsScroll =
+        document.getElementById("newsScroll");
+
+    newsScroll.innerHTML = "";
+
+    data.newsItems.forEach(news => {
+
+        newsScroll.innerHTML += `
+
+            <div class="news-card ${news.active ? "active-news" : ""}">
+
+                <div class="news-top">
+
+                    <div class="news-icon">
+                        <img src="${news.icon}">
+                    </div>
+
+                    <span>
+                        ${getTimeAgo(news.daysAgo, lang)}
+                    </span>
+
+                </div>
+
+                <h3>${news.title}</h3>
+
+                <p>${news.text}</p>
 
             </div>
 
-            <h3>
-                ${news.title}
-            </h3>
+        `;
 
-            <p>
-                ${news.text}
-            </p>
+    });
 
-        </div>
+    const productionList =
+        document.getElementById("productionList");
 
-    `;
+    productionList.innerHTML = "";
 
-});
+    productions.forEach(item => {
 
-/* PRODUCTIONS GENERATION */
+        productionList.innerHTML += `
 
-const productionList =
-    document.getElementById(
-        "productionList"
-    );
+            <div class="production-card">
 
-productions.forEach(item => {
+                <img 
+                    src="${item.image}"
+                    class="production-thumb"
+                >
 
-    productionList.innerHTML += `
+                <div class="production-info">
 
-        <div class="production-card">
+                    <h3>${item.title}</h3>
 
-            <img 
-                src="${item.image}"
-                class="production-thumb"
-            >
+                    <p>${item.studio}</p>
 
-            <div class="production-info">
+                    <span>
+                        ⏱ ${item.time}
+                    </span>
 
-                <h3>${item.title}</h3>
-
-                <p>${item.studio}</p>
-
-                <span>
-                    ⏱ ${item.time}
-                </span>
+                </div>
 
             </div>
 
-        </div>
+        `;
 
-    `;
+    });
 
-});
+    startCarousel();
 
-/* HERO CAROUSEL */
-
-const slides =
-    document.querySelectorAll(
-        ".hero-slide"
-    );
-
-const dots =
-    document.querySelectorAll(
-        ".hero-dot"
-    );
-
-let currentSlide = 0;
-
-function showSlide(index){
-
-    slides.forEach(slide =>
-        slide.classList.remove("active")
-    );
-
-    dots.forEach(dot =>
-        dot.classList.remove("active")
-    );
-
-    slides[index].classList.add("active");
-
-    dots[index].classList.add("active");
+    localStorage.setItem("selectedLanguage", lang);
 
 }
 
-setInterval(() => {
+function startCarousel(){
 
-    currentSlide++;
+    const slides =
+        document.querySelectorAll(".hero-slide");
 
-    if(currentSlide >= slides.length){
+    const dots =
+        document.querySelectorAll(".hero-dot");
 
-        currentSlide = 0;
+    let currentSlide = 0;
 
+    function showSlide(index){
+
+        slides.forEach(slide =>
+            slide.classList.remove("active")
+        );
+
+        dots.forEach(dot =>
+            dot.classList.remove("active")
+        );
+
+        slides[index].classList.add("active");
+
+        dots[index].classList.add("active");
     }
 
-    showSlide(currentSlide);
+    clearInterval(window.heroInterval);
 
-}, 4000);
+    window.heroInterval = setInterval(() => {
+
+        currentSlide++;
+
+        if(currentSlide >= slides.length){
+
+            currentSlide = 0;
+
+        }
+
+        showSlide(currentSlide);
+
+    }, 4000);
+
+}
+
+document
+    .getElementById("btn-nl")
+    .addEventListener("click", () => renderPage("nl"));
+
+document
+    .getElementById("btn-en")
+    .addEventListener("click", () => renderPage("en"));
+
+document
+    .getElementById("btn-fr")
+    .addEventListener("click", () => renderPage("fr"));
+
+const savedLanguage =
+    localStorage.getItem("selectedLanguage") || "en";
+
+renderPage(savedLanguage);
+
 </script>
 
 </body>

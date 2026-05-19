@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
     <title>AED Studios - Map</title>
- 
+
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
 
     <style>
 
@@ -290,347 +292,277 @@
             border: none;
         }
     </style>
+
 </head>
+
 <body class="bodymap">
 
-    <header class="main-header">
-
-        <div class="logo-area">
-            <div class="logo-placeholder"><img src="./images/Logo.svg" alt="logo"></div>
-
-            <div class="logo-text">
-                <strong>AED STUDIOS</strong>
-                <span>Creative Network</span>
-            </div>
+<header class="main-header">
+    <div class="logo-area">
+        <div class="logo-placeholder">
+            <img src="./images/Logo.svg" alt="logo">
         </div>
 
-        <div class="language-toggles">
-            <button class="lang-btn">NL</button>
-            <button class="lang-btn active">EN</button>
-            <button class="lang-btn">FR</button>
-        </div>
-
-    </header>
-
-
-    <div class="map-container" id="map-container">
-        
-        <div class="map-layer" id="map-layer">
-            <div class="map-pin" id="pin-orangerie">
-                <img src="images/Container (3).svg" alt="Orangerie">
-            </div>
-
-            <div class="map-pin" id="pin-2">2</div>
-            <div class="map-pin" id="pin-12">12</div>
-        </div>
-
-        <button class="side-arrow-btn" id="arrow-left"><img src="images/Polygon 2.svg" alt="Left"></button>
-        <button class="side-arrow-btn" id="arrow-right"><img src="images/Polygon 1.svg" alt="Right"></button>
-
-        <div class="map-legend">
-            <div class="legend-item">
-                <div class="dot-white"></div>
-                <span>Your location</span>
-            </div>
-            <div class="legend-item">
-                <div class="icon-red">
-                    <img src="images/Icon (4).svg" alt="Location">
-                </div>
-                <span>Studio locations (5)</span>
-            </div>
-        </div>
-
-        <div class="overlay-popup" id="overlay-popup">
-            <div class="overlay-image-area">
-                <div class="overlay-badge">
-                    <img src="images/Container (3).svg" alt="Icon">
-                </div>
-                <div class="overlay-title">The Orangerie</div>
-            </div>
-            <a href="information.html" class="overlay-action">
-                <span>Ontdek deze studio</span>
-                <img src="images/Icon (3).svg" alt="Arrow Right">
-            </a>
+        <div class="logo-text">
+            <strong>AED STUDIOS</strong>
+            <span>Creative Network</span>
         </div>
     </div>
 
-    <nav class="bottom-nav">
+    <div class="language-toggles">
+        <button class="lang-btn" id="btn-nl">NL</button>
+        <button class="lang-btn active" id="btn-en">EN</button>
+        <button class="lang-btn" id="btn-fr">FR</button>
+    </div>
+</header>
 
-        <a href="index.html" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/HomeIcon.svg" alt="Home">
+<div class="map-container" id="map-container">
+
+    <div class="map-layer" id="map-layer">
+        <div class="map-pin" id="pin-orangerie">
+            <img src="images/Container (3).svg" alt="Orangerie">
+        </div>
+
+        <div class="map-pin" id="pin-2">2</div>
+        <div class="map-pin" id="pin-12">12</div>
+    </div>
+
+    <button class="side-arrow-btn" id="arrow-left">
+        <img src="images/Polygon 2.svg" alt="Left">
+    </button>
+
+    <button class="side-arrow-btn" id="arrow-right">
+        <img src="images/Polygon 1.svg" alt="Right">
+    </button>
+
+    <div class="map-legend">
+        <div class="legend-item">
+            <div class="dot-white"></div>
+            <span data-translate="yourLocation"></span>
+        </div>
+
+        <div class="legend-item">
+            <div class="icon-red">
+                <img src="images/Icon (4).svg" alt="Location">
             </div>
-            <span>Home</span>
-        </a>
-    
-        <a href="map.html" class="nav-item active">
-            <div class="nav-icon">
-                <img src="./images/MapIcon.svg" alt="Map">
+            <span data-translate="studioLocations"></span>
+        </div>
+    </div>
+
+    <div class="overlay-popup" id="overlay-popup">
+        <div class="overlay-image-area">
+            <div class="overlay-badge">
+                <img src="images/Container (3).svg" alt="Icon">
             </div>
-            <span>Map</span>
+
+            <div class="overlay-title">The Orangerie</div>
+        </div>
+
+        <a href="information.html" class="overlay-action">
+            <span data-translate="discoverStudio"></span>
+            <img src="images/Icon (3).svg" alt="Arrow Right">
         </a>
-    
-        <a href="overview.html" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/StudioIcontrans.svg" alt="Studio's">
-            </div>
-            <span>Studio's</span>
-        </a>
-    
-       <a href="#" id="eventNavBtn" class="nav-item">
-            <div class="nav-icon">
-                <img src="./images/EventIcontrans.svg" alt="Event">
-            </div>
-            <span>Event</span>
-        </a>
-    
-    </nav>
+    </div>
+</div>
 
-    <script>
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+        <div class="nav-icon">
+            <img src="./images/HomeIcon.svg" alt="Home">
+        </div>
+        <span data-translate="navHome"></span>
+    </a>
 
-    
+    <a href="map.html" class="nav-item active">
+        <div class="nav-icon">
+            <img src="./images/MapIcon.svg" alt="Map">
+        </div>
+        <span data-translate="navMap"></span>
+    </a>
 
-    const eventNavBtn =
-        document.getElementById("eventNavBtn");
+    <a href="overview.html" class="nav-item">
+        <div class="nav-icon">
+            <img src="./images/StudioIcontrans.svg" alt="Studio's">
+        </div>
+        <span data-translate="navStudios"></span>
+    </a>
 
-    eventNavBtn.addEventListener("click", (e) => {
+    <a href="#" id="eventNavBtn" class="nav-item">
+        <div class="nav-icon">
+            <img src="./images/EventIcontrans.svg" alt="Event">
+        </div>
+        <span data-translate="navEvent"></span>
+    </a>
+</nav>
 
-        e.preventDefault();
+<script>
+    const translations = {
+        en: {
+            yourLocation: "Your location",
+            studioLocations: "Studio locations (5)",
+            discoverStudio: "Discover this studio",
+            navHome: "Home",
+            navMap: "Map",
+            navStudios: "Studios",
+            navEvent: "Event"
+        },
 
-        const access =
-            sessionStorage.getItem("eventAccess");
+        nl: {
+            yourLocation: "Jouw locatie",
+            studioLocations: "Studio locaties (5)",
+            discoverStudio: "Ontdek deze studio",
+            navHome: "Home",
+            navMap: "Kaart",
+            navStudios: "Studio's",
+            navEvent: "Event"
+        },
 
-        
-
-        if(access === "granted"){
-
-            window.location.href =
-                "event-overview.html";
-
+        fr: {
+            yourLocation: "Votre position",
+            studioLocations: "Emplacements des studios (5)",
+            discoverStudio: "Découvrez ce studio",
+            navHome: "Accueil",
+            navMap: "Carte",
+            navStudios: "Studios",
+            navEvent: "Événement"
         }
+    };
 
-        
+    function setLanguage(language) {
+        localStorage.setItem("language", language);
 
-        else{
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+            btn.classList.remove("active");
+        });
 
-            window.location.href =
-                "EventCode.html";
+        document.getElementById(`btn-${language}`).classList.add("active");
 
-        }
+        document.querySelectorAll("[data-translate]").forEach((element) => {
+            const key = element.dataset.translate;
+            element.textContent = translations[language][key];
+        });
+    }
 
+    document.getElementById("btn-nl").addEventListener("click", () => {
+        setLanguage("nl");
     });
 
-    
+    document.getElementById("btn-en").addEventListener("click", () => {
+        setLanguage("en");
+    });
 
-    const pinOrangerie =
-        document.getElementById(
-            'pin-orangerie'
-        );
+    document.getElementById("btn-fr").addEventListener("click", () => {
+        setLanguage("fr");
+    });
 
-    const overlayPopup =
-        document.getElementById(
-            'overlay-popup'
-        );
+    const savedLanguage = localStorage.getItem("language") || "en";
+    setLanguage(savedLanguage);
 
-    const mapContainer =
-        document.getElementById(
-            'map-container'
-        );
+    const eventNavBtn = document.getElementById("eventNavBtn");
 
-    pinOrangerie.addEventListener(
-        'click',
-        (e) => {
+    eventNavBtn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-            e.stopPropagation();
+        const access = sessionStorage.getItem("eventAccess");
 
-            overlayPopup.classList.add(
-                'active'
-            );
-
+        if(access === "granted"){
+            window.location.href = "event-overview.html";
+        } else {
+            window.location.href = "EventCode.html";
         }
-    );
+    });
 
-    mapContainer.addEventListener(
-        'click',
-        () => {
+    const pinOrangerie = document.getElementById("pin-orangerie");
+    const overlayPopup = document.getElementById("overlay-popup");
+    const mapContainer = document.getElementById("map-container");
 
-            overlayPopup.classList.remove(
-                'active'
-            );
+    pinOrangerie.addEventListener("click", (e) => {
+        e.stopPropagation();
+        overlayPopup.classList.add("active");
+    });
 
-        }
-    );
+    mapContainer.addEventListener("click", () => {
+        overlayPopup.classList.remove("active");
+    });
 
-    overlayPopup.addEventListener(
-        'click',
-        (e) => {
+    overlayPopup.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
 
-            e.stopPropagation();
-
-        }
-    );
-
-    
-
-    const mapLayer =
-        document.getElementById(
-            'map-layer'
-        );
+    const mapLayer = document.getElementById("map-layer");
 
     let scale = 1;
-
     let isDragging = false;
-
-    let startX, startY;
-
+    let startX;
+    let startY;
     let translateX = -1000;
-
     let translateY = -1000;
 
     function updateTransform(){
-
         mapLayer.style.transform =
-
             `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-
     }
 
-    
+    mapContainer.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+    });
 
-    mapContainer.addEventListener(
-        'mousedown',
-        (e) => {
+    window.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
 
+    window.addEventListener("mousemove", (e) => {
+        if(!isDragging) return;
+
+        e.preventDefault();
+
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+
+        updateTransform();
+    });
+
+    mapContainer.addEventListener("wheel", (e) => {
+        e.preventDefault();
+
+        const zoomAmount = 0.1;
+
+        if(e.deltaY < 0){
+            scale += zoomAmount;
+        } else {
+            scale -= zoomAmount;
+        }
+
+        scale = Math.min(Math.max(0.4, scale), 3);
+
+        updateTransform();
+    });
+
+    mapContainer.addEventListener("touchstart", (e) => {
+        if(e.touches.length === 1){
             isDragging = true;
-
-            startX =
-                e.clientX - translateX;
-
-            startY =
-                e.clientY - translateY;
-
+            startX = e.touches[0].clientX - translateX;
+            startY = e.touches[0].clientY - translateY;
         }
-    );
+    });
 
-    window.addEventListener(
-        'mouseup',
-        () => {
+    window.addEventListener("touchend", () => {
+        isDragging = false;
+    });
 
-            isDragging = false;
+    window.addEventListener("touchmove", (e) => {
+        if(!isDragging || e.touches.length !== 1) return;
 
-        }
-    );
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
 
-    window.addEventListener(
-        'mousemove',
-        (e) => {
-
-            if(!isDragging) return;
-
-            e.preventDefault();
-
-            translateX =
-                e.clientX - startX;
-
-            translateY =
-                e.clientY - startY;
-
-            updateTransform();
-
-        }
-    );
-
-    
-
-    mapContainer.addEventListener(
-        'wheel',
-        (e) => {
-
-            e.preventDefault();
-
-            const zoomAmount = 0.1;
-
-            if(e.deltaY < 0){
-
-                scale += zoomAmount;
-
-            }
-
-            else{
-
-                scale -= zoomAmount;
-
-            }
-
-            scale =
-                Math.min(
-                    Math.max(0.4, scale),
-                    3
-                );
-
-            updateTransform();
-
-        }
-    );
-
-    
-
-    mapContainer.addEventListener(
-        'touchstart',
-        (e) => {
-
-            if(e.touches.length === 1){
-
-                isDragging = true;
-
-                startX =
-                    e.touches[0].clientX -
-                    translateX;
-
-                startY =
-                    e.touches[0].clientY -
-                    translateY;
-
-            }
-
-        }
-    );
-
-    window.addEventListener(
-        'touchend',
-        () => {
-
-            isDragging = false;
-
-        }
-    );
-
-    window.addEventListener(
-        'touchmove',
-        (e) => {
-
-            if(
-                !isDragging ||
-                e.touches.length !== 1
-            ) return;
-
-            translateX =
-                e.touches[0].clientX -
-                startX;
-
-            translateY =
-                e.touches[0].clientY -
-                startY;
-
-            updateTransform();
-
-        }
-    );
-
-    
+        updateTransform();
+    });
 
     updateTransform();
-
 </script>
+
 </body>
 </html>
