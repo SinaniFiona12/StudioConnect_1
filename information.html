@@ -59,14 +59,14 @@
         </div>
       </section>
 
-      <section class="info-section">
-        <h3 class="section-title" id="gallery-title">GALLERY</h3>
-        <div class="gallery-grid" id="gallery-container"></div>
-      </section>
-
       <section class="info-section" id="references-section" hidden>
         <h3 class="section-title" id="references-title">REFERENCES</h3>
         <div class="references-scroll" id="references-container"></div>
+      </section>
+
+      <section class="info-section">
+        <h3 class="section-title" id="gallery-title">GALLERY</h3>
+        <div class="gallery-grid" id="gallery-container"></div>
       </section>
 
       <section class="info-section">
@@ -78,34 +78,95 @@
           <div class="nav-icon">
             <img src="./images/HomeIcon.svg" alt="Home" />
           </div>
-          <span>Home</span>
+          <span id="nav-home">Home</span>
         </a>
 
         <a href="map.html" class="nav-item">
           <div class="nav-icon">
             <img src="./images/MapIcontrans.svg" alt="Map" />
           </div>
-          <span>Map</span>
+          <span id="nav-map">Map</span>
         </a>
 
         <a href="overview.html" class="nav-item">
           <div class="nav-icon">
             <img src="./images/StudioIcontrans.svg" alt="Studio's" />
           </div>
-          <span>Studio's</span>
+          <span id="nav-studios">Studio's</span>
         </a>
 
         <a href="eventCode.html" id="eventNavBtn" class="nav-item">
           <div class="nav-icon">
             <img src="./images/EventIcontrans.svg" alt="Event" />
           </div>
-          <span>Event</span>
+          <span id="nav-event">Event</span>
         </a>
       </nav>
     </main>
 
     <script type="module">
       import { supabase } from "./src/supabase.js";
+
+      const translations = {
+        nl: {
+          about: "OVER STUDIO",
+          references: "REFERENTIES",
+          gallery: "GALERIJ",
+          navHome: "Home",
+          navMap: "Kaart",
+          navStudios: "Studio's",
+          navEvent: "Event",
+        },
+        en: {
+          about: "ABOUT STUDIO",
+          references: "REFERENCES",
+          gallery: "GALLERY",
+          navHome: "Home",
+          navMap: "Map",
+          navStudios: "Studios",
+          navEvent: "Event",
+        },
+        fr: {
+          about: "À PROPOS DU STUDIO",
+          references: "RÉFÉRENCES",
+          gallery: "GALERIE",
+          navHome: "Accueil",
+          navMap: "Carte",
+          navStudios: "Studios",
+          navEvent: "Événement",
+        },
+      };
+
+      function setText(id, text) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = text;
+        }
+      }
+
+      function setLanguage(lang) {
+        const t = translations[lang];
+
+        setText("about-title", t.about);
+        setText("references-title", t.references);
+        setText("gallery-title", t.gallery);
+        setText("nav-home", t.navHome);
+        setText("nav-map", t.navMap);
+        setText("nav-studios", t.navStudios);
+        setText("nav-event", t.navEvent);
+
+        document.querySelectorAll(".lang-btn").forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === lang);
+        });
+
+        localStorage.setItem("language", lang);
+      }
+
+      document.querySelectorAll(".lang-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          setLanguage(button.dataset.lang);
+        });
+      });
 
       // --- 1. FETCH STUDIO DETAILS FROM SUPABASE ---
       async function fetchStudioDetails(studioId) {
@@ -149,16 +210,6 @@
           document.getElementById("hero-image").src = studio.banner;
         }
 
-        // Render gallery
-        const galleryContainer = document.getElementById("gallery-container");
-        galleryContainer.innerHTML = "";
-        (studio.gallery || []).forEach((imageUrl) => {
-          const imgElement = document.createElement("img");
-          imgElement.src = imageUrl;
-          imgElement.alt = "Gallery Image";
-          galleryContainer.appendChild(imgElement);
-        });
-
         // Render references
         const referencesSection = document.getElementById("references-section");
         const referencesContainer = document.getElementById(
@@ -175,6 +226,16 @@
           imgElement.alt = "Reference Image";
           imgElement.className = "reference-card";
           referencesContainer.appendChild(imgElement);
+        });
+
+        // Render gallery
+        const galleryContainer = document.getElementById("gallery-container");
+        galleryContainer.innerHTML = "";
+        (studio.gallery || []).forEach((imageUrl) => {
+          const imgElement = document.createElement("img");
+          imgElement.src = imageUrl;
+          imgElement.alt = "Gallery Image";
+          galleryContainer.appendChild(imgElement);
         });
 
         // Render contacts
@@ -203,6 +264,7 @@
       }
 
       // --- 3. INITIALIZE PAGE ---
+      setLanguage(localStorage.getItem("language") || "en");
       renderStudioDetails();
     </script>
   </body>
