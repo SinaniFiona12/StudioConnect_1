@@ -99,143 +99,84 @@
       </nav>
     </main>
 
-    <script>
-      // 1. Vaste Data (Nu met meerdere contacten zoals in je design)
-      const databaseData = {
-        title: "The Orangerie",
-        heroImage: "images/image 2 (1).svg",
-        galleryImages: [
-          "images/orangeriefeest.svg",
-          "images/orangeriemensen.svg",
-          "images/orangerieglazen.svg",
-          "images/orangerieplaats.svg",
-        ],
-        // Nieuwe contactenlijst toegevoegd
-        contacts: [{ email: "Sales@aedstudios.com", label: "AED" }],
-      };
-
-      // 2. Woordenboek voor Vertalingen
-      const translations = {
-        en: {
-          aboutTitle: "ABOUT STUDIO",
-          galleryTitle: "GALLERY",
-          emailLabel: "Email",
-          contactBtnPrefix: "CONTACT",
-          description:
-            "The Orangerie is a unique 850 m² transparent event space, surrounded by nature and greenery. Flooded with natural light by day and transformed into an atmospheric venue by night, it offers a stylish setting enhanced with elegant chandeliers, subtle sound and lighting.",
-        },
-        nl: {
-          aboutTitle: "OVER DE STUDIO",
-          galleryTitle: "GALERIJ",
-          emailLabel: "E-mail",
-          contactBtnPrefix: "CONTACTEER",
-          description:
-            "De Orangerie is een unieke, transparante evenementenruimte van 850 m², omgeven door natuur en groen. Overdag overspoeld met natuurlijk licht en 's avonds omgetoverd tot een sfeervolle locatie, biedt het een stijlvolle setting verrijkt met elegante kroonluchters, subtiel geluid en verlichting.",
-        },
-        fr: {
-          aboutTitle: "À PROPOS DU STUDIO",
-          galleryTitle: "GALERIE",
-          emailLabel: "E-mail",
-          contactBtnPrefix: "CONTACTER",
-          description:
-            "L'Orangerie est un espace événementiel transparent unique de 850 m², entouré de nature et de verdure. Inondé de lumière naturelle le jour et transformé en un lieu d'ambiance la nuit, il offre un cadre élégant rehaussé de lustres élégants, d'un son et d'un éclairage subtils.",
-        },
-      };
-
-      let currentLanguage = localStorage.getItem("language") || "en";
-
-      // 3. Functie om de HTML te vullen
-      function buildPage(lang) {
-        const t = translations[lang];
-
-        // Titels & Beschrijving
-        document.getElementById("page-title").textContent = databaseData.title;
-        document.getElementById("studio-title").textContent =
-          databaseData.title;
-        document.getElementById("about-title").textContent = t.aboutTitle;
-        document.getElementById("gallery-title").textContent = t.galleryTitle;
-        document.getElementById("studio-description").textContent =
-          t.description;
-
-        // Gallery opbouwen (slechts 1x inladen)
-        const galleryContainer = document.getElementById("gallery-container");
-        if (galleryContainer.children.length === 0) {
-          databaseData.galleryImages.forEach((imageUrl) => {
+    <script type="module">
+        import { supabase } from "./src/supabase.js";
+      
+        // --- 1. FETCH STUDIO DETAILS FROM SUPABASE ---
+        async function fetchStudioDetails(studioId) {
+          const { data: studio, error } = await supabase
+            .from("studios")
+            .select("*")
+            .eq("id", studioId)
+            .single();
+      
+          if (error) {
+            console.error("Error fetching studio details:", error);
+            return null;
+          }
+          return studio;
+        }
+      
+        // --- 2. RENDER STUDIO DETAILS ---
+        async function renderStudioDetails() {
+          const params = new URLSearchParams(window.location.search);
+          const studioId = params.get("id");
+      
+          if (!studioId) {
+            console.error("No studio ID provided in the URL.");
+            return;
+          }
+      
+          const studio = await fetchStudioDetails(studioId);
+      
+          if (!studio) {
+            console.error("Studio not found.");
+            return;
+          }
+      
+          // Update page content
+          document.getElementById("page-title").textContent = studio.name;
+          document.getElementById("studio-title").textContent = studio.name;
+          document.getElementById("studio-description").textContent =
+            studio.description;
+      
+          // Render gallery
+          const galleryContainer = document.getElementById("gallery-container");
+          galleryContainer.innerHTML = "";
+          studio.gallery.forEach((imageUrl) => {
             const imgElement = document.createElement("img");
             imgElement.src = imageUrl;
-            imgElement.alt = "Gallery Afbeelding";
+            imgElement.alt = "Gallery Image";
             galleryContainer.appendChild(imgElement);
           });
+      
+          // Render contacts
+          const contactsContainer = document.getElementById("contacts-container");
+          contactsContainer.innerHTML = "";
+          studio.contacts.forEach((contact) => {
+            const card = document.createElement("div");
+            card.className = "card contact-section-card";
+      
+            card.innerHTML = `
+              <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
+                  <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
+                </div>
+                <div class="contact-info">
+                  <span class="contact-label" style="display: block; font-size: 12px; color: #888;">Email</span>
+                  <span class="studio-email-text" style="display: block; font-size: 16px; color: white;">${contact.email}</span>
+                </div>
+              </div>
+              <a href="mailto:${contact.email}" class="cta-button-new">
+                Contact ${contact.label} <img src="images/Icon (5).svg" alt="Arrow">
+              </a>
+            `;
+            contactsContainer.appendChild(card);
+          });
         }
-
-        // Contact Kaarten opbouwen met de CTA buttons
-        const contactsContainer = document.getElementById("contacts-container");
-        contactsContainer.innerHTML = ""; // Maak eerst leeg bij taalwissel
-
-       // Zoek in information.html naar dit gedeelte en vervang het door:
-databaseData.contacts.forEach((contact) => {
-  const card = document.createElement("div");
-  // We voegen hier de klasse 'card' toe voor het kader
-  card.className = "card contact-section-card"; 
-
-  const btnText = `${t.contactBtnPrefix} ${contact.label}`;
-
-// Pas dit gedeelte in je information.html aan
-card.innerHTML = `
-    <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-        <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
-            <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
-        </div>
-        <div class="contact-info">
-            <span class="contact-label" style="display: block; font-size: 12px; color: #888;">${t.emailLabel}</span>
-            <span class="studio-email-text" style="display: block; font-size: 16px; color: white;">${contact.email}</span>
-        </div>
-    </div>
-    <a href="mailto:${contact.email}" class="cta-button-new">
-        ${btnText} <img src="images/Icon (5).svg" alt="Arrow">
-    </a>
-`;
-  contactsContainer.appendChild(card);
-});
-      }
-
-      // 4. Taal Knoppen Logica
-      const languageButtons = document.querySelectorAll(".lang-btn");
-
-      languageButtons.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          languageButtons.forEach((button) =>
-            button.classList.remove("active"),
-          );
-          const clickedBtn = e.target;
-          clickedBtn.classList.add("active");
-
-          currentLanguage = clickedBtn.getAttribute("data-lang");
-          localStorage.setItem("language", currentLanguage);
-          buildPage(currentLanguage);
-        });
-      });
-
-      // 5. Initialiseer de pagina in de opgeslagen taal
-      languageButtons.forEach((button) => button.classList.remove("active"));
-      document
-        .querySelector(`[data-lang="${currentLanguage}"]`)
-        ?.classList.add("active");
-      buildPage(currentLanguage);
-
-      // 6. Event Navigatie Logica
-      const eventNavBtn = document.getElementById("eventNavBtn");
-      if (eventNavBtn) {
-        eventNavBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const access = localStorage.getItem("eventAccess");
-          if (access === "granted") {
-            window.location.href = "event-overview.html";
-          } else {
-            window.location.href = "eventCode.html";
-          }
-        });
-      }
-    </script>
+      
+        // --- 3. INITIALIZE PAGE ---
+        renderStudioDetails();
+      </script>
   </body>
 </html>
