@@ -14,7 +14,7 @@
     <header class="main-header">
       <div class="logo-area">
         <div class="logo-placeholder">
-          <img src="./images/Logo.svg" alt="logo" />
+          <img src="/images/Logo.svg" alt="logo" />
         </div>
         <div class="logo-text">
           <strong>AED STUDIOS</strong>
@@ -31,7 +31,7 @@
 
     <nav class="sub-nav">
       <button class="back-btn" id="backButton">
-        <img src="images/Button.svg" alt="Terug" />
+        <img src="/images/Button.svg" alt="Terug" />
       </button>
       <h2 id="page-title">Loading...</h2>
     </nav>
@@ -41,12 +41,12 @@
         <img
           id="hero-image"
           class="hero-bg"
-          src="images/image 2 (1).svg"
+          src="/images/image 2 (1).svg"
           alt="Hero Afbeelding"
         />
         <div class="hero-content">
           <div class="hero-icon">
-            <img src="images/Container (3).svg" alt="Orangerie Icon" />
+            <img src="/images/Container (3).svg" alt="Orangerie Icon" />
           </div>
           <h1 id="studio-title">Loading...</h1>
         </div>
@@ -76,28 +76,28 @@
       <nav class="bottom-nav">
         <a href="index.html" class="nav-item">
           <div class="nav-icon">
-            <img src="./images/HomeIcon.svg" alt="Home" />
+            <img src="/images/HomeIcon.svg" alt="Home" />
           </div>
           <span id="nav-home">Home</span>
         </a>
 
         <a href="map.html" class="nav-item">
           <div class="nav-icon">
-            <img src="./images/MapIcontrans.svg" alt="Map" />
+            <img src="/images/MapIcontrans.svg" alt="Map" />
           </div>
           <span id="nav-map">Map</span>
         </a>
 
         <a href="overview.html" class="nav-item">
           <div class="nav-icon">
-            <img src="./images/StudioIcontrans.svg" alt="Studio's" />
+            <img src="/images/StudioIcontrans.svg" alt="Studio's" />
           </div>
           <span id="nav-studios">Studio's</span>
         </a>
 
         <a href="eventCode.html" id="eventNavBtn" class="nav-item">
           <div class="nav-icon">
-            <img src="./images/EventIcontrans.svg" alt="Event" />
+            <img src="/images/EventIcontrans.svg" alt="Event" />
           </div>
           <span id="nav-event">Event</span>
         </a>
@@ -108,45 +108,18 @@
       import { supabase } from "./src/supabase.js";
 
       const translations = {
-        nl: {
-          about: "OVER STUDIO",
-          references: "REFERENTIES",
-          gallery: "GALERIJ",
-          navHome: "Home",
-          navMap: "Kaart",
-          navStudios: "Studio's",
-          navEvent: "Event",
-        },
-        en: {
-          about: "ABOUT STUDIO",
-          references: "REFERENCES",
-          gallery: "GALLERY",
-          navHome: "Home",
-          navMap: "Map",
-          navStudios: "Studios",
-          navEvent: "Event",
-        },
-        fr: {
-          about: "À PROPOS DU STUDIO",
-          references: "RÉFÉRENCES",
-          gallery: "GALERIE",
-          navHome: "Accueil",
-          navMap: "Carte",
-          navStudios: "Studios",
-          navEvent: "Événement",
-        },
+        nl: { about: "OVER STUDIO", references: "REFERENTIES", gallery: "GALERIJ", navHome: "Home", navMap: "Kaart", navStudios: "Studio's", navEvent: "Event" },
+        en: { about: "ABOUT STUDIO", references: "REFERENCES", gallery: "GALLERY", navHome: "Home", navMap: "Map", navStudios: "Studios", navEvent: "Event" },
+        fr: { about: "À PROPOS DU STUDIO", references: "RÉFÉRENCES", gallery: "GALERIE", navHome: "Accueil", navMap: "Carte", navStudios: "Studios", navEvent: "Événement" },
       };
 
       function setText(id, text) {
         const element = document.getElementById(id);
-        if (element) {
-          element.textContent = text;
-        }
+        if (element) element.textContent = text;
       }
 
       function setLanguage(lang) {
         const t = translations[lang];
-
         setText("about-title", t.about);
         setText("references-title", t.references);
         setText("gallery-title", t.gallery);
@@ -154,81 +127,51 @@
         setText("nav-map", t.navMap);
         setText("nav-studios", t.navStudios);
         setText("nav-event", t.navEvent);
-
         document.querySelectorAll(".lang-btn").forEach((button) => {
           button.classList.toggle("active", button.dataset.lang === lang);
         });
-
         localStorage.setItem("language", lang);
       }
 
       document.querySelectorAll(".lang-btn").forEach((button) => {
-        button.addEventListener("click", () => {
-          setLanguage(button.dataset.lang);
-        });
+        button.addEventListener("click", () => setLanguage(button.dataset.lang));
       });
 
-      // --- 1. FETCH STUDIO DETAILS FROM SUPABASE ---
       async function fetchStudioDetails(studioId) {
-        const { data: studio, error } = await supabase
-          .from("studios")
-          .select("*")
-          .eq("id", studioId)
-          .single();
-
-        if (error) {
-          console.error("Error fetching studio details:", error);
-          return null;
-        }
+        const { data: studio, error } = await supabase.from("studios").select("*").eq("id", studioId).single();
+        if (error) { console.error("Error fetching studio details:", error); return null; }
         return studio;
       }
 
-      // --- 2. RENDER STUDIO DETAILS ---
       async function renderStudioDetails() {
         const params = new URLSearchParams(window.location.search);
         const studioId = params.get("id");
-
-        if (!studioId) {
-          console.error("No studio ID provided in the URL.");
-          return;
-        }
+        if (!studioId) return;
 
         const studio = await fetchStudioDetails(studioId);
+        if (!studio) return;
 
-        if (!studio) {
-          console.error("Studio not found.");
-          return;
-        }
-
-        // Update page content
         document.getElementById("page-title").textContent = studio.name;
         document.getElementById("studio-title").textContent = studio.name;
-        document.getElementById("studio-description").textContent =
-          studio.description;
+        document.getElementById("studio-description").textContent = studio.description;
 
-        if (studio.banner) {
-          document.getElementById("hero-image").src = studio.banner;
-        }
+        if (studio.banner) document.getElementById("hero-image").src = studio.banner;
 
-        // Render references
         const referencesSection = document.getElementById("references-section");
-        const referencesContainer = document.getElementById(
-          "references-container"
-        );
+        const referencesContainer = document.getElementById("references-container");
         const references = studio.references || [];
-
         referencesContainer.innerHTML = "";
         referencesSection.hidden = references.length === 0;
 
         references.forEach((imageUrl) => {
           const imgElement = document.createElement("img");
-          imgElement.src = imageUrl;
+          // Path fixed to /images/Cinema/
+          imgElement.src = "/images/Cinema/" + imageUrl;
           imgElement.alt = "Reference Image";
           imgElement.className = "reference-card";
           referencesContainer.appendChild(imgElement);
         });
 
-        // Render gallery
         const galleryContainer = document.getElementById("gallery-container");
         galleryContainer.innerHTML = "";
         (studio.gallery || []).forEach((imageUrl) => {
@@ -238,17 +181,15 @@
           galleryContainer.appendChild(imgElement);
         });
 
-        // Render contacts
         const contactsContainer = document.getElementById("contacts-container");
         contactsContainer.innerHTML = "";
         (studio.contacts || []).forEach((contact) => {
           const card = document.createElement("div");
           card.className = "card contact-section-card";
-
           card.innerHTML = `
             <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
               <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
-                <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
+                <img src="/images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
               </div>
               <div class="contact-info">
                 <span class="contact-label" style="display: block; font-size: 12px; color: #888;">Email</span>
@@ -256,30 +197,21 @@
               </div>
             </div>
             <a href="mailto:${contact.email}" class="cta-button-new">
-              Contact ${contact.label} <img src="images/Icon (5).svg" alt="Arrow">
+              Contact ${contact.label} <img src="/images/Icon (5).svg" alt="Arrow">
             </a>
           `;
           contactsContainer.appendChild(card);
         });
       }
 
-      // --- 3. INITIALIZE PAGE ---
       setLanguage(localStorage.getItem("language") || "en");
       renderStudioDetails();
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const from = urlParams.get("from");
-
       const backButton = document.getElementById("backButton");
-
       backButton.addEventListener("click", () => {
-        if (from === "map") {
-          window.location.href = "map.html";
-        } else {
-          window.location.href = "overview.html";
-        }
+        const urlParams = new URLSearchParams(window.location.search);
+        window.location.href = urlParams.get("from") === "map" ? "map.html" : "overview.html";
       });
-      
     </script>
   </body>
 </html>
