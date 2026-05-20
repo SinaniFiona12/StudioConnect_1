@@ -85,149 +85,147 @@
       </a>
     </nav>
 
-    <script>
-      const translations = {
-        en: {
-          accessTitle: "Access Code",
+    <script type="module">
+  import { supabase } from "/src/supabase.js";
 
-          accessSubtitle: "Enter your unique company code to view events",
+  const translations = {
+    en: {
+      accessTitle: "Access Code",
+      accessSubtitle: "Enter your unique company code to view events",
+      accessPlaceholder: "ENTER CODE",
+      submitBtn: "SUBMIT",
+      errorMessage:
+        "An invite code is required to proceed. If you haven't received one, this page may not be relevant to you.",
+      tryAgain: "PLEASE TRY AGAIN",
+      navHome: "Home",
+      navMap: "Map",
+      navStudios: "Studios",
+      navEvent: "Event",
+    },
 
-          accessPlaceholder: "ENTER CODE",
+    nl: {
+      accessTitle: "Toegangscode",
+      accessSubtitle:
+        "Voer je unieke bedrijfscode in om evenementen te bekijken",
+      accessPlaceholder: "VOER CODE IN",
+      submitBtn: "VERZENDEN",
+      errorMessage:
+        "Een uitnodigingscode is vereist om verder te gaan. Als je er geen hebt ontvangen, is deze pagina mogelijk niet relevant voor jou.",
+      tryAgain: "PROBEER OPNIEUW",
+      navHome: "Home",
+      navMap: "Kaart",
+      navStudios: "Studio's",
+      navEvent: "Event",
+    },
 
-          submitBtn: "SUBMIT",
+    fr: {
+      accessTitle: "Code d'accès",
+      accessSubtitle:
+        "Entrez votre code d'entreprise unique pour voir les événements",
+      accessPlaceholder: "ENTREZ LE CODE",
+      submitBtn: "ENVOYER",
+      errorMessage:
+        "Un code d'invitation est requis pour continuer. Si vous n'en avez pas reçu, cette page peut ne pas vous concerner.",
+      tryAgain: "RÉESSAYEZ",
+      navHome: "Accueil",
+      navMap: "Carte",
+      navStudios: "Studios",
+      navEvent: "Événement",
+    },
+  };
 
-          errorMessage:
-            "An invite code is required to proceed. If you haven't received one, this page may not be relevant to you.",
+  function getCurrentLanguage() {
+    return localStorage.getItem("language") || "en";
+  }
 
-          navHome: "Home",
+  function setLanguage(language) {
+    localStorage.setItem("language", language);
 
-          navMap: "Map",
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
 
-          navStudios: "Studios",
+    document.getElementById(`btn-${language}`).classList.add("active");
 
-          navEvent: "Event",
-        },
+    document.querySelectorAll("[data-translate]").forEach((element) => {
+      const key = element.dataset.translate;
+      element.textContent = translations[language][key];
+    });
 
-        nl: {
-          accessTitle: "Toegangscode",
+    document.querySelectorAll("[data-placeholder]").forEach((element) => {
+      const key = element.dataset.placeholder;
+      element.placeholder = translations[language][key];
+    });
+  }
 
-          accessSubtitle:
-            "Voer je unieke bedrijfscode in om evenementen te bekijken",
+  document.getElementById("btn-nl").addEventListener("click", () => {
+    setLanguage("nl");
+  });
 
-          accessPlaceholder: "VOER CODE IN",
+  document.getElementById("btn-en").addEventListener("click", () => {
+    setLanguage("en");
+  });
 
-          submitBtn: "VERZENDEN",
+  document.getElementById("btn-fr").addEventListener("click", () => {
+    setLanguage("fr");
+  });
 
-          errorMessage:
-            "Een uitnodigingscode is vereist om verder te gaan. Als je er geen hebt ontvangen, is deze pagina mogelijk niet relevant voor jou.",
+  setLanguage(getCurrentLanguage());
 
-          navHome: "Home",
+  const input = document.getElementById("accessCode");
+  const button = document.getElementById("submitBtn");
+  const errorBox = document.getElementById("errorBox");
 
-          navMap: "Kaart",
+  input.addEventListener("input", () => {
+    if (input.value.trim() !== "") {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  });
 
-          navStudios: "Studio's",
+  button.addEventListener("click", async () => {
+    const enteredCode = input.value.trim();
+    const language = getCurrentLanguage();
 
-          navEvent: "Event",
-        },
+    errorBox.classList.remove("show");
+    button.classList.remove("error");
+    button.textContent = translations[language].submitBtn;
 
-        fr: {
-          accessTitle: "Code d'accès",
+    if (enteredCode === "") {
+      errorBox.classList.add("show");
+      button.classList.add("error");
+      button.textContent = translations[language].tryAgain;
+      return;
+    }
 
-          accessSubtitle:
-            "Entrez votre code d'entreprise unique pour voir les événements",
+    const { data, error } = await supabase
+      .from("event_codes")
+      .select("*")
+      .eq("code", enteredCode)
+      .eq("active", true)
+      .maybeSingle();
 
-          accessPlaceholder: "ENTREZ LE CODE",
+    if (error) {
+      console.error(error);
+      errorBox.classList.add("show");
+      button.classList.add("error");
+      button.textContent = translations[language].tryAgain;
+      return;
+    }
 
-          submitBtn: "ENVOYER",
+    if (data) {
+      localStorage.setItem("eventAccess", "granted");
+      localStorage.setItem("eventCode", data.code);
+      localStorage.setItem("eventUserName", data.name);
 
-          errorMessage:
-            "Un code d'invitation est requis pour continuer. Si vous n'en avez pas reçu, cette page peut ne pas vous concerner.",
-
-          navHome: "Accueil",
-
-          navMap: "Carte",
-
-          navStudios: "Studios",
-
-          navEvent: "Événement",
-        },
-      };
-
-      function setLanguage(language) {
-        localStorage.setItem("language", language);
-
-        document.querySelectorAll(".lang-btn").forEach((btn) => {
-          btn.classList.remove("active");
-        });
-
-        document.getElementById(`btn-${language}`).classList.add("active");
-
-        document.querySelectorAll("[data-translate]").forEach((element) => {
-          const key = element.dataset.translate;
-
-          element.textContent = translations[language][key];
-        });
-
-        document.querySelectorAll("[data-placeholder]").forEach((element) => {
-          const key = element.dataset.placeholder;
-
-          element.placeholder = translations[language][key];
-        });
-      }
-
-      document.getElementById("btn-nl").addEventListener("click", () => {
-        setLanguage("nl");
-      });
-
-      document.getElementById("btn-en").addEventListener("click", () => {
-        setLanguage("en");
-      });
-
-      document.getElementById("btn-fr").addEventListener("click", () => {
-        setLanguage("fr");
-      });
-
-      const savedLanguage = localStorage.getItem("language") || "en";
-
-      setLanguage(savedLanguage);
-
-      const input = document.getElementById("accessCode");
-
-      const button = document.getElementById("submitBtn");
-
-      const errorBox = document.getElementById("errorBox");
-
-      const validCode = "Studio123";
-
-      input.addEventListener("input", () => {
-        if (input.value.trim() !== "") {
-          button.classList.add("active");
-        } else {
-          button.classList.remove("active");
-        }
-      });
-
-      button.addEventListener("click", () => {
-        const enteredCode = input.value.trim();
-
-        errorBox.classList.remove("show");
-
-        button.classList.remove("error");
-
-        button.textContent = translations[savedLanguage].submitBtn;
-
-        if (enteredCode === validCode) {
-          localStorage.setItem("eventAccess", "granted");
-
-          window.location.href = "event-overview.html";
-        } else {
-          errorBox.classList.add("show");
-
-          button.classList.add("error");
-
-          button.textContent = "PLEASE TRY AGAIN";
-        }
-      });
-    </script>
+      window.location.href = "event-overview.html";
+    } else {
+      errorBox.classList.add("show");
+      button.classList.add("error");
+      button.textContent = translations[language].tryAgain;
+    }
+  });
+</script>
   </body>
 </html>
