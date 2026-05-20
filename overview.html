@@ -91,15 +91,19 @@
       async function fetchStudios() {
         const { data: studios, error } = await supabase
           .from("studios")
-          .select("*")
-          .order("name", { ascending: true });
+          .select("*");
 
         if (error) {
           console.error("Error fetching studios:", error);
           return [];
         }
 
-        return studios || [];
+        return (studios || []).sort((a, b) =>
+          a.name.localeCompare(b.name, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          })
+        );
       }
 
       // --- 2. RENDER STUDIOS ---
