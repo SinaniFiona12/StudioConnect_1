@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+    <title>AED Studios - Map</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        .bodymap {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            padding-bottom:120px;
+            overflow: hidden; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* MAP AREA */
+        .map-container {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            overflow: hidden;
+            background-color: #1a1919; 
+            cursor: grab;
+        }
+
+        .map-container:active {
+            cursor: grabbing;
+        }
+
+        .map-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1200px;
+            height: 1200px;
+            transform-origin: center;
+
+            background-image: url("/assets/Map_AEDStudios-DF-6Cdbo.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        /* PINS OP DE MAP */
+        .map-pin {
+            position: absolute;
+
+            width: 42px;
+            height: 42px;
+
+            background-color: var(--accent-color);
+
+            border-radius: 50% 50% 50% 0;
+
+            transform: rotate(-45deg);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+
+            cursor: pointer;
+
+            transition: transform 0.2s;
+        }
+
+        /* inhoud terug recht zetten */
+        .map-pin img,
+        .map-pin {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .map-pin img,
+        .map-pin span {
+            transform: rotate(45deg);
+        }
+
+        .map-pin img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+
+        .map-pin img {
+            width: 44px; 
+            height: 44px; 
+            object-fit: contain;
+        }
+
+        /* Pin Posities */
+        #pin-orangerie { top: 21%; left: 7%; }
+        #pin-2 { top: 55%; left: 60%; }
+        #pin-12 { top: 65%; left: 40%; }
+
+        /* PIJLTJES LINKS EN RECHTS */
+        .side-arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 55;
+            padding: 10px;
+        }
+
+        .side-arrow-btn img {
+            width: 24px;
+            height: auto;
+        }
+
+        #arrow-left {
+            left: 15px;
+        }
+
+        #arrow-right {
+            right: 15px;
+        }
+
+        /* LEGEND */
+        .map-legend {
+            position: absolute;
+            bottom: 120px;
+            left: 20px;
+            background-color: #4a1a1a;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 50;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #ddd;
+        }
+
+        .dot-white {
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .icon-red {
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-red img {
+            width: 10px;
+            height: 10px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* OVERLAY POPUP CARD (Aangepast: Gecentreerd in het midden) */
+        .overlay-popup {
+            position: absolute;
+            top: 150%; /* Start ver onder het scherm */
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            width: 90%;
+            max-width: 400px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 60;
+            opacity: 0; 
+            pointer-events: none; 
+        }
+
+        .overlay-popup.active {
+            top: 45%; /* Verplaatst de popup naar het midden (ietsje hoger ivm navigatie) */
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+
+        .overlay-image-area {
+            position: relative;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay-image-area::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                var(--popup-image);
+
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+        }
+
+        .overlay-image-area::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(60, 10, 10, 0.5); 
+        }
+
+        .overlay-badge {
+            position: relative;
+            z-index: 2;
+            background-color: var(--accent-color);
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .overlay-badge img {
+            width: 36px;
+            height: 36px;
+        }
+
+        .overlay-title {
+            position: relative;
+            z-index: 2;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .overlay-action {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .overlay-action span {
+            flex-grow: 1;
+        }
+
+        .overlay-action img {
+            width: 18px;
+            height: auto;
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            background: #2f2d2d;
+            padding: 18px 10px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border-top: 1px solid #4a4a4a;
+            z-index: 100;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #8e8e8e;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .nav-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            background: #3a3939;
+            border: 1px solid #5c5c5c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .nav-item.active .nav-icon {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+        }
+        #pin-studio-1 {
+            top: 39%;
+            left: 31%;
+        }
+        .studio-location-pin {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+
+        .studio-location-pin img {
+            width: 22px;
+            height: 22px;
+        }
+
+        #pin-studio-1 {
+            top: 46%;
+            left: 17%;
+        }
+
+        #pin-studio-2 {
+            top: 52%;
+            left: 17%;
+        }
+
+        #pin-studio-3 {
+            top: 46%;
+            left: 5%;
+        }
+
+        #pin-studio-4 {
+            top: 53%;
+            left: 4%;
+        }
+
+        #pin-studio-5 {
+            top: 53%;
+            left: 8%;
+        }
+
+        #pin-studio-6 {
+            top: 31%;
+            left: 9%;
+        }
+
+        #pin-studio-7 {
+            top: 32%;
+            left: 43%;
+        }
+
+        #pin-studio-8 {
+            top: 29%;
+            left: 30%;
+        }
+
+        #pin-studio-9 {
+            top: 32%;
+            left: 61%;
+        }
+        #pin-studio-10a {
+            top: 33%;
+            left: 30%;
+        }
+
+        #pin-studio-10b {
+            top: 34%;
+            left: 35%;
+        }
+
+        #pin-studio-11 {
+            top: 59%;
+            left: 7%;
+        }
+
+        #pin-studio-12 {
+            top: 57%;
+            left: 52%;
+        }
+
+        #pin-studio-14 {
+            top: 59%;
+            left: 21%;
+        }
+
+        #pin-studio-16 {
+            top: 45%;
+            left: 46%;
+        }
+
+        #pin-studio-cinema {
+            top: 25%;
+            left: 43%;
+        }
+
+        #cinema-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+
+    </style>
+
+  <script type="module" crossorigin src="/assets/map-DYsar2is.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-CKYT3bNG.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-Dri6nCMG.css">
+</head>
+
+<body class="bodymap">
+
+<header class="main-header">
+    <div class="logo-area">
+        <div class="logo-placeholder">
+            <img src="/assets/Logo-CxIWc5sf.svg" alt="logo">
+        </div>
+
+        <div class="logo-text">
+            <strong>AED STUDIOS</strong>
+            <span>Creative Network</span>
+        </div>
+    </div>
+
+    <div class="language-toggles">
+        <button class="lang-btn" id="btn-nl">NL</button>
+        <button class="lang-btn active" id="btn-en">EN</button>
+        <button class="lang-btn" id="btn-fr">FR</button>
+    </div>
+</header>
+
+<div class="map-container" id="map-container">
+
+    <div class="map-layer" id="map-layer">
+
+        <div class="map-pin" id="pin-orangerie">
+            <img src="data:image/svg+xml,%3csvg%20width='72'%20height='72'%20viewBox='0%200%2072%2072'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M0%2024C0%2010.7452%2010.7452%200%2024%200H48C61.2548%200%2072%2010.7452%2072%2024V48C72%2061.2548%2061.2548%2072%2048%2072H24C10.7452%2072%200%2061.2548%200%2048V24Z'%20fill='%23FE0D00'/%3e%3cpath%20d='M29.0583%2027.5002H42.9417C42.7333%2026.4725%2042.2976%2025.5044%2041.6667%2024.6668H30.3333C29.7024%2025.5044%2029.2667%2026.4725%2029.0583%2027.5002ZM42.9417%2030.3335H29.0583C29.3863%2031.9324%2030.2561%2033.3691%2031.5209%2034.4008C32.7856%2035.4325%2034.3678%2035.9959%2036%2035.9959C37.6322%2035.9959%2039.2143%2035.4325%2040.4791%2034.4008C41.7439%2033.3691%2042.6137%2031.9324%2042.9417%2030.3335ZM34.5833%2047.3335V38.7343C32.7533%2038.4696%2031.0338%2037.6986%2029.6187%2036.5084C28.2037%2035.3182%2027.1495%2033.7561%2026.5751%2031.9986C26.0006%2030.241%2025.9289%2028.3579%2026.368%2026.5617C26.807%2024.7656%2027.7393%2023.1279%2029.0597%2021.8335L42.9402%2021.8335C44.2606%2023.1279%2045.193%2024.7656%2045.632%2026.5617C46.0711%2028.3579%2045.9993%2030.241%2045.4249%2031.9986C44.8505%2033.7561%2043.7963%2035.3182%2042.3812%2036.5084C40.9662%2037.6986%2039.2466%2038.4696%2037.4167%2038.7343V47.3335H40.25C40.6257%2047.3335%2040.986%2047.4828%2041.2517%2047.7484C41.5174%2048.0141%2041.6667%2048.3744%2041.6667%2048.7502C41.6667%2049.1259%2041.5174%2049.4862%2041.2517%2049.7519C40.986%2050.0176%2040.6257%2050.1668%2040.25%2050.1668H31.75C31.3743%2050.1668%2031.0139%2050.0176%2030.7483%2049.7519C30.4826%2049.4862%2030.3333%2049.1259%2030.3333%2048.7502C30.3333%2048.3744%2030.4826%2048.0141%2030.7483%2047.7484C31.0139%2047.4828%2031.3743%2047.3335%2031.75%2047.3335H34.5833Z'%20fill='white'/%3e%3c/svg%3e" alt="Orangerie">
+        </div>
+    
+        <div class="map-pin" id="pin-studio-1">
+            <span>1</span>
+        </div>
+        
+    
+        <div class="map-pin" id="pin-studio-2">
+            <span>2</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-3">
+            <span>3</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-4">
+            <span>4</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-5">
+            <span>5</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-6">
+            <span>6</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-7">
+            <span>7</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-8">
+            <span>8</span>
+        </div>
+        
+        <div class="map-pin" id="pin-studio-9">
+            <span>9</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-10a">
+            <span>10a</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-10b">
+            <span>10b</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-11">
+            <span>11</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-12">
+            <span>12</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-14">
+            <span>14</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-16">
+            <span>16</span>
+        </div>
+
+        <div class="map-pin" id="pin-studio-cinema">
+            <img id="cinema-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAZxJREFUeAHN1DlLA0EUwPHZGLSJEDCNhaIgimKnFtoFUSsPCMTGQmwEiyAoBI9CEQSPThtB63h2NmLhJ7CwiIhgISiKqJBG8EjW/7BvYAkJbkwEH/yY4c3y8vL2UOq/hW3bNYjjGiMm7yugQAOWcYsMEqRHUYYmzJGz8hblsBUbeEQaW6Qj+EAdZpG0LGtJik7jwNTzSRE/UlJglVQ3XlCNKTxA59+k4D4GuTbJGkcnzpBxd5bQrWMci7KPYQHNuMANnrGNNuVhXkMIokP/Ou5xhRVdVBUYlhStYtGDf0UQFXhCFLv6EtTiDgM4lFwXzhHGMSqZc9R0GkKf7G2Z8Qz6ZRS2nPViXs5NLqDHJPs9d6chlnXoWZ0gjQnsoBGXyrmpk9hUzhOQUs7NjElO38R6Oh12dxpWRYbp1P2clqsShV/l/sUjli/lPHdp12pyhp5rjL+c+bEoF0WUx6ABn9dOT1k+szo1+7R0aPJjnorSaY8qolPPX6l8kT3PkhTNFaaofgkCqoiQMbzrvZmpfufbOVhTvw/9rW1RfxXfYU8i9nQRCugAAAAASUVORK5CYII=" alt="Cinema">
+        </div>
+    
+    </div>
+
+    <button class="side-arrow-btn" id="arrow-left">
+        <img src="data:image/svg+xml,%3csvg%20width='22'%20height='39'%20viewBox='0%200%2022%2039'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M21.0095%200.5L0.829114%2018.7585C0.390331%2019.1555%200.390332%2019.8445%200.829114%2020.2415L21.0095%2038.5'%20stroke='white'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="Left">
+    </button>
+
+    <button class="side-arrow-btn" id="arrow-right">
+        <img src="data:image/svg+xml,%3csvg%20width='22'%20height='39'%20viewBox='0%200%2022%2039'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M0.5%2038.5L20.6804%2020.2415C21.1192%2019.8445%2021.1192%2019.1555%2020.6804%2018.7585L0.5%200.5'%20stroke='white'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="Right">
+    </button>
+
+    <div class="map-legend">
+        <div class="legend-item">
+            <div class="dot-white"></div>
+            <span data-translate="yourLocation"></span>
+        </div>
+
+        <div class="legend-item">
+            <div class="icon-red">
+                <img src="data:image/svg+xml,%3csvg%20width='12'%20height='12'%20viewBox='0%200%2012%2012'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_1015_1124)'%3e%3cpath%20d='M9.99475%204.9974C9.99475%207.49259%207.22671%2010.0912%206.2972%2010.8938C6.2106%2010.9589%206.1052%2010.9941%205.99685%2010.9941C5.88851%2010.9941%205.78311%2010.9589%205.69651%2010.8938C4.767%2010.0912%201.99896%207.49259%201.99896%204.9974C1.99896%203.9371%202.42017%202.92022%203.16992%202.17047C3.91967%201.42072%204.93655%200.999512%205.99685%200.999512C7.05716%200.999512%208.07404%201.42072%208.82379%202.17047C9.57354%202.92022%209.99475%203.9371%209.99475%204.9974Z'%20stroke='%23FDFDFD'%20stroke-width='0.999473'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M5.99683%206.49647C6.82482%206.49647%207.49604%205.82525%207.49604%204.99726C7.49604%204.16927%206.82482%203.49805%205.99683%203.49805C5.16884%203.49805%204.49762%204.16927%204.49762%204.99726C4.49762%205.82525%205.16884%206.49647%205.99683%206.49647Z'%20stroke='%23FDFDFD'%20stroke-width='0.999473'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_1015_1124'%3e%3crect%20width='11.9937'%20height='11.9937'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="Location">
+            </div>
+            <span data-translate="studioLocations"></span>
+        </div>
+    </div>
+
+    <div class="overlay-popup" id="overlay-popup">
+        <div class="overlay-image-area">
+            <div class="overlay-badge">
+                <img id="overlay-icon" src="" alt="Icon">
+            </div>
+
+            <div class="overlay-title" id="overlay-title">
+                The Orangerie
+            </div>
+        </div>
+
+        <a href="information.html" class="overlay-action" id="overlay-link">
+            <span data-translate="discoverStudio"></span>
+            <img src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5%2012H19'%20stroke='%23FDFDFD'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M14.4034%207.20166L19.2045%2012.0028L14.4034%2016.8039'%20stroke='%23FDFDFD'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Arrow Right">
+        </a>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+        <div class="nav-icon">
+            <img src="data:image/svg+xml,%3csvg%20width='28'%20height='28'%20viewBox='0%200%2028%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M17.4957%2024.494V15.163C17.4957%2014.8536%2017.3729%2014.5569%2017.1541%2014.3382C16.9354%2014.1195%2016.6387%2013.9966%2016.3294%2013.9966H11.6638C11.3545%2013.9966%2011.0578%2014.1195%2010.8391%2014.3382C10.6203%2014.5569%2010.4974%2014.8536%2010.4974%2015.163V24.494'%20stroke='white'%20stroke-opacity='0.6'%20stroke-width='2.33277'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.49915%2011.6638C3.49906%2011.3245%203.57302%2010.9892%203.71585%2010.6814C3.85867%2010.3736%204.06694%2010.1006%204.32611%209.8816L12.4908%202.88447C12.9118%202.52861%2013.4453%202.33337%2013.9966%202.33337C14.5479%202.33337%2015.0813%202.52861%2015.5024%202.88447L23.6671%209.8816C23.9263%2010.1006%2024.1345%2010.3736%2024.2773%2010.6814C24.4202%2010.9892%2024.4941%2011.3245%2024.494%2011.6638V22.1613C24.494%2022.78%2024.2483%2023.3733%2023.8108%2023.8108C23.3733%2024.2483%2022.78%2024.4941%2022.1613%2024.4941H5.83191C5.21322%2024.4941%204.61988%2024.2483%204.1824%2023.8108C3.74492%2023.3733%203.49915%2022.78%203.49915%2022.1613V11.6638Z'%20stroke='white'%20stroke-opacity='0.6'%20stroke-width='2.33277'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Home">
+        </div>
+        <span data-translate="navHome"></span>
+    </a>
+
+    <a href="map.html" class="nav-item active">
+        <div class="nav-icon">
+            <img src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M14.1037%205.55215C14.3813%205.69084%2014.6873%205.76305%2014.9976%205.76305C15.3078%205.76305%2015.6139%205.69084%2015.8914%205.55215L19.5498%203.72245C19.7024%203.64622%2019.8719%203.61028%2020.0422%203.61803C20.2126%203.62579%2020.3781%203.67699%2020.5231%203.76677C20.6681%203.85655%2020.7877%203.98192%2020.8706%204.13096C20.9535%204.28001%2020.9968%204.44777%2020.9966%204.6183V17.3802C20.9965%2017.5659%2020.9447%2017.7478%2020.8471%2017.9057C20.7494%2018.0635%2020.6097%2018.1911%2020.4437%2018.2741L15.8914%2020.5507C15.6139%2020.6894%2015.3078%2020.7616%2014.9976%2020.7616C14.6873%2020.7616%2014.3813%2020.6894%2014.1037%2020.5507L9.89239%2018.445C9.61484%2018.3064%209.30882%2018.2342%208.99854%2018.2342C8.68826%2018.2342%208.38224%2018.3064%208.10468%2018.445L4.44628%2020.2748C4.29366%2020.351%204.12405%2020.387%203.95362%2020.3792C3.78318%2020.3714%203.61757%2020.3201%203.47255%2020.2302C3.32754%2020.1403%203.20794%2020.0148%203.12514%2019.8656C3.04234%2019.7164%202.99909%2019.5485%202.99951%2019.3779V6.61698C2.99961%206.43135%203.05139%206.24941%203.14904%206.09154C3.2467%205.93367%203.38637%205.8061%203.55242%205.72312L8.10468%203.44649C8.38224%203.3078%208.68826%203.2356%208.99854%203.2356C9.30882%203.2356%209.61484%203.3078%209.89239%203.44649L14.1037%205.55215Z'%20stroke='%23FDFDFD'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M14.9976%205.76306V20.7606'%20stroke='%23FDFDFD'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M8.99854%203.23547V18.233'%20stroke='%23FDFDFD'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Map">
+        </div>
+        <span data-translate="navMap"></span>
+    </a>
+
+    <a href="overview.html" class="nav-item">
+        <div class="nav-icon">
+            <img src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5.99902%2021.9964V3.99931C5.99902%203.46896%206.2097%202.96034%206.58471%202.58532C6.95973%202.21031%207.46835%201.99963%207.9987%201.99963H15.9974C16.5277%201.99963%2017.0364%202.21031%2017.4114%202.58532C17.7864%202.96034%2017.9971%203.46896%2017.9971%203.99931V21.9964H5.99902Z'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M5.99901%2011.998H3.99934C3.46899%2011.998%202.96037%2012.2087%202.58536%2012.5837C2.21034%2012.9587%201.99966%2013.4674%201.99966%2013.9977V19.9967C1.99966%2020.5271%202.21034%2021.0357%202.58536%2021.4107C2.96037%2021.7857%203.46899%2021.9964%203.99934%2021.9964H5.99901'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M17.9971%208.99854H19.9967C20.5271%208.99854%2021.0357%209.20921%2021.4107%209.58423C21.7857%209.95924%2021.9964%2010.4679%2021.9964%2010.9982V19.9967C21.9964%2020.5271%2021.7857%2021.0357%2021.4107%2021.4107C21.0357%2021.7857%2020.5271%2021.9964%2019.9967%2021.9964H17.9971'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M9.99838%205.99902H13.9984'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M9.99838%209.99841H13.9984'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M9.99838%2013.9977H13.9984'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M9.99838%2017.9971H13.9984'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Studio's">
+        </div>
+        <span data-translate="navStudios"></span>
+    </a>
+
+    <a href="#" id="eventNavBtn" class="nav-item">
+        <div class="nav-icon">
+            <img src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M7.9987%201.99963V5.99963'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M15.9974%201.99963V5.99963'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M18.9969%203.99939H4.99919C3.8948%203.99939%202.99951%204.89467%202.99951%205.99906V19.9968C2.99951%2021.1012%203.8948%2021.9965%204.99919%2021.9965H18.9969C20.1013%2021.9965%2020.9966%2021.1012%2020.9966%2019.9968V5.99906C20.9966%204.89467%2020.1013%203.99939%2018.9969%203.99939Z'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M2.99951%209.99841H20.9966'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.9987%2013.9977H8.0087'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M11.998%2013.9977H12.008'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M15.9974%2013.9977H16.0074'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.9987%2017.9971H8.0087'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M11.998%2017.9971H12.008'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M15.9974%2017.9971H16.0074'%20stroke='%23FDFDFD'%20stroke-opacity='0.6'%20stroke-width='1.99967'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Event">
+        </div>
+        <span data-translate="navEvent"></span>
+    </a>
+</nav>
+
+
+</body>
+</html>

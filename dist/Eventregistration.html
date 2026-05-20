@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventregistration</title>
+
+    <style></style>
+    <script type="module" crossorigin src="/assets/eventRegistration-DLlJt8TD.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/supabase-CKYT3bNG.js">
+    <link rel="stylesheet" crossorigin href="/assets/style-Dri6nCMG.css">
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="logo-area">
+        <div class="logo-placeholder">
+          <img src="/assets/Logo-CxIWc5sf.svg" alt="logo" />
+        </div>
+
+        <div class="logo-text">
+          <strong>AED STUDIOS</strong>
+
+          <span>Creative Network</span>
+        </div>
+      </div>
+
+      <div class="language-toggles">
+        <button class="lang-btn" id="btn-nl">NL</button>
+
+        <button class="lang-btn active" id="btn-en">EN</button>
+
+        <button class="lang-btn" id="btn-fr">FR</button>
+      </div>
+    </header>
+
+    <main class="registration-page">
+      <section class="top-section">
+        <a href="EventDatum.html" class="back-btn">
+          <div class="back-icon">←</div>
+
+          <span data-translate="goBack"></span>
+        </a>
+      </section>
+
+      <section class="title-section">
+        <h1 data-translate="registrationTitle"></h1>
+
+        <p data-translate="registrationSubtitle"></p>
+      </section>
+
+      <section class="form-section">
+        <div class="form-group">
+          <label>
+            <img src="data:image/svg+xml,%3csvg%20width='18'%20height='18'%20viewBox='0%200%2018%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M14.2459%2015.7453V14.2457C14.2459%2013.4503%2013.9299%2012.6875%2013.3675%2012.125C12.805%2011.5626%2012.0422%2011.2466%2011.2468%2011.2466H6.74805C5.95263%2011.2466%205.18978%2011.5626%204.62733%2012.125C4.06488%2012.6875%203.7489%2013.4503%203.7489%2014.2457V15.7453'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M8.99744%208.24781C10.6538%208.24781%2011.9966%206.90504%2011.9966%205.24866C11.9966%203.59228%2010.6538%202.24951%208.99744%202.24951C7.34105%202.24951%205.99829%203.59228%205.99829%205.24866C5.99829%206.90504%207.34105%208.24781%208.99744%208.24781Z'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" />
+
+            <span data-translate="yourName"></span>
+          </label>
+
+          <input
+            type="text"
+            id="nameInput"
+            data-placeholder="yourNamePlaceholder"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <img src="data:image/svg+xml,%3csvg%20width='18'%20height='18'%20viewBox='0%200%2018%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_712_1609)'%3e%3cpath%20d='M4.49878%2016.4952V2.99909C4.49878%202.60137%204.65677%202.21995%204.93799%201.93873C5.21922%201.6575%205.60064%201.49951%205.99835%201.49951H11.9966C12.3944%201.49951%2012.7758%201.6575%2013.057%201.93873C13.3382%202.21995%2013.4962%202.60137%2013.4962%202.99909V16.4952H4.49878Z'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M4.49878%208.99756H2.99921C2.6015%208.99756%202.22007%209.15555%201.93885%209.43677C1.65762%209.718%201.49963%2010.0994%201.49963%2010.4971V14.9959C1.49963%2015.3936%201.65762%2015.775%201.93885%2016.0562C2.22007%2016.3374%202.6015%2016.4954%202.99921%2016.4954H4.49878'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.4962%206.74805H14.9958C15.3935%206.74805%2015.7749%206.90604%2016.0561%207.18726C16.3374%207.46849%2016.4954%207.84991%2016.4954%208.24762V14.9957C16.4954%2015.3934%2016.3374%2015.7748%2016.0561%2016.0561C15.7749%2016.3373%2015.3935%2016.4953%2014.9958%2016.4953H13.4962'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%204.49854H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%207.49805H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%2010.4971H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%2013.4961H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_712_1609'%3e%3crect%20width='17.9949'%20height='17.9949'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" />
+
+            <span data-translate="workPlace"></span>
+          </label>
+
+          <input
+            type="text"
+            id="companyInput"
+            data-placeholder="workPlacePlaceholder"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <img src="data:image/svg+xml,%3csvg%20width='18'%20height='18'%20viewBox='0%200%2018%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_712_1609)'%3e%3cpath%20d='M4.49878%2016.4952V2.99909C4.49878%202.60137%204.65677%202.21995%204.93799%201.93873C5.21922%201.6575%205.60064%201.49951%205.99835%201.49951H11.9966C12.3944%201.49951%2012.7758%201.6575%2013.057%201.93873C13.3382%202.21995%2013.4962%202.60137%2013.4962%202.99909V16.4952H4.49878Z'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M4.49878%208.99756H2.99921C2.6015%208.99756%202.22007%209.15555%201.93885%209.43677C1.65762%209.718%201.49963%2010.0994%201.49963%2010.4971V14.9959C1.49963%2015.3936%201.65762%2015.775%201.93885%2016.0562C2.22007%2016.3374%202.6015%2016.4954%202.99921%2016.4954H4.49878'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.4962%206.74805H14.9958C15.3935%206.74805%2015.7749%206.90604%2016.0561%207.18726C16.3374%207.46849%2016.4954%207.84991%2016.4954%208.24762V14.9957C16.4954%2015.3934%2016.3374%2015.7748%2016.0561%2016.0561C15.7749%2016.3373%2015.3935%2016.4953%2014.9958%2016.4953H13.4962'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%204.49854H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%207.49805H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%2010.4971H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.49792%2013.4961H10.4971'%20stroke='%23FE0D00'%20stroke-width='1.49957'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_712_1609'%3e%3crect%20width='17.9949'%20height='17.9949'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" />
+
+            <span data-translate="email"></span>
+          </label>
+
+          <input
+            type="email"
+            id="emailInput"
+            data-placeholder="emailPlaceholder"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <img src="data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_1237_240)'%3e%3cpath%20d='M10.663%2013.9952V12.6623C10.663%2011.9553%2010.3821%2011.2773%209.88222%2010.7774C9.3823%2010.2774%208.70425%209.99658%207.99725%209.99658H3.99863C3.29163%209.99658%202.61359%2010.2774%202.11366%2010.7774C1.61374%2011.2773%201.33289%2011.9553%201.33289%2012.6623V13.9952'%20stroke='%23FE0D00'%20stroke-width='1.33287'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M5.9979%207.33101C7.47015%207.33101%208.66365%206.13751%208.66365%204.66526C8.66365%203.19301%207.47015%201.99951%205.9979%201.99951C4.52565%201.99951%203.33215%203.19301%203.33215%204.66526C3.33215%206.13751%204.52565%207.33101%205.9979%207.33101Z'%20stroke='%23FE0D00'%20stroke-width='1.33287'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M14.6617%2013.995V12.6621C14.6612%2012.0715%2014.4646%2011.4977%2014.1028%2011.0309C13.7409%2010.5641%2013.2342%2010.2307%2012.6624%2010.083'%20stroke='%23FE0D00'%20stroke-width='1.33287'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M10.663%202.08594C11.2364%202.23275%2011.7446%202.56624%2012.1076%203.03382C12.4705%203.5014%2012.6675%204.07647%2012.6675%204.66838C12.6675%205.26029%2012.4705%205.83536%2012.1076%206.30294C11.7446%206.77052%2011.2364%207.10401%2010.663%207.25082'%20stroke='%23FE0D00'%20stroke-width='1.33287'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_1237_240'%3e%3crect%20width='15.9945'%20height='15.9945'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" />
+
+            <span data-translate="meetPeople"></span>
+          </label>
+
+          <p class="roles-subtitle" data-translate="rolesSubtitle"></p>
+
+          <div class="roles-grid" id="rolesGrid"></div>
+        </div>
+      </section>
+
+      <section class="bottom-button">
+        <button id="confirmBtn" data-translate="confirmBtn"></button>
+      </section>
+    </main>
+    <!-- <script>
+
+const translations = {
+
+    en: {
+
+        goBack:
+            "Go back",
+
+        registrationTitle:
+            "Event Registration",
+
+        registrationSubtitle:
+            "Tell us about yourself so we can connect you with the right people",
+
+        yourName:
+            "Your name",
+
+        yourNamePlaceholder:
+            "Enter your full name",
+
+        workPlace:
+            "Where do you work?",
+
+        workPlacePlaceholder:
+            "Company name or studio",
+
+        companyOnSite:
+            "For which company on site?",
+
+        companyOnSitePlaceholder:
+            "AED Studio location",
+
+        meetPeople:
+            "Who would you like to meet?",
+
+        rolesSubtitle:
+            "Select all roles that interest you",
+
+        confirmBtn:
+            "CONFIRM REGISTRATION"
+
+    },
+
+    nl: {
+
+        goBack:
+            "Ga terug",
+
+        registrationTitle:
+            "Event Registratie",
+
+        registrationSubtitle:
+            "Vertel ons meer over jezelf zodat we je met de juiste mensen kunnen verbinden",
+
+        yourName:
+            "Jouw naam",
+
+        yourNamePlaceholder:
+            "Voer je volledige naam in",
+
+        workPlace:
+            "Waar werk je?",
+
+        workPlacePlaceholder:
+            "Bedrijfsnaam of studio",
+
+        companyOnSite:
+            "Voor welk bedrijf op locatie?",
+
+        companyOnSitePlaceholder:
+            "AED Studio locatie",
+
+        meetPeople:
+            "Wie zou je graag ontmoeten?",
+
+        rolesSubtitle:
+            "Selecteer alle rollen die je interesseren",
+
+        confirmBtn:
+            "BEVESTIG REGISTRATIE"
+
+    },
+
+    fr: {
+
+        goBack:
+            "Retour",
+
+        registrationTitle:
+            "Inscription à l'événement",
+
+        registrationSubtitle:
+            "Parlez-nous de vous afin que nous puissions vous connecter aux bonnes personnes",
+
+        yourName:
+            "Votre nom",
+
+        yourNamePlaceholder:
+            "Entrez votre nom complet",
+
+        workPlace:
+            "Où travaillez-vous ?",
+
+        workPlacePlaceholder:
+            "Nom de l'entreprise ou studio",
+
+        companyOnSite:
+            "Pour quelle entreprise sur site ?",
+
+        companyOnSitePlaceholder:
+            "Localisation AED Studio",
+
+        meetPeople:
+            "Qui aimeriez-vous rencontrer ?",
+
+        rolesSubtitle:
+            "Sélectionnez tous les rôles qui vous intéressent",
+
+        confirmBtn:
+            "CONFIRMER L'INSCRIPTION"
+
+    }
+
+};
+
+function setLanguage(language){
+
+    localStorage.setItem(
+        "language",
+        language
+    );
+
+    document
+    .querySelectorAll(".lang-btn")
+    .forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
+
+    document
+    .getElementById(`btn-${language}`)
+    .classList.add("active");
+
+    document
+    .querySelectorAll("[data-translate]")
+    .forEach(element => {
+
+        const key =
+            element.dataset.translate;
+
+        element.textContent =
+            translations[language][key];
+
+    });
+
+    document
+    .querySelectorAll("[data-placeholder]")
+    .forEach(element => {
+
+        const key =
+            element.dataset.placeholder;
+
+        element.placeholder =
+            translations[language][key];
+
+    });
+
+}
+
+document
+.getElementById("btn-nl")
+.addEventListener("click", () => {
+
+    setLanguage("nl");
+
+});
+
+document
+.getElementById("btn-en")
+.addEventListener("click", () => {
+
+    setLanguage("en");
+
+});
+
+document
+.getElementById("btn-fr")
+.addEventListener("click", () => {
+
+    setLanguage("fr");
+
+});
+
+const savedLanguage =
+
+    localStorage.getItem("language")
+
+    || "en";
+
+setLanguage(savedLanguage);
+
+const roles = [
+
+    "Producer",
+    "Developer",
+    "Designer",
+    "Sound Engineer",
+    "Animator",
+    "Director",
+    "Project Manager",
+    "Marketing Specialist",
+    "Content Creator",
+    "Photographer",
+    "Video Editor",
+    "Copywriter"
+
+];
+
+const rolesGrid =
+    document.getElementById("rolesGrid");
+
+const confirmBtn =
+    document.getElementById("confirmBtn");
+
+const nameInput =
+    document.getElementById("nameInput");
+
+const companyInput =
+    document.getElementById("companyInput");
+
+const locationInput =
+    document.getElementById("locationInput");
+
+let selectedRoles = [];
+
+roles.forEach(role => {
+
+    rolesGrid.innerHTML += `
+
+        <button class="role-btn">
+
+            ${role}
+
+        </button>
+
+    `;
+
+});
+
+const roleButtons =
+    document.querySelectorAll(".role-btn");
+
+roleButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const role =
+            button.textContent.trim();
+
+        button.classList.toggle("active");
+
+        if(selectedRoles.includes(role)){
+
+            selectedRoles =
+                selectedRoles.filter(
+                    item => item !== role
+                );
+
+        }
+
+        else{
+
+            selectedRoles.push(role);
+
+        }
+
+        validateForm();
+
+    });
+
+});
+
+function validateForm(){
+
+    const hasName =
+        nameInput.value.trim() !== "";
+
+    const hasCompany =
+        companyInput.value.trim() !== "";
+
+    const hasLocation =
+        locationInput.value.trim() !== "";
+
+    const hasRoles =
+        selectedRoles.length > 0;
+
+    if(
+        hasName &&
+        hasCompany &&
+        hasLocation &&
+        hasRoles
+    ){
+
+        confirmBtn.classList.add("active");
+
+    }
+
+    else{
+
+        confirmBtn.classList.remove("active");
+
+    }
+
+}
+
+nameInput.addEventListener(
+    "input",
+    validateForm
+);
+
+companyInput.addEventListener(
+    "input",
+    validateForm
+);
+
+locationInput.addEventListener(
+    "input",
+    validateForm
+);
+
+confirmBtn.addEventListener("click", () => {
+
+    if(
+        !confirmBtn.classList.contains(
+            "active"
+        )
+    ) return;
+
+    const registrationData = {
+
+        selectedDate:
+            localStorage.getItem(
+                "selectedEventDate"
+            ),
+
+        name:
+            nameInput.value,
+
+        company:
+            companyInput.value,
+
+        location:
+            locationInput.value,
+
+        roles:
+            selectedRoles
+
+    };
+
+    console.log(registrationData);
+
+    localStorage.setItem(
+        "eventRegistration",
+        JSON.stringify(registrationData)
+    );
+
+    window.location.href =
+        "confirmation.html";
+
+});
+
+</script> -->
+  </body>
+</html>
