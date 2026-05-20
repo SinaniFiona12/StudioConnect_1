@@ -139,26 +139,33 @@ async function loadNews() {
 
   data.forEach((news) => {
 
-    container.innerHTML += `
-      <div class="news-card">
+  container.innerHTML += `
+    <div class="news-card">
 
-        <div class="news-top">
+     <div class="news-header">
 
-          <span class="news-date">
-            ${new Date(
-              news.published_at
-            ).toLocaleDateString()}
-          </span>
+  <img
+    src="${news.icon_url}"
+    class="news-icon"
+    alt="${news.title}"
+  />
 
-        </div>
+  <span class="news-date">
+    ${new Date(
+      news.published_at
+    ).toLocaleDateString()}
+  </span>
 
-        <h3>${news.title}</h3>
+</div >
 
-        <p>${news.description}</p>
 
-      </div>
-    `;
-  });
+      <h3 class="titleH">${news.title}</h3>
+
+      <p>${news.description}</p>
+
+    </div>
+  `;
+});
 }
 
 /* =========================
