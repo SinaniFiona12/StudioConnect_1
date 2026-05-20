@@ -172,6 +172,15 @@
 
   setLanguage(getCurrentLanguage());
 
+  /*nieuw*/
+  const existingAccess =
+  localStorage.getItem("eventAccess");
+
+if (existingAccess === "granted") {
+  window.location.href =
+    "event-overview.html";
+}
+
   const input = document.getElementById("accessCode");
   const button = document.getElementById("submitBtn");
   const errorBox = document.getElementById("errorBox");
