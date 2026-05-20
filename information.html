@@ -107,19 +107,39 @@
     <script type="module">
       import { supabase } from "./src/supabase.js";
 
+      // --- 1. EXPANDED TRANSLATIONS (All Texts) ---
       const translations = {
-        nl: { about: "OVER STUDIO", references: "REFERENTIES", gallery: "GALERIJ", navHome: "Home", navMap: "Kaart", navStudios: "Studio's", navEvent: "Event" },
-        en: { about: "ABOUT STUDIO", references: "REFERENCES", gallery: "GALLERY", navHome: "Home", navMap: "Map", navStudios: "Studios", navEvent: "Event" },
-        fr: { about: "À PROPOS DU STUDIO", references: "RÉFÉRENCES", gallery: "GALERIE", navHome: "Accueil", navMap: "Carte", navStudios: "Studios", navEvent: "Événement" },
+        nl: { 
+          about: "OVER STUDIO", references: "REFERENTIES", gallery: "GALERIJ", 
+          navHome: "Home", navMap: "Kaart", navStudios: "Studio's", navEvent: "Event",
+          loading: "Laden...", loadingInfo: "Informatie wordt geladen...",
+          emailLabel: "E-mail", contactBtn: "Contacteer"
+        },
+        en: { 
+          about: "ABOUT STUDIO", references: "REFERENCES", gallery: "GALLERY", 
+          navHome: "Home", navMap: "Map", navStudios: "Studios", navEvent: "Event",
+          loading: "Loading...", loadingInfo: "Information is loading...",
+          emailLabel: "Email", contactBtn: "Contact"
+        },
+        fr: { 
+          about: "À PROPOS DU STUDIO", references: "RÉFÉRENCES", gallery: "GALERIE", 
+          navHome: "Accueil", navMap: "Carte", navStudios: "Studios", navEvent: "Événement",
+          loading: "Chargement...", loadingInfo: "Chargement des informations...",
+          emailLabel: "E-mail", contactBtn: "Contacter"
+        },
       };
 
+      // Helper function for translating text
       function setText(id, text) {
         const element = document.getElementById(id);
         if (element) element.textContent = text;
       }
 
+      // Master function to set all language across the page
       function setLanguage(lang) {
         const t = translations[lang];
+
+        // Translate fixed section titles
         setText("about-title", t.about);
         setText("references-title", t.references);
         setText("gallery-title", t.gallery);
@@ -127,37 +147,59 @@
         setText("nav-map", t.navMap);
         setText("nav-studios", t.navStudios);
         setText("nav-event", t.navEvent);
+
+        // Translate loading states (if studio data hasn't loaded yet)
+        const pageTitle = document.getElementById("page-title");
+        if (pageTitle && (pageTitle.textContent === "Loading..." || pageTitle.textContent === "Laden..." || pageTitle.textContent === "Chargement...")) {
+          setText("page-title", t.loading);
+          setText("studio-title", t.loading);
+          setText("studio-description", t.loadingInfo);
+        }
+
+        // Translate dynamic contact cards if they exist
+        document.querySelectorAll(".contact-label").forEach(el => el.textContent = t.emailLabel);
+        document.querySelectorAll(".cta-contact-text").forEach(el => el.textContent = t.contactBtn);
+
+        // Update button active states
         document.querySelectorAll(".lang-btn").forEach((button) => {
           button.classList.toggle("active", button.dataset.lang === lang);
         });
+
         localStorage.setItem("language", lang);
       }
 
+      // Hook up the language buttons
       document.querySelectorAll(".lang-btn").forEach((button) => {
         button.addEventListener("click", () => setLanguage(button.dataset.lang));
       });
 
-      // --- DE FIX VAN JE VRIEND: SUPABASE STORAGE URLS ---
-      function getStorageImageUrl(path, bucket = "images") {
+      // --- 2. THE FRIEND'S AI FIX: SUPABASE STORAGE BUCKETS ---
+      
+      function getBannerUrl(path) {
         if (!path) return "";
-        // Als het al een volledige URL is
-        if (path.startsWith("http")) {
-          return path;
-        }
-        // Haal eventuele slash vooraan weg
+        if (path.startsWith("http")) return path;
         const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-        const { data } = supabase.storage.from(bucket).getPublicUrl(cleanPath);
+        const { data } = supabase.storage.from("images").getPublicUrl(cleanPath);
         return data.publicUrl;
       }
 
-      function getGalleryImageUrl(path) {
-        return getStorageImageUrl(path, "images"); 
+      function getGalleryUrl(path) {
+        if (!path) return "";
+        if (path.startsWith("http")) return path;
+        const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+        const { data } = supabase.storage.from("gallery").getPublicUrl(cleanPath);
+        return data.publicUrl;
       }
 
       function getReferenceImageUrl(path) {
-        return getStorageImageUrl(path, "references"); 
+        if (!path) return "";
+        if (path.startsWith("http")) return path;
+        const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+        const { data } = supabase.storage.from("references").getPublicUrl(cleanPath);
+        return data.publicUrl;
       }
-      // ----------------------------------------------------
+
+      // --- 3. FETCH AND RENDER LOGIC ---
 
       async function fetchStudioDetails(studioId) {
         const { data: studio, error } = await supabase.from("studios").select("*").eq("id", studioId).single();
@@ -173,16 +215,17 @@
         const studio = await fetchStudioDetails(studioId);
         if (!studio) return;
 
+        // Set database texts
         document.getElementById("page-title").textContent = studio.name;
         document.getElementById("studio-title").textContent = studio.name;
         document.getElementById("studio-description").textContent = studio.description;
 
-        // 1. BANNER FIX
+        // Banner Image
         if (studio.banner) {
-          document.getElementById("hero-image").src = getGalleryImageUrl(studio.banner);
+          document.getElementById("hero-image").src = getBannerUrl(studio.banner);
         }
 
-        // 2. REFERENCES FIX
+        // References 
         const referencesSection = document.getElementById("references-section");
         const referencesContainer = document.getElementById("references-container");
         const references = studio.references || [];
@@ -197,17 +240,17 @@
           referencesContainer.appendChild(imgElement);
         });
 
-        // 3. GALLERY FIX
+        // Gallery
         const galleryContainer = document.getElementById("gallery-container");
         galleryContainer.innerHTML = "";
         (studio.gallery || []).forEach((imageUrl) => {
           const imgElement = document.createElement("img");
-          imgElement.src = getGalleryImageUrl(imageUrl);
+          imgElement.src = getGalleryUrl(imageUrl);
           imgElement.alt = "Gallery Image";
           galleryContainer.appendChild(imgElement);
         });
 
-        // Contacts (Local icons)
+        // Contacts (Generated with translatable <span> tags)
         const contactsContainer = document.getElementById("contacts-container");
         contactsContainer.innerHTML = "";
         (studio.contacts || []).forEach((contact) => {
@@ -224,16 +267,21 @@
               </div>
             </div>
             <a href="mailto:${contact.email}" class="cta-button-new">
-              Contact ${contact.label} <img src="/images/Icon%20(5).svg" alt="Arrow">
+              <span class="cta-contact-text">Contact</span> ${contact.label} <img src="/images/Icon%20(5).svg" alt="Arrow">
             </a>
           `;
           contactsContainer.appendChild(card);
         });
+
+        // Re-apply language immediately after building the dynamic content
+        setLanguage(localStorage.getItem("language") || "en");
       }
 
+      // --- 4. INITIALIZE PAGE ---
       setLanguage(localStorage.getItem("language") || "en");
       renderStudioDetails();
 
+      // Back button logic
       const backButton = document.getElementById("backButton");
       backButton.addEventListener("click", () => {
         const urlParams = new URLSearchParams(window.location.search);
