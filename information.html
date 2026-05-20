@@ -157,19 +157,9 @@
 
   <script type="module">
     import { supabase } from "./src/supabase.js";
-
-    function getIconForStudio(studioName) {
-      const normalizedName = (studioName || "").toLowerCase();
-
-      if (normalizedName.includes("orangerie")) {
-        return "/images/orangerie-icon.svg";
-      }
-
-      return "/images/studio-icon.svg";
-    }
-
+  
     // --- 1. TRANSLATIONS ---
-
+  
     const translations = {
       nl: {
         about: "OVER STUDIO",
@@ -184,7 +174,7 @@
         emailLabel: "E-mail",
         contactBtn: "Contacteer",
       },
-
+  
       en: {
         about: "ABOUT STUDIO",
         references: "REFERENCES",
@@ -198,7 +188,7 @@
         emailLabel: "Email",
         contactBtn: "Contact",
       },
-
+  
       fr: {
         about: "À PROPOS DU STUDIO",
         references: "RÉFÉRENCES",
@@ -213,29 +203,29 @@
         contactBtn: "Contacter",
       },
     };
-
+  
     function setText(id, text) {
       const element = document.getElementById(id);
-
+  
       if (element) {
         element.textContent = text;
       }
     }
-
+  
     function setLanguage(lang) {
       const t = translations[lang];
-
+  
       setText("about-title", t.about);
       setText("references-title", t.references);
       setText("gallery-title", t.gallery);
-
+  
       setText("nav-home", t.navHome);
       setText("nav-map", t.navMap);
       setText("nav-studios", t.navStudios);
       setText("nav-event", t.navEvent);
-
+  
       const pageTitle = document.getElementById("page-title");
-
+  
       if (
         pageTitle &&
         (
@@ -248,210 +238,213 @@
         setText("studio-title", t.loading);
         setText("studio-description", t.loadingInfo);
       }
-
+  
       document.querySelectorAll(".contact-label").forEach((el) => {
         el.textContent = t.emailLabel;
       });
-
+  
       document.querySelectorAll(".cta-contact-text").forEach((el) => {
         el.textContent = t.contactBtn;
       });
-
+  
       document.querySelectorAll(".lang-btn").forEach((button) => {
         button.classList.toggle(
           "active",
           button.dataset.lang === lang
         );
       });
-
+  
       localStorage.setItem("language", lang);
     }
-
+  
     document.querySelectorAll(".lang-btn").forEach((button) => {
       button.addEventListener("click", () => {
         setLanguage(button.dataset.lang);
       });
     });
-
+  
     // --- 2. SUPABASE STORAGE ---
-
-    function getBannerUrl(path) {
+  
+    function getImageUrl(path) {
       if (!path) return "";
-
+  
       if (path.startsWith("http")) {
         return path;
       }
-
+  
       const cleanPath = path.startsWith("/")
         ? path.slice(1)
         : path;
-
+  
       const { data } = supabase
         .storage
         .from("images")
         .getPublicUrl(cleanPath);
-
+  
       return data.publicUrl;
     }
-
+  
     function getGalleryUrl(path) {
       if (!path) return "";
-
+  
       if (path.startsWith("http")) {
         return path;
       }
-
+  
       const cleanPath = path.startsWith("/")
         ? path.slice(1)
         : path;
-
+  
       const { data } = supabase
         .storage
         .from("gallery")
         .getPublicUrl(cleanPath);
-
+  
       return data.publicUrl;
     }
-
+  
     function getReferenceImageUrl(path) {
       if (!path) return "";
-
+  
       if (path.startsWith("http")) {
         return path;
       }
-
+  
       const cleanPath = path.startsWith("/")
         ? path.slice(1)
         : path;
-
+  
       const { data } = supabase
         .storage
         .from("references")
         .getPublicUrl(cleanPath);
-
+  
       return data.publicUrl;
     }
-
+  
     // --- 3. FETCH + RENDER ---
-
+  
     async function fetchStudioDetails(studioId) {
       const { data: studio, error } = await supabase
         .from("studios")
         .select("*")
         .eq("id", studioId)
         .single();
-
+  
       if (error) {
         console.error(
           "Error fetching studio details:",
           error
         );
-
+  
         return null;
       }
-
+  
       return studio;
     }
-
+  
     async function renderStudioDetails() {
       const params = new URLSearchParams(
         window.location.search
       );
-
+  
       const studioId = params.get("id");
-
+  
       if (!studioId) return;
-
+  
       const studio = await fetchStudioDetails(studioId);
-
+  
       if (!studio) return;
-
+  
       // TITLES + DESCRIPTION
-
+  
       document.getElementById("page-title").textContent =
         studio.name;
-
+  
       document.getElementById("studio-title").textContent =
         studio.name;
-
-      const studioIcon = document.querySelector(".hero-icon img");
-
-      if (studioIcon) {
-        studioIcon.src = getIconForStudio(studio.name);
-      }
-
+  
       document.getElementById(
         "studio-description"
       ).textContent = studio.description;
-
+  
+      // STUDIO LOGO / ICON
+  
+      const studioIcon = document.querySelector(".hero-icon img");
+  
+      if (studioIcon) {
+        studioIcon.src = getImageUrl(studio.logo || "studio-icon.svg");
+        studioIcon.alt = `${studio.name} icon`;
+      }
+  
       // HERO IMAGE
-
+  
       if (studio.banner) {
         document.getElementById("hero-image").src =
-          getBannerUrl(studio.banner);
+          getImageUrl(studio.banner);
       }
-
+  
       // REFERENCES
-
+  
       const referencesSection =
         document.getElementById("references-section");
-
+  
       const referencesContainer =
         document.getElementById("references-container");
-
+  
       const references = studio.references || [];
-
+  
       referencesContainer.innerHTML = "";
-
+  
       referencesSection.hidden =
         references.length === 0;
-
+  
       references.forEach((imageUrl) => {
         const imgElement =
           document.createElement("img");
-
+  
         imgElement.src =
           getReferenceImageUrl(imageUrl);
-
+  
         imgElement.alt = "Reference Image";
-
+  
         imgElement.className = "reference-card";
-
+  
         referencesContainer.appendChild(imgElement);
       });
-
+  
       // GALLERY
-
+  
       const galleryContainer =
         document.getElementById("gallery-container");
-
+  
       galleryContainer.innerHTML = "";
-
+  
       (studio.gallery || []).forEach((imageUrl) => {
         const imgElement =
           document.createElement("img");
-
+  
         imgElement.src =
           getGalleryUrl(imageUrl);
-
+  
         imgElement.alt = "Gallery Image";
-
+  
         galleryContainer.appendChild(imgElement);
       });
-
+  
       // CONTACTS
-
+  
       const contactsContainer =
         document.getElementById("contacts-container");
-
+  
       contactsContainer.innerHTML = "";
-
+  
       (studio.contacts || []).forEach((contact) => {
         const card = document.createElement("div");
-
+  
         card.className =
           "card contact-section-card";
-
+  
         card.innerHTML = `
           <div
             class="contact-top"
@@ -489,7 +482,7 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
-
+  
                 <path
                   d="M18.329 5.83203L10.8558 10.5809C10.5986 10.7421 10.3012 10.8275 9.99764 10.8275C9.69412 10.8275 9.39673 10.7421 9.13951 10.5809L1.66628 5.83203"
                   stroke="#FE0D00"
@@ -499,7 +492,7 @@
                 />
               </svg>
             </div>
-
+  
             <div class="contact-info">
               <span
                 class="contact-label"
@@ -511,7 +504,7 @@
               >
                 Email
               </span>
-
+  
               <span
                 class="studio-email-text"
                 style="
@@ -524,7 +517,7 @@
               </span>
             </div>
           </div>
-
+  
           <a
             href="mailto:${contact.email}"
             class="cta-button-new"
@@ -532,9 +525,9 @@
             <span class="cta-contact-text">
               Contact
             </span>
-
+  
             ${contact.label}
-
+  
             <svg
               width="17"
               height="20"
@@ -549,7 +542,7 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-
+  
               <path
                 d="M8.5 4.1665L13.4583 9.99984L8.5 15.8332"
                 stroke="#FDFDFD"
@@ -560,33 +553,33 @@
             </svg>
           </a>
         `;
-
+  
         contactsContainer.appendChild(card);
       });
-
+  
       setLanguage(
         localStorage.getItem("language") || "en"
       );
     }
-
+  
     // --- 4. INITIALIZE PAGE ---
-
+  
     setLanguage(
       localStorage.getItem("language") || "en"
     );
-
+  
     renderStudioDetails();
-
+  
     // BACK BUTTON
-
+  
     const backButton =
       document.getElementById("backButton");
-
+  
     backButton.addEventListener("click", () => {
       const urlParams = new URLSearchParams(
         window.location.search
       );
-
+  
       window.location.href =
         urlParams.get("from") === "map"
           ? "map.html"
