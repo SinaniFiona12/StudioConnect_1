@@ -137,6 +137,28 @@
         button.addEventListener("click", () => setLanguage(button.dataset.lang));
       });
 
+      // --- DE FIX VAN JE VRIEND: SUPABASE STORAGE URLS ---
+      function getStorageImageUrl(path, bucket = "images") {
+        if (!path) return "";
+        // Als het al een volledige URL is
+        if (path.startsWith("http")) {
+          return path;
+        }
+        // Haal eventuele slash vooraan weg
+        const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+        const { data } = supabase.storage.from(bucket).getPublicUrl(cleanPath);
+        return data.publicUrl;
+      }
+
+      function getGalleryImageUrl(path) {
+        return getStorageImageUrl(path, "images"); 
+      }
+
+      function getReferenceImageUrl(path) {
+        return getStorageImageUrl(path, "references"); 
+      }
+      // ----------------------------------------------------
+
       async function fetchStudioDetails(studioId) {
         const { data: studio, error } = await supabase.from("studios").select("*").eq("id", studioId).single();
         if (error) { console.error("Error fetching studio details:", error); return null; }
@@ -155,8 +177,12 @@
         document.getElementById("studio-title").textContent = studio.name;
         document.getElementById("studio-description").textContent = studio.description;
 
-        if (studio.banner) document.getElementById("hero-image").src = studio.banner;
+        // 1. BANNER FIX
+        if (studio.banner) {
+          document.getElementById("hero-image").src = getGalleryImageUrl(studio.banner);
+        }
 
+        // 2. REFERENCES FIX
         const referencesSection = document.getElementById("references-section");
         const referencesContainer = document.getElementById("references-container");
         const references = studio.references || [];
@@ -165,22 +191,23 @@
 
         references.forEach((imageUrl) => {
           const imgElement = document.createElement("img");
-          // Path fixed to /images/Cinema/
-          imgElement.src = "/images/Cinema/" + imageUrl;
+          imgElement.src = getReferenceImageUrl(imageUrl);
           imgElement.alt = "Reference Image";
           imgElement.className = "reference-card";
           referencesContainer.appendChild(imgElement);
         });
 
+        // 3. GALLERY FIX
         const galleryContainer = document.getElementById("gallery-container");
         galleryContainer.innerHTML = "";
         (studio.gallery || []).forEach((imageUrl) => {
           const imgElement = document.createElement("img");
-          imgElement.src = imageUrl;
+          imgElement.src = getGalleryImageUrl(imageUrl);
           imgElement.alt = "Gallery Image";
           galleryContainer.appendChild(imgElement);
         });
 
+        // Contacts (Local icons)
         const contactsContainer = document.getElementById("contacts-container");
         contactsContainer.innerHTML = "";
         (studio.contacts || []).forEach((contact) => {
@@ -197,7 +224,7 @@
               </div>
             </div>
             <a href="mailto:${contact.email}" class="cta-button-new">
-              Contact ${contact.label} <img src="/images/Icon (5).svg" alt="Arrow">
+              Contact ${contact.label} <img src="/images/Icon%20(5).svg" alt="Arrow">
             </a>
           `;
           contactsContainer.appendChild(card);
