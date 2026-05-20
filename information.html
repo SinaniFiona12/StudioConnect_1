@@ -248,15 +248,23 @@
           card.innerHTML = `
             <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
               <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
-                <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6627 3.33301H3.33255C2.41229 3.33301 1.66628 4.07902 1.66628 4.99928V14.9969C1.66628 15.9172 2.41229 16.6632 3.33255 16.6632H16.6627C17.583 16.6632 18.329 15.9172 18.329 14.9969V4.99928C18.329 4.07902 17.583 3.33301 16.6627 3.33301Z" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18.329 5.83203L10.8558 10.5809C10.5986 10.7421 10.3012 10.8275 9.99764 10.8275C9.69412 10.8275 9.39673 10.7421 9.13951 10.5809L1.66628 5.83203" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
               <div class="contact-info">
                 <span class="contact-label" style="display: block; font-size: 12px; color: #888;">Email</span>
                 <span class="studio-email-text" style="display: block; font-size: 16px; color: white;">${contact.email}</span>
               </div>
             </div>
+
             <a href="mailto:${contact.email}" class="cta-button-new">
-              Contact ${contact.label} <img src="images/Icon (5).svg" alt="Arrow">
+              Contact ${contact.label}
+              <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.54169 10H13.4584" stroke="#FDFDFD" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.5 4.1665L13.4583 9.99984L8.5 15.8332" stroke="#FDFDFD" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           `;
           contactsContainer.appendChild(card);
@@ -279,7 +287,7 @@
           window.location.href = "overview.html";
         }
       });
-      
+
     </script>
   </body>
 </html>
