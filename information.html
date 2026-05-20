@@ -53,8 +53,8 @@
       <div class="hero-content">
         <div class="hero-icon">
           <img
-            src="/images/Container (3).svg"
-            alt="Orangerie Icon"
+            src="/images/studio-icon.svg"
+            alt="type icon"
           />
         </div>
 
@@ -157,6 +157,16 @@
 
   <script type="module">
     import { supabase } from "./src/supabase.js";
+
+    function getIconForStudio(studioName) {
+      const normalizedName = (studioName || "").toLowerCase();
+
+      if (normalizedName.includes("orangerie")) {
+        return "/images/orangerie-icon.svg";
+      }
+
+      return "/images/studio-icon.svg";
+    }
 
     // --- 1. TRANSLATIONS ---
 
@@ -363,6 +373,12 @@
 
       document.getElementById("studio-title").textContent =
         studio.name;
+
+      const studioIcon = document.querySelector(".hero-icon img");
+
+      if (studioIcon) {
+        studioIcon.src = getIconForStudio(studio.name);
+      }
 
       document.getElementById(
         "studio-description"
