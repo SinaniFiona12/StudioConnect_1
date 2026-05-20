@@ -30,7 +30,7 @@
     </header>
 
     <nav class="sub-nav">
-      <button class="back-btn" onclick="window.location.href = 'overview.html'">
+      <button class="back-btn" id="backButton">
         <img src="images/Button.svg" alt="Terug" />
       </button>
       <h2 id="page-title">Loading...</h2>
@@ -266,6 +266,20 @@
       // --- 3. INITIALIZE PAGE ---
       setLanguage(localStorage.getItem("language") || "en");
       renderStudioDetails();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const from = urlParams.get("from");
+
+      const backButton = document.getElementById("backButton");
+
+      backButton.addEventListener("click", () => {
+        if (from === "map") {
+          window.location.href = "map.html";
+        } else {
+          window.location.href = "overview.html";
+        }
+      });
+      
     </script>
   </body>
 </html>
