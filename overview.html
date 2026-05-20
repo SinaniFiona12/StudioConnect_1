@@ -4,18 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AED Studios - Overview</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <header class="main-header">
       <div class="logo-area">
         <div class="logo-placeholder">
           <img src="./images/Logo.svg" alt="logo" />
         </div>
+
         <div class="logo-text">
           <strong>AED STUDIOS</strong>
           <span>Creative Network</span>
@@ -23,22 +27,42 @@
       </div>
 
       <div class="language-toggles">
-        <button class="lang-btn" data-lang="nl">NL</button>
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" id="btn-nl">NL</button>
+
+        <button class="lang-btn active" id="btn-en">
+          EN
+        </button>
+
+        <button class="lang-btn" id="btn-fr">
+          FR
+        </button>
       </div>
     </header>
 
     <main class="page-content">
       <div class="page-title-area">
-        <h1 class="page-title" id="page-title-text">Studios Network</h1>
-        <p class="page-subtitle" id="page-subtitle-text">
+        <h1
+          class="page-title"
+          id="page-title-text"
+        >
+          Studios Network
+        </h1>
+
+        <p
+          class="page-subtitle"
+          id="page-subtitle-text"
+        >
           Discover creative studios
         </p>
       </div>
 
       <div class="search-container">
-        <img src="images/Icon (1).svg" alt="Search" class="search-icon" />
+        <img
+          src="images/Icon (1).svg"
+          alt="Search"
+          class="search-icon"
+        />
+
         <input
           type="text"
           class="search-input"
@@ -47,112 +71,369 @@
         />
       </div>
 
-      <div class="studios-list" id="studios-container">
+      <div
+        class="studios-list"
+        id="studios-container"
+      >
         <p>Loading studios...</p>
       </div>
     </main>
 
     <nav class="bottom-nav">
-      <a href="index.html" class="nav-item">
+      <a
+        href="index.html"
+        class="nav-item"
+      >
         <div class="nav-icon">
-          <img src="./images/HomeIcon.svg" alt="Home" />
+          <img
+            src="./images/HomeIcon.svg"
+            alt="Home"
+          />
         </div>
-        <span>Home</span>
+
+        <span id="navHome">Home</span>
       </a>
 
-      <a href="map.html" class="nav-item">
+      <a
+        href="map.html"
+        class="nav-item"
+      >
         <div class="nav-icon">
-          <img src="./images/MapIcontrans.svg" alt="Map" />
+          <img
+            src="./images/MapIcontrans.svg"
+            alt="Map"
+          />
         </div>
-        <span>Map</span>
+
+        <span id="navMap">Map</span>
       </a>
 
-      <a href="overview.html" class="nav-item active">
+      <a
+        href="overview.html"
+        class="nav-item active"
+      >
         <div class="nav-icon">
-          <img src="./images/Studiofull.svg" alt="Studio's" />
+          <img
+            src="./images/Studiofull.svg"
+            alt="Studio's"
+          />
         </div>
-        <span>Studio's</span>
+
+        <span id="navStudios">
+          Studio's
+        </span>
       </a>
 
-      <a href="eventCode.html" id="eventNavBtn" class="nav-item">
+      <a
+        href="eventCode.html"
+        id="eventNavBtn"
+        class="nav-item"
+      >
         <div class="nav-icon">
-          <img src="./images/EventIcontrans.svg" alt="Event" />
+          <img
+            src="./images/EventIcontrans.svg"
+            alt="Event"
+          />
         </div>
-        <span>Event</span>
+
+        <span id="navEvent">Event</span>
       </a>
     </nav>
 
     <script type="module">
       import { supabase } from "./src/supabase.js";
 
+      /* =========================
+         LANGUAGE SWITCHER
+      ========================= */
+
+      const translations = {
+        nl: {
+          title: "Studio Netwerk",
+          subtitle:
+            "Ontdek creatieve studio's",
+          search:
+            "Zoek studio's...",
+          noStudios:
+            "Geen studio's gevonden.",
+          home: "Home",
+          map: "Kaart",
+          studios: "Studio's",
+          event: "Event",
+        },
+
+        en: {
+          title: "Studios Network",
+          subtitle:
+            "Discover creative studios",
+          search:
+            "Search studios...",
+          noStudios:
+            "No studios found.",
+          home: "Home",
+          map: "Map",
+          studios: "Studios",
+          event: "Event",
+        },
+
+        fr: {
+          title:
+            "Réseau de Studios",
+          subtitle:
+            "Découvrez des studios créatifs",
+          search:
+            "Rechercher des studios...",
+          noStudios:
+            "Aucun studio trouvé.",
+          home: "Accueil",
+          map: "Carte",
+          studios: "Studios",
+          event: "Événement",
+        },
+      };
+
+      function setLanguage(lang) {
+
+        localStorage.setItem(
+          "language",
+          lang
+        );
+
+        document.documentElement.lang =
+          lang;
+
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((btn) => {
+            btn.classList.remove("active");
+          });
+
+        document
+          .getElementById(`btn-${lang}`)
+          .classList.add("active");
+
+        document.getElementById(
+          "page-title-text"
+        ).textContent =
+          translations[lang].title;
+
+        document.getElementById(
+          "page-subtitle-text"
+        ).textContent =
+          translations[lang].subtitle;
+
+        document.getElementById(
+          "search-input"
+        ).placeholder =
+          translations[lang].search;
+
+        document.getElementById(
+          "navHome"
+        ).textContent =
+          translations[lang].home;
+
+        document.getElementById(
+          "navMap"
+        ).textContent =
+          translations[lang].map;
+
+        document.getElementById(
+          "navStudios"
+        ).textContent =
+          translations[lang].studios;
+
+        document.getElementById(
+          "navEvent"
+        ).textContent =
+          translations[lang].event;
+      }
+
+      document
+        .getElementById("btn-nl")
+        .addEventListener(
+          "click",
+          () => {
+            setLanguage("nl");
+          }
+        );
+
+      document
+        .getElementById("btn-en")
+        .addEventListener(
+          "click",
+          () => {
+            setLanguage("en");
+          }
+        );
+
+      document
+        .getElementById("btn-fr")
+        .addEventListener(
+          "click",
+          () => {
+            setLanguage("fr");
+          }
+        );
+
+      const savedLanguage =
+        localStorage.getItem(
+          "language"
+        ) || "en";
+
+      setLanguage(savedLanguage);
+
+      /* =========================
+         STUDIOS
+      ========================= */
+
       let allStudios = [];
 
-      // --- 1. FETCH STUDIOS FROM SUPABASE ---
       async function fetchStudios() {
-        const { data: studios, error } = await supabase
+
+        const {
+          data: studios,
+          error,
+        } = await supabase
           .from("studios")
           .select("*");
 
         if (error) {
-          console.error("Error fetching studios:", error);
+          console.error(
+            "Error fetching studios:",
+            error
+          );
+
           return [];
         }
 
-        return (studios || []).sort((a, b) =>
-          a.name.localeCompare(b.name, undefined, {
-            numeric: true,
-            sensitivity: "base",
-          })
+        return (
+          studios || []
+        ).sort((a, b) =>
+          a.name.localeCompare(
+            b.name,
+            undefined,
+            {
+              numeric: true,
+              sensitivity: "base",
+            }
+          )
         );
       }
 
-      // --- 2. RENDER STUDIOS ---
-      function renderStudioCards(studios) {
-        const container = document.getElementById("studios-container");
+      function renderStudioCards(
+        studios
+      ) {
+
+        const container =
+          document.getElementById(
+            "studios-container"
+          );
+
         container.innerHTML = "";
 
+        const currentLanguage =
+          localStorage.getItem(
+            "language"
+          ) || "en";
+
         if (studios.length === 0) {
-          container.innerHTML = "<p>No studios found.</p>";
+
+          container.innerHTML = `
+            <p>
+              ${
+                translations[
+                  currentLanguage
+                ].noStudios
+              }
+            </p>
+          `;
+
           return;
         }
 
         studios.forEach((studio) => {
-          const cardElement = document.createElement("a");
-          cardElement.href = `information.html?id=${studio.id}`;
-          cardElement.className = "studio-card";
+
+          const cardElement =
+            document.createElement(
+              "a"
+            );
+
+          cardElement.href =
+            `information.html?id=${studio.id}`;
+
+          cardElement.className =
+            "studio-card";
 
           cardElement.innerHTML = `
             <div class="studio-icon-box">
-              <img src="images/Icon (2).svg" alt="Building Icon">
+
+              <img
+                src="images/Icon (2).svg"
+                alt="Building Icon"
+              />
+
             </div>
+
             <div class="studio-info">
-              <div class="studio-name">${studio.name}</div>
-              <div class="studio-type">Creative production space</div>
+
+              <div class="studio-name">
+                ${studio.name}
+              </div>
+
+              <div class="studio-type">
+                Creative production space
+              </div>
+
             </div>
-            <img src="images/Container (4).svg" alt="Arrow Right" class="arrow-right">
+
+            <img
+              src="images/Container (4).svg"
+              alt="Arrow Right"
+              class="arrow-right"
+            >
           `;
 
-          container.appendChild(cardElement);
+          container.appendChild(
+            cardElement
+          );
         });
       }
 
       async function renderStudios() {
-        allStudios = await fetchStudios();
-        renderStudioCards(allStudios);
+
+        allStudios =
+          await fetchStudios();
+
+        renderStudioCards(
+          allStudios
+        );
       }
 
-      // --- 3. SEARCH STUDIOS ---
-      document.getElementById("search-input").addEventListener("input", (event) => {
-        const searchTerm = event.target.value.toLowerCase();
+      document
+        .getElementById(
+          "search-input"
+        )
+        .addEventListener(
+          "input",
+          (event) => {
 
-        const filteredStudios = allStudios.filter((studio) =>
-          studio.name.toLowerCase().includes(searchTerm)
+            const searchTerm =
+              event.target.value.toLowerCase();
+
+            const filteredStudios =
+              allStudios.filter(
+                (studio) =>
+                  studio.name
+                    .toLowerCase()
+                    .includes(searchTerm)
+              );
+
+            renderStudioCards(
+              filteredStudios
+            );
+          }
         );
 
-        renderStudioCards(filteredStudios);
-      });
-
-      // --- 4. INITIALIZE PAGE ---
       renderStudios();
     </script>
   </body>
