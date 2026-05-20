@@ -64,6 +64,11 @@
         <div class="gallery-grid" id="gallery-container"></div>
       </section>
 
+      <section class="info-section" id="references-section" hidden>
+        <h3 class="section-title" id="references-title">REFERENCES</h3>
+        <div class="references-scroll" id="references-container"></div>
+      </section>
+
       <section class="info-section">
         <div id="contacts-container"></div>
       </section>
@@ -100,83 +105,105 @@
     </main>
 
     <script type="module">
-        import { supabase } from "./src/supabase.js";
-      
-        // --- 1. FETCH STUDIO DETAILS FROM SUPABASE ---
-        async function fetchStudioDetails(studioId) {
-          const { data: studio, error } = await supabase
-            .from("studios")
-            .select("*")
-            .eq("id", studioId)
-            .single();
-      
-          if (error) {
-            console.error("Error fetching studio details:", error);
-            return null;
-          }
-          return studio;
+      import { supabase } from "./src/supabase.js";
+
+      // --- 1. FETCH STUDIO DETAILS FROM SUPABASE ---
+      async function fetchStudioDetails(studioId) {
+        const { data: studio, error } = await supabase
+          .from("studios")
+          .select("*")
+          .eq("id", studioId)
+          .single();
+
+        if (error) {
+          console.error("Error fetching studio details:", error);
+          return null;
         }
-      
-        // --- 2. RENDER STUDIO DETAILS ---
-        async function renderStudioDetails() {
-          const params = new URLSearchParams(window.location.search);
-          const studioId = params.get("id");
-      
-          if (!studioId) {
-            console.error("No studio ID provided in the URL.");
-            return;
-          }
-      
-          const studio = await fetchStudioDetails(studioId);
-      
-          if (!studio) {
-            console.error("Studio not found.");
-            return;
-          }
-      
-          // Update page content
-          document.getElementById("page-title").textContent = studio.name;
-          document.getElementById("studio-title").textContent = studio.name;
-          document.getElementById("studio-description").textContent =
-            studio.description;
-      
-          // Render gallery
-          const galleryContainer = document.getElementById("gallery-container");
-          galleryContainer.innerHTML = "";
-          studio.gallery.forEach((imageUrl) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = imageUrl;
-            imgElement.alt = "Gallery Image";
-            galleryContainer.appendChild(imgElement);
-          });
-      
-          // Render contacts
-          const contactsContainer = document.getElementById("contacts-container");
-          contactsContainer.innerHTML = "";
-          studio.contacts.forEach((contact) => {
-            const card = document.createElement("div");
-            card.className = "card contact-section-card";
-      
-            card.innerHTML = `
-              <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
-                  <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
-                </div>
-                <div class="contact-info">
-                  <span class="contact-label" style="display: block; font-size: 12px; color: #888;">Email</span>
-                  <span class="studio-email-text" style="display: block; font-size: 16px; color: white;">${contact.email}</span>
-                </div>
+        return studio;
+      }
+
+      // --- 2. RENDER STUDIO DETAILS ---
+      async function renderStudioDetails() {
+        const params = new URLSearchParams(window.location.search);
+        const studioId = params.get("id");
+
+        if (!studioId) {
+          console.error("No studio ID provided in the URL.");
+          return;
+        }
+
+        const studio = await fetchStudioDetails(studioId);
+
+        if (!studio) {
+          console.error("Studio not found.");
+          return;
+        }
+
+        // Update page content
+        document.getElementById("page-title").textContent = studio.name;
+        document.getElementById("studio-title").textContent = studio.name;
+        document.getElementById("studio-description").textContent =
+          studio.description;
+
+        if (studio.banner) {
+          document.getElementById("hero-image").src = studio.banner;
+        }
+
+        // Render gallery
+        const galleryContainer = document.getElementById("gallery-container");
+        galleryContainer.innerHTML = "";
+        (studio.gallery || []).forEach((imageUrl) => {
+          const imgElement = document.createElement("img");
+          imgElement.src = imageUrl;
+          imgElement.alt = "Gallery Image";
+          galleryContainer.appendChild(imgElement);
+        });
+
+        // Render references
+        const referencesSection = document.getElementById("references-section");
+        const referencesContainer = document.getElementById(
+          "references-container"
+        );
+        const references = studio.references || [];
+
+        referencesContainer.innerHTML = "";
+        referencesSection.hidden = references.length === 0;
+
+        references.forEach((imageUrl) => {
+          const imgElement = document.createElement("img");
+          imgElement.src = imageUrl;
+          imgElement.alt = "Reference Image";
+          imgElement.className = "reference-card";
+          referencesContainer.appendChild(imgElement);
+        });
+
+        // Render contacts
+        const contactsContainer = document.getElementById("contacts-container");
+        contactsContainer.innerHTML = "";
+        (studio.contacts || []).forEach((contact) => {
+          const card = document.createElement("div");
+          card.className = "card contact-section-card";
+
+          card.innerHTML = `
+            <div class="contact-top" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+              <div class="contact-icon" style="background-color: #4A1A1A; width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
+                <img src="images/Icon.svg" alt="Email Icon" style="width: 20px; height: 20px;">
               </div>
-              <a href="mailto:${contact.email}" class="cta-button-new">
-                Contact ${contact.label} <img src="images/Icon (5).svg" alt="Arrow">
-              </a>
-            `;
-            contactsContainer.appendChild(card);
-          });
-        }
-      
-        // --- 3. INITIALIZE PAGE ---
-        renderStudioDetails();
-      </script>
+              <div class="contact-info">
+                <span class="contact-label" style="display: block; font-size: 12px; color: #888;">Email</span>
+                <span class="studio-email-text" style="display: block; font-size: 16px; color: white;">${contact.email}</span>
+              </div>
+            </div>
+            <a href="mailto:${contact.email}" class="cta-button-new">
+              Contact ${contact.label} <img src="images/Icon (5).svg" alt="Arrow">
+            </a>
+          `;
+          contactsContainer.appendChild(card);
+        });
+      }
+
+      // --- 3. INITIALIZE PAGE ---
+      renderStudioDetails();
+    </script>
   </body>
 </html>
