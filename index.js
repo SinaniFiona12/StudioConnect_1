@@ -15,8 +15,12 @@ async function loadCarousel() {
   const { data, error } = await supabase
     .from("hero_carousel")
     .select("*")
+
+
     .eq("active", true)
     .order("sort_order", { ascending: true });
+
+     console.log("CAROUSEL DATA:", data)
 
   if (error) {
     console.error(error);
@@ -113,10 +117,15 @@ async function loadNews() {
   const { data, error } = await supabase
     .from("news")
     .select("*")
+
+
+
     .eq("active", true)
     .order("published_at", {
       ascending: false,
     });
+
+    console.log("NEWS DATA:", data)
 
   if (error) {
     console.error(error);
@@ -161,7 +170,9 @@ async function loadProductions() {
   const { data, error } = await supabase
     .from("productions")
     .select("*")
-    .eq("active", true);
+     .eq("active", true);
+
+       console.log("PRODUCTIONS DATA:", data)
 
   if (error) {
     console.error(error);
