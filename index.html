@@ -2,7 +2,12 @@
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
     <title>AED Studios - Home</title>
 
     <link rel="stylesheet" href="style.css" />
@@ -14,99 +19,225 @@
   </head>
 
   <body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <header class="main-header">
+
       <div class="logo-area">
+
         <div class="logo-placeholder">
-          <img src="./images/Logo.svg" alt="logo" />
+          <img
+            src="./images/Logo.svg"
+            alt="logo"
+          />
         </div>
 
         <div class="logo-text">
           <strong>AED STUDIOS</strong>
           <span>Creative Network</span>
         </div>
+
       </div>
+
+      <!-- LANGUAGE SWITCH -->
 
       <div class="language-toggles">
-        <button class="lang-btn" id="btn-nl">NL</button>
 
-        <button class="lang-btn active" id="btn-en">EN</button>
+        <button
+          class="lang-btn"
+          id="btn-nl"
+        >
+          NL
+        </button>
 
-        <button class="lang-btn" id="btn-fr">FR</button>
+        <button
+          class="lang-btn active"
+          id="btn-en"
+        >
+          EN
+        </button>
+
+        <button
+          class="lang-btn"
+          id="btn-fr"
+        >
+          FR
+        </button>
+
       </div>
+
     </header>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
 
     <main>
 
-  <!-- HERO -->
-  <section class="hero-section">
+      <!-- HERO SECTION -->
 
-    <div id="carousel" class="carousel"></div>
+      <section class="hero-section">
 
-    <div id="carouselDots" class="carousel-dots"></div>
+        <div
+          id="carousel"
+          class="carousel"
+        ></div>
 
-  </section>
+        <div
+          id="carouselDots"
+          class="carousel-dots"
+        ></div>
 
-  <!-- NEWS -->
-  <section class="news-section">
+      </section>
 
-    <div class="section-header">
-      <h2>Nieuws</h2>
-    </div>
+      <!-- NEWS SECTION -->
 
-    <div id="newsContainer" class="news-scroll"></div>
+      <section class="news-section">
 
-  </section>
+        <div class="section-header">
 
-  <!-- PRODUCTIONS -->
-  <section class="productions-section">
+          <h2 id="newsTitle">
+            Nieuws
+          </h2>
 
-    <div class="section-header">
-      <h2>Actieve Producties</h2>
-    </div>
+        </div>
 
-    <div id="productionList" class="production-list"></div>
+        <div
+          id="newsContainer"
+          class="news-scroll"
+        ></div>
 
-  </section>
+      </section>
 
-</main>
+      <!-- PRODUCTIONS SECTION -->
+
+      <section class="productions-section">
+
+        <div class="section-header">
+
+          <h2 id="productionsTitle">
+            Actieve Producties
+          </h2>
+
+        </div>
+
+        <div
+          id="productionList"
+          class="production-list"
+        ></div>
+
+      </section>
+
+    </main>
+
+    <!-- =========================
+         BOTTOM NAVIGATION
+    ========================== -->
 
     <nav class="bottom-nav">
-      <a href="index.html" class="nav-item active">
+
+      <!-- HOME -->
+
+      <a
+        href="index.html"
+        class="nav-item active"
+      >
+
         <div class="nav-icon">
-          <img src="./images/HomeIconfull.svg" alt="Home" />
+
+          <img
+            src="./images/HomeIconfull.svg"
+            alt="Home"
+          />
+
         </div>
 
-        <span id="navHome"></span>
+        <span id="navHome">
+          Home
+        </span>
+
       </a>
 
-      <a href="map.html" class="nav-item">
+      <!-- MAP -->
+
+      <a
+        href="map.html"
+        class="nav-item"
+      >
+
         <div class="nav-icon">
-          <img src="./images/MapIcontrans.svg" alt="Map" />
+
+          <img
+            src="./images/MapIcontrans.svg"
+            alt="Map"
+          />
+
         </div>
 
-        <span id="navMap"></span>
+        <span id="navMap">
+          Map
+        </span>
+
       </a>
 
-      <a href="overview.html" class="nav-item">
+      <!-- STUDIOS -->
+
+      <a
+        href="overview.html"
+        class="nav-item"
+      >
+
         <div class="nav-icon">
-          <img src="./images/StudioIcontrans.svg" alt="Studio's" />
+
+          <img
+            src="./images/StudioIcontrans.svg"
+            alt="Studio's"
+          />
+
         </div>
 
-        <span id="navStudios"></span>
+        <span id="navStudios">
+          Studio's
+        </span>
+
       </a>
 
-      <a href="eventCode.html" id="eventNavBtn" class="nav-item">
+      <!-- EVENT -->
+
+      <a
+        href="eventCode.html"
+        id="eventNavBtn"
+        class="nav-item"
+      >
+
         <div class="nav-icon">
-          <img src="./images/EventIcontrans.svg" alt="Event" />
+
+          <img
+            src="./images/EventIcontrans.svg"
+            alt="Event"
+          />
+
         </div>
 
-        <span id="navEvent"></span>
+        <span id="navEvent">
+          Event
+        </span>
+
       </a>
+
     </nav>
 
-  
-    
-    <script type="module" src="./index.js"></script>
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script
+      type="module"
+      src="./index.js"
+    ></script>
 
   </body>
 </html>
