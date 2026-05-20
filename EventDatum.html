@@ -153,51 +153,74 @@
           card.dataset.id = event.id;
 
           card.innerHTML = `
-      <div class="date-row">
-        <div class="date-icon">
-          <img src="./images/EventRed.svg" alt="">
-        </div>
+            <div class="date-row">
+              <div class="date-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.66504 1.6665V4.99905" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13.3302 1.6665V4.99905" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.8296 3.33252H4.16566C3.24541 3.33252 2.49939 4.07854 2.49939 4.99879V16.6627C2.49939 17.583 3.24541 18.329 4.16566 18.329H15.8296C16.7498 18.329 17.4959 17.583 17.4959 16.6627V4.99879C17.4959 4.07854 16.7498 3.33252 15.8296 3.33252Z" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2.49939 8.33154H17.4959" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
 
-        <div class="date-title">
-          ${event.date}
-        </div>
-      </div>
+              <div class="date-title">
+                ${event.date}
+              </div>
+            </div>
 
-      <div class="date-row">
-        <div class="date-icon">
-          <img src="./images/ClockRed.svg" alt="">
-        </div>
+            <div class="date-row">
+              <div class="date-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.99763 18.3292C14.5989 18.3292 18.329 14.5992 18.329 9.99787C18.329 5.39658 14.5989 1.6665 9.99763 1.6665C5.39634 1.6665 1.66626 5.39658 1.66626 9.99787C1.66626 14.5992 5.39634 18.3292 9.99763 18.3292Z" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9.99768 4.99902V9.99784L13.3302 11.6641" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
 
-        <div class="date-info">
-          ${event.time}
-        </div>
-      </div>
+              <div class="date-info">
+                ${event.time}
+              </div>
+            </div>
 
-      <div class="date-row">
-        <div class="date-icon">
-          <img src="./images/LocationRed.svg" alt="">
-        </div>
+            <div class="date-row">
+              <div class="date-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6627 8.3316C16.6627 12.4915 12.048 16.8238 10.4983 18.1618C10.354 18.2703 10.1782 18.329 9.99761 18.329C9.81699 18.329 9.64126 18.2703 9.4969 18.1618C7.94726 16.8238 3.33252 12.4915 3.33252 8.3316C3.33252 6.56391 4.03473 4.86861 5.28468 3.61867C6.53463 2.36872 8.22992 1.6665 9.99761 1.6665C11.7653 1.6665 13.4606 2.36872 14.7105 3.61867C15.9605 4.86861 16.6627 6.56391 16.6627 8.3316Z" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9.9977 10.8309C11.3781 10.8309 12.4971 9.71183 12.4971 8.33144C12.4971 6.95106 11.3781 5.83203 9.9977 5.83203C8.61732 5.83203 7.49829 6.95106 7.49829 8.33144C7.49829 9.71183 8.61732 10.8309 9.9977 10.8309Z" stroke="#FE0D00" stroke-width="1.66627" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
 
-        <div class="date-info">
-          ${event.location}
-        </div>
-      </div>
+              <div class="date-info">
+                ${event.location}
+              </div>
+            </div>
 
-      <div class="spots">
-        <img src="./images/PeopleRed.svg" alt="">
+            <div class="spots">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#peopleClip-${event.id})">
+                  <path d="M10.663 13.9952V12.6623C10.663 11.9553 10.3821 11.2773 9.88222 10.7774C9.3823 10.2774 8.70425 9.99658 7.99725 9.99658H3.99863C3.29163 9.99658 2.61359 10.2774 2.11366 10.7774C1.61374 11.2773 1.33289 11.9553 1.33289 12.6623V13.9952" stroke="#FE0D00" stroke-width="1.33287" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M5.9979 7.33101C7.47015 7.33101 8.66365 6.13751 8.66365 4.66526C8.66365 3.19301 7.47015 1.99951 5.9979 1.99951C4.52565 1.99951 3.33215 3.19301 3.33215 4.66526C3.33215 6.13751 4.52565 7.33101 5.9979 7.33101Z" stroke="#FE0D00" stroke-width="1.33287" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14.6617 13.995V12.6621C14.6612 12.0715 14.4646 11.4977 14.1028 11.0309C13.7409 10.5641 13.2342 10.2307 12.6624 10.083" stroke="#FE0D00" stroke-width="1.33287" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M10.663 2.08594C11.2364 2.23275 11.7446 2.56624 12.1076 3.03382C12.4705 3.5014 12.6675 4.07647 12.6675 4.66838C12.6675 5.26029 12.4705 5.83536 12.1076 6.30294C11.7446 6.77052 11.2364 7.10401 10.663 7.25082" stroke="#FE0D00" stroke-width="1.33287" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="peopleClip-${event.id}">
+                    <rect width="15.9945" height="15.9945" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
 
-        <span>
-          ${availableSpots} ${translations[language].spotsAvailable}
-        </span>
-      </div>
+              <span>
+                ${availableSpots} ${translations[language].spotsAvailable}
+              </span>
+            </div>
 
-      <div class="progress-bar">
-        <div 
-          class="progress-fill"
-          style="width: ${progress}%"
-        ></div>
-      </div>
-    `;
+            <div class="progress-bar">
+              <div 
+                class="progress-fill"
+                style="width: ${progress}%"
+              ></div>
+            </div>
+          `;
 
           card.addEventListener("click", () => {
             document.querySelectorAll(".date-card").forEach((item) => {
