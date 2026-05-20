@@ -45,9 +45,7 @@
           alt="Hero Afbeelding"
         />
         <div class="hero-content">
-          <div class="hero-icon">
-            <img id="studio-icon" src="" alt="Studio Icon" />
-          </div>
+          <div class="hero-icon" id="studio-icon"></div>
           <h1 id="studio-title">Loading...</h1>
         </div>
       </section>
@@ -226,13 +224,27 @@
         }
 
         // Studio Icon
-        const studioIcon = document.getElementById("studio-icon");
+const studioIcon = document.getElementById("studio-icon");
 
-        if (studio.name.toLowerCase() === "the orangerie") {
-  studioIcon.src = "/images/Container (3).svg";
+if (studio.name.toLowerCase() === "the orangerie") {
+  studioIcon.outerHTML = `
+    <div class="hero-icon" id="studio-icon">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 24C0 10.7452 10.7452 0 24 0H48C61.2548 0 72 10.7452 72 24V48C72 61.2548 61.2548 72 48 72H24C10.7452 72 0 61.2548 0 48V24Z" fill="#FE0D00"/>
+        <path d="M29.0583 27.5002H42.9417C42.7333 26.4725 42.2976 25.5044 41.6667 24.6668H30.3333C29.7024 25.5044 29.2667 26.4725 29.0583 27.5002ZM42.9417 30.3335H29.0583C29.3863 31.9324 30.2561 33.3691 31.5209 34.4008C32.7856 35.4325 34.3678 35.9959 36 35.9959C37.6322 35.9959 39.2143 35.4325 40.4791 34.4008C41.7439 33.3691 42.6137 31.9324 42.9417 30.3335ZM34.5833 47.3335V38.7343C32.7533 38.4696 31.0338 37.6986 29.6187 36.5084C28.2037 35.3182 27.1495 33.7561 26.5751 31.9986C26.0006 30.241 25.9289 28.3579 26.368 26.5617C26.807 24.7656 27.7393 23.1279 29.0597 21.8335L42.9402 21.8335C44.2606 23.1279 45.193 24.7656 45.632 26.5617C46.0711 28.3579 45.9993 30.241 45.4249 31.9986C44.8505 33.7561 43.7963 35.3182 42.3812 36.5084C40.9662 37.6986 39.2466 38.4696 37.4167 38.7343V47.3335H40.25C40.6257 47.3335 40.986 47.4828 41.2517 47.7484C41.5174 48.0141 41.6667 48.3744 41.6667 48.7502C41.6667 49.1259 41.5174 49.4862 41.2517 49.7519C40.986 50.0176 40.6257 50.1668 40.25 50.1668H31.75C31.3743 50.1668 31.0139 50.0176 30.7483 49.7519C30.4826 49.4862 30.3333 49.1259 30.3333 48.7502C30.3333 48.3744 30.4826 48.0141 30.7483 47.7484C31.0139 47.4828 31.3743 47.3335 31.75 47.3335H34.5833Z" fill="white"/>
+      </svg>
+    </div>
+  `;
 } else {
-          studioIcon.src = "/images/defaultStudioIcon.svg";
-        }
+  studioIcon.outerHTML = `
+    <div class="hero-icon" id="studio-icon">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 24C0 10.7452 10.7452 0 24 0H48C61.2548 0 72 10.7452 72 24V48C72 61.2548 61.2548 72 48 72H24C10.7452 72 0 61.2548 0 48V24Z" fill="#FE0D00"/>
+        <path d="M22 22H50V50H22V22Z" fill="white"/>
+      </svg>
+    </div>
+  `;
+}
 
         // References 
         const referencesSection = document.getElementById("references-section");
