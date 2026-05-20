@@ -82,163 +82,47 @@
       </a>
     </nav>
 
-    <script>
-      // --- 1. EVENT NAVIGATIE LOGICA ---
-      const eventNavBtn = document.getElementById("eventNavBtn");
-
-      eventNavBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const access = localStorage.getItem("eventAccess");
-
-        if (access === "granted") {
-          window.location.href = "event-overview.html";
-        } else {
-          window.location.href = "eventCode.html";
+    <script type="module">
+        import { supabase } from "./src/supabase.js";
+      
+        // --- 1. FETCH STUDIOS FROM SUPABASE ---
+        async function fetchStudios() {
+          const { data: studios, error } = await supabase.from("studios").select("*");
+          if (error) {
+            console.error("Error fetching studios:", error);
+            return [];
+          }
+          return studios;
         }
-      });
-
-      // --- 2. DATABASE ---
-      const studiosDatabase = [
-        { id: "orangerie", name: "The orangerie", type: "Backstage" },
-        { id: "studio1", name: "Studio 1", type: "Occupied by Banijay" },
-        { id: "studio2", name: "Studio 2", type: "Occupied by Banijay" },
-        { id: "studio3", name: "Studio 3", type: "Black box" },
-        { id: "studio4", name: "Studio 4", type: "Black box" },
-        { id: "studio5", name: "Studio 5", type: "Black box" },
-        { id: "studio6", name: "Studio 6", type: "Restaurant" },
-        { id: "studio7", name: "Studio 7", type: "Black box" },
-        { id: "studio8", name: "Studio 8", type: "Auditorium" },
-        { id: "studio9", name: "Studio 9", type: "Black box" },
-        { id: "studio10A", name: "Studio 10A", type: "Black box" },
-        { id: "studio10B", name: "Studio 10B", type: "Black box" },
-        { id: "studio11", name: "Studio 11", type: "Black box" },
-        { id: "studio12", name: "Studio 12", type: "Water tank" },
-        { id: "studio14", name: "Studio 14", type: "Black box" },
-        { id: "studio15", name: "Studio 15", type: "Occupied by Banijay" },
-        { id: "studio16", name: "Studio 16", type: "Event hall" },
-        { id: "cinema", name: "AED Cinema", type: "Cinema" },
-      ];
-
-      // --- 3. VERTALINGEN WOORDENBOEK ---
-      const translations = {
-        en: {
-          title: "Studios Network",
-          subtitle: "Discover 18 creative studios",
-          searchPlaceholder: "Search studios...",
-          types: {
-            Backstage: "Backstage",
-            "Occupied by Banijay": "Occupied by Banijay",
-            "Black box": "Black box",
-            Restaurant: "Restaurant",
-            Auditorium: "Auditorium",
-            "Water tank": "Water tank",
-            "Event hall": "Event hall",
-            Cinema: "Cinema",
-          },
-        },
-        nl: {
-          title: "Studio Netwerk",
-          subtitle: "Ontdek 18 creatieve studio's",
-          searchPlaceholder: "Zoek studio's...",
-          types: {
-            Backstage: "Backstage",
-            "Occupied by Banijay": "Bezet door Banijay",
-            "Black box": "Zwarte doos",
-            Restaurant: "Restaurant",
-            Auditorium: "Auditorium",
-            "Water tank": "Watertank",
-            "Event hall": "Evenementenhal",
-            Cinema: "Bioscoop",
-          },
-        },
-        fr: {
-          title: "Réseau de Studios",
-          subtitle: "Découvrez 18 studios créatifs",
-          searchPlaceholder: "Rechercher des studios...",
-          types: {
-            Backstage: "Coulisses",
-            "Occupied by Banijay": "Occupé par Banijay",
-            "Black box": "Boîte noire",
-            Restaurant: "Restaurant",
-            Auditorium: "Auditorium",
-            "Water tank": "Réservoir d'eau",
-            "Event hall": "Salle d'événement",
-            Cinema: "Cinéma",
-          },
-        },
-      };
-
-      // Variabele om bij te houden welke taal momenteel actief is
-      let currentLanguage = localStorage.getItem("language") || "en";
-
-      // --- 4. FUNCTIE OM PAGINA OP TE BOUWEN ---
-      function renderPage(lang) {
-        const t = translations[lang];
-
-        // Update de statische teksten
-        document.getElementById("page-title-text").textContent = t.title;
-        document.getElementById("page-subtitle-text").textContent = t.subtitle;
-        document.getElementById("search-input").placeholder =
-          t.searchPlaceholder;
-
-        // Update de lijst met studios
-        const container = document.getElementById("studios-container");
-        container.innerHTML = "";
-
-        studiosDatabase.forEach((studio) => {
-          const cardElement = document.createElement("a");
-          cardElement.href = "information.html";
-          cardElement.className = "studio-card";
-
-          // Haal de vertaalde studio type op uit het woordenboek
-          const translatedType = t.types[studio.type] || studio.type;
-
-          cardElement.innerHTML = `
-                <div class="studio-icon-box">
-                    <img src="images/Icon (2).svg" alt="Building Icon">
-                </div>
-                <div class="studio-info">
-                    <div class="studio-name">${studio.name}</div>
-                    <div class="studio-type">${translatedType}</div>
-                </div>
-                <img src="images/Container (4).svg" alt="Arrow Right" class="arrow-right">
+      
+        // --- 2. RENDER STUDIOS ---
+        async function renderStudios() {
+          const studios = await fetchStudios();
+          const container = document.getElementById("studios-container");
+          container.innerHTML = "";
+      
+          studios.forEach((studio) => {
+            const cardElement = document.createElement("a");
+            cardElement.href = `information.html?id=${studio.id}`;
+            cardElement.className = "studio-card";
+      
+            cardElement.innerHTML = `
+              <div class="studio-icon-box">
+                <img src="images/Icon (2).svg" alt="Building Icon">
+              </div>
+              <div class="studio-info">
+                <div class="studio-name">${studio.name}</div>
+                <div class="studio-type">${studio.type}</div>
+              </div>
+              <img src="images/Container (4).svg" alt="Arrow Right" class="arrow-right">
             `;
-
-          container.appendChild(cardElement);
-        });
-      }
-
-      // --- 5. TAAL KNOPPEN LOGICA ---
-      const languageButtons = document.querySelectorAll(".lang-btn");
-
-      languageButtons.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          // Verwijder de .active class van alle knoppen
-          languageButtons.forEach((button) =>
-            button.classList.remove("active"),
-          );
-
-          // Voeg de .active class toe aan de geklikte knop (wordt rood)
-          const clickedBtn = e.target;
-          clickedBtn.classList.add("active");
-
-          // Haal de gekozen taal op (nl, en, of fr)
-          currentLanguage = clickedBtn.getAttribute("data-lang");
-          localStorage.setItem("language", currentLanguage);
-
-          // Herlaad de pagina met de nieuwe taal
-          renderPage(currentLanguage);
-        });
-      });
-
-      // --- 6. INITIËLE LADING ---
-      // Start de pagina in de opgeslagen taal
-      languageButtons.forEach((button) => button.classList.remove("active"));
-      document
-        .querySelector(`[data-lang="${currentLanguage}"]`)
-        ?.classList.add("active");
-      renderPage(currentLanguage);
-    </script>
+      
+            container.appendChild(cardElement);
+          });
+        }
+      
+        // --- 3. INITIALIZE PAGE ---
+        renderStudios();
+      </script>
   </body>
 </html>
