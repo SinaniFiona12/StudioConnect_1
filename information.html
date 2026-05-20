@@ -46,7 +46,7 @@
         />
         <div class="hero-content">
           <div class="hero-icon">
-            <img src="/images/Container (3).svg" alt="Orangerie Icon" />
+            <img id="studio-icon" src="" alt="Studio Icon" />
           </div>
           <h1 id="studio-title">Loading...</h1>
         </div>
@@ -223,6 +223,15 @@
         // Banner Image
         if (studio.banner) {
           document.getElementById("hero-image").src = getBannerUrl(studio.banner);
+        }
+
+        // Studio Icon
+        const studioIcon = document.getElementById("studio-icon");
+
+        if (studio.name.toLowerCase() === "the orangerie") {
+  studioIcon.src = "/images/Container (3).svg";
+} else {
+          studioIcon.src = "/images/defaultStudioIcon.svg";
         }
 
         // References 
