@@ -1,6 +1,97 @@
 import { supabase } from "./src/supabase.js";
 
 /* =========================
+   LANGUAGE SWITCHER
+========================= */
+
+const translations = {
+  nl: {
+    news: "Nieuws",
+    productions: "Actieve Producties",
+    home: "Home",
+    map: "Map",
+    studios: "Studio's",
+    event: "Event",
+  },
+
+  en: {
+    news: "News",
+    productions: "Active Productions",
+    home: "Home",
+    map: "Map",
+    studios: "Studios",
+    event: "Event",
+  },
+
+  fr: {
+    news: "Nouvelles",
+    productions: "Productions Actives",
+    home: "Accueil",
+    map: "Carte",
+    studios: "Studios",
+    event: "Événement",
+  },
+};
+
+function setLanguage(lang) {
+
+  document.documentElement.lang = lang;
+
+  document.getElementById("newsTitle").textContent =
+    translations[lang].news;
+
+  document.getElementById("productionsTitle").textContent =
+    translations[lang].productions;
+
+  document.getElementById("navHome").textContent =
+    translations[lang].home;
+
+  document.getElementById("navMap").textContent =
+    translations[lang].map;
+
+  document.getElementById("navStudios").textContent =
+    translations[lang].studios;
+
+  document.getElementById("navEvent").textContent =
+    translations[lang].event;
+
+  document
+    .querySelectorAll(".lang-btn")
+    .forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+  document
+    .getElementById(`btn-${lang}`)
+    .classList.add("active");
+
+  localStorage.setItem("language", lang);
+}
+
+document
+  .getElementById("btn-nl")
+  .addEventListener("click", () => {
+    setLanguage("nl");
+  });
+
+document
+  .getElementById("btn-en")
+  .addEventListener("click", () => {
+    setLanguage("en");
+  });
+
+document
+  .getElementById("btn-fr")
+  .addEventListener("click", () => {
+    setLanguage("fr");
+  });
+
+const savedLanguage =
+  localStorage.getItem("language") || "en";
+
+setLanguage(savedLanguage);
+
+/* =========================
    HERO CAROUSEL
 ========================= */
 
