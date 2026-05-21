@@ -245,10 +245,7 @@
             margin-bottom: 15px;
         }
 
-        .overlay-badge img {
-            width: 36px;
-            height: 36px;
-        }
+
 
         .overlay-title {
             position: relative;
@@ -413,8 +410,8 @@
         }
 
         #cinema-icon {
-            width: 18px;
-            height: 18px;
+            width: 80%;
+            height: 80%;
             object-fit: contain;
         }
 
@@ -448,9 +445,9 @@
     <div class="map-layer" id="map-layer">
 
         <div class="map-pin" id="pin-orangerie">
-            <img src="images/Container (3).svg" alt="Orangerie">
+            <img id="orangerie-pin-icon" src="" alt="Orangerie">
         </div>
-    
+
         <div class="map-pin" id="pin-studio-1">
             <span>1</span>
         </div>
@@ -513,7 +510,7 @@
         </div>
 
         <div class="map-pin" id="pin-studio-cinema">
-            <img id="cinema-icon" src="images/cinema_Icon.png" alt="Cinema">
+            <img id="cinema-icon" src="" alt="Cinema">
         </div>
     
     </div>
@@ -590,6 +587,21 @@
 
 <script type="module">
 import { supabase } from "./src/supabase.js";
+
+function getImagesBucketUrl(path) {
+    const { data } = supabase
+        .storage
+        .from("images")
+        .getPublicUrl(path);
+
+    return data.publicUrl;
+}
+
+document.getElementById("orangerie-pin-icon").src =
+    getImagesBucketUrl("orangerie-icon.svg");
+
+document.getElementById("cinema-icon").src =
+    getImagesBucketUrl("studio-icon.svg");
 
     const translations = {
         en: {
@@ -700,7 +712,7 @@ import { supabase } from "./src/supabase.js";
         );
 
         let locationImages = {
-    orangerie: "images/image 2 (1).svg",
+    orangerie: getImagesBucketUrl("orangerie.webp"),
 
     studio1: "images/studio1.png",
     studio2: "images/studio2.png",
@@ -751,7 +763,7 @@ async function loadStudioImagesFromDatabase() {
 await loadStudioImagesFromDatabase();
 
         const locationIcons = {
-            orangerie: "images/Container (3).svg",
+            orangerie: getImagesBucketUrl("orangerie-icon.svg"),
 
             studio1: null,
             studio2: null,
@@ -769,7 +781,7 @@ await loadStudioImagesFromDatabase();
             studio14: null,
             studio16: null,
 
-            cinema: "images/cinema_Icon.png"
+            cinema: getImagesBucketUrl("studio-icon.svg")
         };
 
     const mapContainer = document.getElementById("map-container");
